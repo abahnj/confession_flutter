@@ -5,8 +5,9 @@ import 'package:confession_flutter/screens/prayers_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/avd.dart';
 
 import '../constants.dart';
 
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> allDestinations = [
+  final List<Widget> allDestinations = [
     ExaminationPage(),
     ConfessionPage(),
     GuidePage(),
@@ -27,26 +28,80 @@ class _HomePageState extends State<HomePage> {
 
   final _items = [
     BottomNavigationBarItem(
-      icon: SvgPicture.asset(
-        'assets/vectors/firefox_logo.svg',
+      title: PlatformText('Examination'),
+      icon: SizedBox(
         height: 24,
         width: 24,
+        child: AvdPicture.asset(
+          'assets/vectors/ic_exam.xml',
+          color: Color.fromRGBO(0, 0, 0, .26),
+        ),
       ),
-      title: PlatformText(
-        'Exam',
+      activeIcon: SizedBox(
+        height: 24,
+        width: 24,
+        child: AvdPicture.asset(
+          'assets/vectors/ic_exam.xml',
+          color: Colors.red,
+        ),
       ),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.dehaze),
       title: PlatformText('Confession'),
+      icon: SizedBox(
+        height: 24,
+        width: 24,
+        child: AvdPicture.asset(
+          'assets/vectors/ic_confession.xml',
+          color: Color.fromRGBO(0, 0, 0, .26),
+        ),
+      ),
+      activeIcon: SizedBox(
+        height: 24,
+        width: 24,
+        child: AvdPicture.asset(
+          'assets/vectors/ic_confession.xml',
+          color: Colors.red,
+        ),
+      ),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.dehaze),
       title: PlatformText('Guide'),
+      icon: SizedBox(
+        height: 24,
+        width: 24,
+        child: AvdPicture.asset(
+          'assets/vectors/ic_guides.xml',
+          color: Color.fromRGBO(0, 0, 0, .26),
+        ),
+      ),
+      activeIcon: SizedBox(
+        height: 24,
+        width: 24,
+        child: AvdPicture.asset(
+          'assets/vectors/ic_guides.xml',
+          color: Colors.red,
+        ),
+      ),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.aspect_ratio),
       title: PlatformText('Prayers'),
+      icon: SizedBox(
+        height: 24,
+        width: 24,
+        child: AvdPicture.asset(
+          'assets/vectors/ic_prayer.xml',
+          color: Color.fromRGBO(0, 0, 0, .26),
+        ),
+      ),
+      activeIcon: SizedBox(
+        height: 24,
+        width: 24,
+        child: AvdPicture.asset(
+          'assets/vectors/ic_prayer.xml',
+          color: Colors.red,
+        ),
+      ),
     ),
   ];
 
@@ -58,6 +113,11 @@ class _HomePageState extends State<HomePage> {
     _tabController ??= PlatformTabController(
       initialIndex: 0,
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   // This needs to be captured here in a stateful widget
@@ -98,8 +158,8 @@ class _HomePageState extends State<HomePage> {
       items: _items,
       androidTabs: (_) => MaterialNavBarData(
           type: BottomNavigationBarType.fixed,
-          iconSize: 36,
-          showUnselectedLabels: true),
+          iconSize: 24,
+          showUnselectedLabels: false),
     );
   }
 }
