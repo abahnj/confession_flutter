@@ -1,4 +1,5 @@
 import 'package:confession_flutter/data/app_database.dart';
+import 'package:confession_flutter/prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -14,6 +15,9 @@ List<SingleChildWidget> independentServices = [
   Provider(
     create: (_) => AppDatabase(),
     lazy: false,
+  ),
+  ChangeNotifierProvider(
+    create: (_) => PrefsNotifier(),
   )
 ];
 

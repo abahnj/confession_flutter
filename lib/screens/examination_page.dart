@@ -26,80 +26,75 @@ class ExaminationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelProvider<ExaminationPageViewModel>.withConsumer(
       viewModel: ExaminationPageViewModel(
-          Provider
-              .of<AppDatabase>(context)
-              .commandmentsDao),
+          Provider.of<AppDatabase>(context).commandmentsDao),
       onModelReady: (model) => model.getAllCommandment(),
-      builder: (context, model, _) =>
-          Container(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: model.commandments.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 8.0,
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                  child: InkWell(
-                    highlightColor: Colors.red,
-                    splashColor: Colors.green,
-                    onTap: () {
-                      print('tapped index $index');
-                    },
-                    child: Container(
-                      decoration:
-                      BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-                      child: ListTile(
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                        leading: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.only(right: 12.0),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  right:
-                                  BorderSide(width: 1.0, color: Colors.white24),
-                                ),
-                              ),
-                              child: Icon(Icons.autorenew, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        title: Text(
-                          model.commandments[index].commandment,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-// subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+      builder: (context, model, _) => Container(
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: model.commandments.length,
+          itemBuilder: (context, index) {
+            return _buildCard(index, model);
+          },
+        ),
+      ),
+    );
+  }
 
-                        subtitle: Row(
-                          children: <Widget>[
-                            Icon(
-                                Icons.linear_scale, color: Colors.yellowAccent),
-                            Expanded(
-                              child: Text(
-                                  model.commandments[index].commandmentText,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(color: Colors.white)),
-                            )
-                          ],
-                        ),
-                        trailing: Icon(Icons.keyboard_arrow_right,
-                            color: Colors.white, size: 30.0),
-                      ),
+  Card _buildCard(int index, ExaminationPageViewModel model) {
+    return Card(
+      elevation: 8.0,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: InkWell(
+        highlightColor: Colors.red,
+        splashColor: Colors.green,
+        onTap: () {
+          print('tapped index $index');
+        },
+        child: Container(
+          decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+          child: ListTile(
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(right: 12.0),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      right: BorderSide(width: 1.0, color: Colors.white24),
                     ),
                   ),
-                );
-              },
+                  child: Icon(Icons.autorenew, color: Colors.white),
+                ),
+              ],
             ),
+            title: Text(
+              model.commandments[index].commandment,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            subtitle: Row(
+              children: <Widget>[
+                Icon(Icons.linear_scale, color: Colors.yellowAccent),
+                Expanded(
+                  child: Text(model.commandments[index].commandmentText,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.white)),
+                )
+              ],
+            ),
+            trailing: Icon(Icons.keyboard_arrow_right,
+                color: Colors.white, size: 30.0),
           ),
+        ),
+      ),
     );
   }
 }
