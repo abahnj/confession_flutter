@@ -8,6 +8,7 @@ import 'package:confession_flutter/screens/guide_page.dart';
 import 'package:confession_flutter/screens/home_page.dart';
 import 'package:confession_flutter/screens/prayers_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
+import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,7 @@ void main() => runApp(
       MultiProvider(
         providers: providers,
         child: PlatformApp(
+          debugShowCheckedModeBanner: false,
           home: MyApp(),
         ),
       ),
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
       android: (_) => MaterialAppData(
         theme: ThemeData(
           primarySwatch: Colors.purple,
+          accentColor: Colors.purpleAccent,
         ),
         darkTheme: ThemeData.dark(),
         themeMode: _userThemeMode(context),
@@ -62,19 +65,6 @@ ThemeMode _userThemeMode(context) =>
 
 Brightness _setBrightness(BuildContext context) {
   var themeMode = _userThemeMode(context);
-  print(themeMode);
 
-  switch (themeMode) {
-    case ThemeMode.system:
-      return MediaQuery.of(context).platformBrightness;
-      break;
-    case ThemeMode.light:
-      return Brightness.light;
-      break;
-    case ThemeMode.dark:
-      return Brightness.dark;
-      break;
-    default:
-      return Brightness.light;
-  }
+  return Utils.returnBrightness(context, themeMode);
 }
