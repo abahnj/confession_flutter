@@ -2,11 +2,7 @@ import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/provider_setup.dart';
 import 'package:confession_flutter/screens/app_intro_page.dart';
 import 'package:confession_flutter/screens/app_lock_page.dart';
-import 'package:confession_flutter/screens/confession_page.dart';
-import 'package:confession_flutter/screens/examination_page.dart';
-import 'package:confession_flutter/screens/guide_page.dart';
 import 'package:confession_flutter/screens/home_page.dart';
-import 'package:confession_flutter/screens/prayers_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,10 +44,6 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         HomePage.Id: (context) => HomePage(),
-        ExaminationPage.Id: (context) => ExaminationPage(),
-        ConfessionPage.Id: (context) => ConfessionPage(),
-        GuidePage.Id: (context) => GuidePage(),
-        PrayersPage.Id: (context) => PrayersPage(),
         AppIntroPage.Id: (context) => AppIntroPage(),
         AppLockPage.Id: (context) => AppLockPage(),
         SettingsPage.Id: (context) => SettingsPage()

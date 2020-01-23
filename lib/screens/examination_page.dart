@@ -19,9 +19,33 @@ import 'package:provider_architecture/provider_architecture.dart';
 ///  * <https://developer.apple.com/ios/human-interface-guidelines/bars/tab-bars>
 ///
 
-class ExaminationPage extends StatelessWidget {
+class ExaminationPage extends StatefulWidget {
   static const String Id = 'examinationPage';
+  // ignore: missing_return
+  static Function router = (name) {
+    print('jsut playing $name');
+    switch (name) {
+      case '/':
+        return ExaminationPage();
+      case '/list':
+        return null;
+      case '/text':
+        return null;
+    }
+  };
 
+  static const String title = 'Exam';
+
+  static const String iconAsset = 'assets/vectors/ic_exam.xml';
+  final Key navigatorKey;
+
+  const ExaminationPage({Key key, this.navigatorKey}) : super(key: key);
+
+  @override
+  _ExaminationPageState createState() => _ExaminationPageState();
+}
+
+class _ExaminationPageState extends State<ExaminationPage> {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<ExaminationPageViewModel>.withConsumer(
