@@ -8,13 +8,12 @@ import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
       MultiProvider(
         providers: providers,
-        child: PlatformApp(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: MyApp(),
         ),
@@ -25,23 +24,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return PlatformApp(
+    return MaterialApp(
       title: 'Confession',
       debugShowCheckedModeBanner: false,
-      android: (_) => MaterialAppData(
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          accentColor: Colors.purpleAccent,
-        ),
-        darkTheme: ThemeData.dark(),
-        themeMode: _userThemeMode(context),
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.purpleAccent,
       ),
-      ios: (_) => CupertinoAppData(
-        theme: CupertinoThemeData(
-          brightness: _setBrightness(context),
-          primaryColor: Colors.red,
-        ),
-      ),
+      darkTheme: ThemeData.dark(),
+      themeMode: _userThemeMode(context),
       routes: {
         HomePage.Id: (context) => HomePage(),
         AppIntroPage.Id: (context) => AppIntroPage(),
