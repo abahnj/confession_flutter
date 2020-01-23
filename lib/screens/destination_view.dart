@@ -7,11 +7,13 @@ class ViewNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
+    print('didPop');
     onNavigation();
   }
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
+    print('didPush');
     onNavigation();
   }
 }
@@ -50,6 +52,9 @@ class _DestinationViewState extends State<DestinationView> {
   Widget build(BuildContext context) {
     return Navigator(
       key: widget.navigatorKey,
+      observers: <NavigatorObserver>[
+        ViewNavigatorObserver(widget.onNavigation),
+      ],
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(
           settings: settings,

@@ -27,12 +27,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Confession',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.purpleAccent,
+      darkTheme: ThemeData.dark().copyWith(
+        iconTheme: IconThemeData(color: Colors.red),
       ),
-      darkTheme: ThemeData.dark(),
       themeMode: _userThemeMode(context),
+      theme: ThemeData(
+        brightness: _setBrightness(context),
+        bottomAppBarColor: Colors.red,
+        primarySwatch: Colors.red,
+        primaryIconTheme: IconThemeData(color: Colors.red),
+        accentIconTheme: IconThemeData(color: Colors.red),
+        primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: Theme.of(context).textTheme.copyWith(
+              caption: TextStyle(color: Colors.black54),
+              subhead: TextStyle(fontFamily: 'Garamond', fontSize: 18.0),
+            ),
+      ),
       routes: {
         HomePage.Id: (context) => HomePage(),
         AppIntroPage.Id: (context) => AppIntroPage(),

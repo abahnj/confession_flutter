@@ -12,11 +12,12 @@ List<SingleChildWidget> providers = [
 
 //providers that need no other dependencies injected
 List<SingleChildWidget> independentServices = [
-  Provider(
+  Provider<AppDatabase>(
     create: (_) => AppDatabase(),
     lazy: false,
+    dispose: (_, db) => db.close(),
   ),
-  ChangeNotifierProvider(
+  ChangeNotifierProvider<PrefsNotifier>(
     create: (_) => PrefsNotifier(),
   )
 ];

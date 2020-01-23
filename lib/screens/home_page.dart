@@ -107,6 +107,7 @@ class _HomePageState extends State<HomePage>
                     key: _destinationKeys[destination.index],
                     child: DestinationView(
                       navigatorKey: _navigatorKeys[destination.index],
+                      onNavigation: () {},
                       destination: destination,
                     ),
                   ),
@@ -125,6 +126,7 @@ class _HomePageState extends State<HomePage>
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
+          selectedItemColor: Colors.red,
           type: BottomNavigationBarType.fixed,
           onTap: (int index) {
             setState(() {
