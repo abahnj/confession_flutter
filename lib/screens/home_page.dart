@@ -1,7 +1,7 @@
 import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/screens/confession_page.dart';
 import 'package:confession_flutter/screens/destination_view.dart';
-import 'package:confession_flutter/screens/examination_page.dart';
+import 'package:confession_flutter/screens/exam/commandments_page.dart';
 import 'package:confession_flutter/screens/guide_page.dart';
 import 'package:confession_flutter/screens/prayers_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
@@ -15,8 +15,8 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 
 final List<Destination> allDestinations = <Destination>[
-  Destination(0, ExaminationPage.title, ExaminationPage.iconAsset,
-      ExaminationPage.router),
+  Destination(0, CommandmentsPage.title, CommandmentsPage.iconAsset,
+      CommandmentsPage.router),
   Destination(
     1, 'Confession', 'assets/vectors/ic_confession.xml',
     //ConfessionPage router

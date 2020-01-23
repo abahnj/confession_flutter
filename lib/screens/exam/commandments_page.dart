@@ -27,6 +27,18 @@ class CommandmentsPage extends StatelessWidget {
 
   static const String iconAsset = 'assets/vectors/ic_exam.xml';
 
+  static Function router = (name) {
+    // ignore: missing_return
+    switch (name) {
+      case '/':
+        return CommandmentsPage();
+      case ExaminationPage.Id:
+        return ExaminationPage();
+      case '/text':
+        return null;
+    }
+  };
+
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<CommandmentsPageViewModel>.withConsumer(
@@ -60,6 +72,7 @@ Card _buildCard(
       highlightColor: Colors.red,
       splashColor: Colors.green,
       onTap: () {
+        print('$index');
         Navigator.pushNamed(context, ExaminationPage.Id,
             arguments: model.commandments[index].id);
       },

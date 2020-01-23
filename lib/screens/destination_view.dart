@@ -1,5 +1,21 @@
 import 'package:flutter/material.dart';
 
+class ViewNavigatorObserver extends NavigatorObserver {
+  ViewNavigatorObserver(this.onNavigation);
+
+  final VoidCallback onNavigation;
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
+    onNavigation();
+  }
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
+    onNavigation();
+  }
+}
+
 class Destination {
   const Destination(
     this.index,
@@ -14,10 +30,15 @@ class Destination {
 }
 
 class DestinationView extends StatefulWidget {
-  const DestinationView({Key key, this.destination, this.navigatorKey})
-      : super(key: key);
+  const DestinationView({
+    Key key,
+    this.destination,
+    this.onNavigation,
+    this.navigatorKey,
+  }) : super(key: key);
 
   final Destination destination;
+  final VoidCallback onNavigation;
   final Key navigatorKey;
 
   @override
