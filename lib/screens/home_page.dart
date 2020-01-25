@@ -4,7 +4,6 @@ import 'package:confession_flutter/screens/destination_view.dart';
 import 'package:confession_flutter/screens/exam/commandments_page.dart';
 import 'package:confession_flutter/screens/guide_page.dart';
 import 'package:confession_flutter/screens/prayers_page.dart';
-import 'package:confession_flutter/screens/settings_page.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
-final List<Destination> allDestinations = <Destination>[
+final List<Destination> _allDestinations = <Destination>[
   Destination(0, CommandmentsPage.title, CommandmentsPage.iconAsset,
       CommandmentsPage.router),
   Destination(
@@ -53,16 +52,16 @@ class _HomePageState extends State<HomePage>
     super.initState();
 
     _faders = List<AnimationController>.generate(
-        allDestinations.length,
+        _allDestinations.length,
         (_) => AnimationController(
             vsync: this, duration: Duration(milliseconds: 200)),
         growable: false);
     _faders[_currentIndex].value = 1.0;
     _destinationKeys = List<Key>.generate(
-        allDestinations.length, (int index) => GlobalKey(),
+        _allDestinations.length, (int index) => GlobalKey(),
         growable: false);
     _navigatorKeys = List<GlobalKey<NavigatorState>>.generate(
-        allDestinations.length, (int index) => GlobalKey(),
+        _allDestinations.length, (int index) => GlobalKey(),
         growable: false);
   }
 
@@ -84,27 +83,9 @@ class _HomePageState extends State<HomePage>
       onWillPop: () async =>
           !await _navigatorKeys[_currentIndex].currentState.maybePop(),
       child: Scaffold(
-        appBar: _canPop()
-            ? null
-            : AppBar(
-                title: PlatformText(kAppName),
-                actions: <Widget>[
-                  PlatformIconButton(
-                    onPressed: () {},
-                    icon: Icon(PlatformIcons(context).share),
-                  ),
-                  PlatformIconButton(
-                    onPressed: () {
-                      print(context);
-                      Navigator.of(context).pushNamed(SettingsPage.Id);
-                    },
-                    icon: Icon(PlatformIcons(context).settings),
-                  ),
-                ],
-              ),
         body: Stack(
             fit: StackFit.expand,
-            children: allDestinations.map((Destination destination) {
+            children: _allDestinations.map((Destination destination) {
               final Widget view = FadeTransition(
                 opacity: _faders[destination.index]
                     .drive(CurveTween(curve: Curves.fastOutSlowIn)),
@@ -112,11 +93,7 @@ class _HomePageState extends State<HomePage>
                   key: _destinationKeys[destination.index],
                   child: DestinationView(
                     navigatorKey: _navigatorKeys[destination.index],
-                    onNavigation: () {
-                      setState(() {
-                        _canPop();
-                      });
-                    },
+                    onNavigation: () {},
                     destination: destination,
                   ),
                 ),
@@ -156,7 +133,7 @@ List<BottomNavigationBarItem> _buildItems(context) {
       ? iconColorDarkInactive
       : iconColorLightInactive;
 
-  return allDestinations.map((Destination destination) {
+  return _allDestinations.map((Destination destination) {
     return BottomNavigationBarItem(
       title: PlatformText(destination.title),
       icon: SizedBox(

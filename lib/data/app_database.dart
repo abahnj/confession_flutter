@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:confession_flutter/data/commandments_dao.dart';
+import 'package:confession_flutter/data/daos/commandments_dao.dart';
+import 'package:confession_flutter/data/daos/examinations_dao.dart';
 import 'package:flutter/services.dart';
 import 'package:moor/moor.dart';
 import 'package:moor_ffi/moor_ffi.dart';
@@ -41,7 +42,9 @@ LazyDatabase _openConnection() {
   });
 }
 
-@UseMoor(tables: [Commandments], daos: [CommandmentsDao])
+@UseMoor(
+    tables: [Commandments, Examinations],
+    daos: [CommandmentsDao, ExaminationsDao])
 class AppDatabase extends _$AppDatabase {
   static final AppDatabase _instance = AppDatabase._internal();
 

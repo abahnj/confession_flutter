@@ -1,8 +1,11 @@
+import 'package:confession_flutter/components/root_app_bar.dart';
+import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:confession_flutter/viewmodels/commandments_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/avd.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 
@@ -33,7 +36,10 @@ class CommandmentsPage extends StatelessWidget {
       case '/':
         return CommandmentsPage();
       case ExaminationPage.Id:
-        return ExaminationPage();
+        var commandmentId = settings.arguments;
+        return ExaminationPage(
+          commandmentId: commandmentId,
+        );
       case '/text':
         return null;
     }
@@ -45,8 +51,10 @@ class CommandmentsPage extends StatelessWidget {
         Provider.of<AppDatabase>(context).commandmentsDao,
       ),
       onModelReady: (model) => model.getAllCommandment(),
-      builder: (context, model, _) => Container(
-        child: SafeArea(
+      staticChild: rootAppBar(context),
+      builder: (context, model, child) => Scaffold(
+        appBar: child,
+        body: SafeArea(
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
@@ -93,7 +101,14 @@ Card _buildCard(
                     right: BorderSide(width: 1.0, color: Colors.white24),
                   ),
                 ),
-                child: Icon(Icons.autorenew, color: Colors.white),
+                child: SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: AvdPicture.asset(
+                    'assets/vectors/ic_cross.xml',
+                    color: iconColorActive,
+                  ),
+                ),
               ),
             ],
           ),
