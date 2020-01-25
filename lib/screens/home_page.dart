@@ -17,17 +17,17 @@ final List<Destination> _allDestinations = <Destination>[
   Destination(0, CommandmentsPage.title, CommandmentsPage.iconAsset,
       CommandmentsPage.router),
   Destination(
-    1, 'Confession', 'assets/vectors/ic_confession.xml',
+    1, ConfessionPage.title, ConfessionPage.iconAsset,
     //ConfessionPage router
     ConfessionPage.router,
   ),
   Destination(
-    2, 'Guide', 'assets/vectors/ic_guides.xml',
+    2, GuidePage.title, GuidePage.iconAsset,
     //GuidePage router
     GuidePage.router,
   ),
   Destination(
-    3, 'Prayers', 'assets/vectors/ic_prayer.xml',
+    3, PrayersPage.title, PrayersPage.iconAsset,
     //PrayersPage router
     PrayersPage.router,
   )

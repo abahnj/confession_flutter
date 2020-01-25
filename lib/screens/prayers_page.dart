@@ -1,8 +1,13 @@
+import 'package:confession_flutter/constants.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class PrayersPage extends StatefulWidget {
-  static const String Id = 'prayersPage';
+  static const String Id = '/prayersPage';
+
+  static const String title = 'Prayers';
+
+  static const String iconAsset = vectorRoot + 'ic_prayer.xml';
 
   // ignore: missing_return
   static Function router = (RouteSettings settings) {

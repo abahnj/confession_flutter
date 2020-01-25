@@ -28,7 +28,7 @@ class CommandmentsPage extends StatelessWidget {
 
   static const String title = 'Exam';
 
-  static const String iconAsset = 'assets/vectors/ic_exam.xml';
+  static const String iconAsset = vectorRoot + 'ic_exam.xml';
 
   // ignore: missing_return
   static Function router = (RouteSettings settings) {
