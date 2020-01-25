@@ -1,4 +1,3 @@
-import 'package:confession_flutter/screens/prayers_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
@@ -6,11 +5,11 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 class ConfessionPage extends StatefulWidget {
   static const String Id = 'confessionPage';
 
-  static Function router = (name) {
-    // ignore: missing_return
-    switch (name) {
+  // ignore: missing_return
+  static Function router = (RouteSettings settings) {
+    switch (settings.name) {
       case '/':
-        return PrayersPage();
+        return ConfessionPage();
       case '/list':
         return null;
       case '/text':

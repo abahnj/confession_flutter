@@ -27,9 +27,9 @@ class CommandmentsPage extends StatelessWidget {
 
   static const String iconAsset = 'assets/vectors/ic_exam.xml';
 
-  static Function router = (name) {
-    // ignore: missing_return
-    switch (name) {
+  // ignore: missing_return
+  static Function router = (RouteSettings settings) {
+    switch (settings.name) {
       case '/':
         return CommandmentsPage();
       case ExaminationPage.Id:
@@ -38,21 +38,23 @@ class CommandmentsPage extends StatelessWidget {
         return null;
     }
   };
-
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<CommandmentsPageViewModel>.withConsumer(
       viewModel: CommandmentsPageViewModel(
-          Provider.of<AppDatabase>(context).commandmentsDao),
+        Provider.of<AppDatabase>(context).commandmentsDao,
+      ),
       onModelReady: (model) => model.getAllCommandment(),
       builder: (context, model, _) => Container(
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: model.commandments.length,
-          itemBuilder: (context, index) {
-            return _buildCard(context, index, model);
-          },
+        child: SafeArea(
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: model.commandments.length,
+            itemBuilder: (context, index) {
+              return _buildCard(context, index, model);
+            },
+          ),
         ),
       ),
     );

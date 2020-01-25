@@ -74,56 +74,64 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
+  bool _canPop() {
+    return _navigatorKeys[_currentIndex].currentState?.canPop() ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async =>
           !await _navigatorKeys[_currentIndex].currentState.maybePop(),
       child: Scaffold(
-        appBar: AppBar(
-          title: PlatformText(kAppName),
-          actions: <Widget>[
-            PlatformIconButton(
-              onPressed: () {},
-              icon: Icon(PlatformIcons(context).share),
-            ),
-            PlatformIconButton(
-              onPressed: () {
-                print(context);
-                Navigator.of(context).pushNamed(SettingsPage.Id);
-              },
-              icon: Icon(PlatformIcons(context).settings),
-            ),
-          ],
-        ),
-        body: SafeArea(
-          child: Stack(
-              fit: StackFit.expand,
-              children: allDestinations.map((Destination destination) {
-                final Widget view = FadeTransition(
-                  opacity: _faders[destination.index]
-                      .drive(CurveTween(curve: Curves.fastOutSlowIn)),
-                  child: KeyedSubtree(
-                    key: _destinationKeys[destination.index],
-                    child: DestinationView(
-                      navigatorKey: _navigatorKeys[destination.index],
-                      onNavigation: () {},
-                      destination: destination,
-                    ),
+        appBar: _canPop()
+            ? null
+            : AppBar(
+                title: PlatformText(kAppName),
+                actions: <Widget>[
+                  PlatformIconButton(
+                    onPressed: () {},
+                    icon: Icon(PlatformIcons(context).share),
                   ),
-                );
-                if (destination.index == _currentIndex) {
-                  _faders[destination.index].forward();
-                  return view;
-                } else {
-                  _faders[destination.index].reverse();
-                  if (_faders[destination.index].isAnimating) {
-                    return IgnorePointer(child: view);
-                  }
-                  return Offstage(child: view);
+                  PlatformIconButton(
+                    onPressed: () {
+                      print(context);
+                      Navigator.of(context).pushNamed(SettingsPage.Id);
+                    },
+                    icon: Icon(PlatformIcons(context).settings),
+                  ),
+                ],
+              ),
+        body: Stack(
+            fit: StackFit.expand,
+            children: allDestinations.map((Destination destination) {
+              final Widget view = FadeTransition(
+                opacity: _faders[destination.index]
+                    .drive(CurveTween(curve: Curves.fastOutSlowIn)),
+                child: KeyedSubtree(
+                  key: _destinationKeys[destination.index],
+                  child: DestinationView(
+                    navigatorKey: _navigatorKeys[destination.index],
+                    onNavigation: () {
+                      setState(() {
+                        _canPop();
+                      });
+                    },
+                    destination: destination,
+                  ),
+                ),
+              );
+              if (destination.index == _currentIndex) {
+                _faders[destination.index].forward();
+                return view;
+              } else {
+                _faders[destination.index].reverse();
+                if (_faders[destination.index].isAnimating) {
+                  return IgnorePointer(child: view);
                 }
-              }).toList()),
-        ),
+                return Offstage(child: view);
+              }
+            }).toList()),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           selectedItemColor: Colors.red,

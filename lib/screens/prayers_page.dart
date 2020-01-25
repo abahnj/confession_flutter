@@ -4,9 +4,9 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 class PrayersPage extends StatefulWidget {
   static const String Id = 'prayersPage';
 
-  static Function router = (name) {
-    // ignore: missing_return
-    switch (name) {
+  // ignore: missing_return
+  static Function router = (RouteSettings settings) {
+    switch (settings.name) {
       case '/':
         return PrayersPage();
       case '/list':

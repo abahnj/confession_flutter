@@ -4,9 +4,9 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 class GuidePage extends StatefulWidget {
   static const String Id = 'guidePage';
 
-  static Function router = (name) {
-    // ignore: missing_return
-    switch (name) {
+  // ignore: missing_return
+  static Function router = (RouteSettings settings) {
+    switch (settings.name) {
       case '/':
         return GuidePage();
       case '/list':
@@ -15,7 +15,6 @@ class GuidePage extends StatefulWidget {
         return null;
     }
   };
-
   @override
   _GuidePageState createState() => _GuidePageState();
 }

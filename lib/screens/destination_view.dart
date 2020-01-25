@@ -7,14 +7,19 @@ class ViewNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
-    print('didPop');
-    onNavigation();
+    if (route.settings.name != '/') {
+      print('didPush $route');
+      onNavigation();
+    }
+    //onNavigation();
   }
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
-    print('didPush');
-    onNavigation();
+    if (route.settings.name != '/') {
+      print('didPush $route');
+      onNavigation();
+    }
   }
 }
 
@@ -59,7 +64,7 @@ class _DestinationViewState extends State<DestinationView> {
         return MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) {
-            return widget.destination.router(settings.name);
+            return widget.destination.router(settings);
           },
         );
       },
