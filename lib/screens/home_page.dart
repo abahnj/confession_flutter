@@ -73,10 +73,6 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
-  bool _canPop() {
-    return _navigatorKeys[_currentIndex].currentState?.canPop() ?? false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

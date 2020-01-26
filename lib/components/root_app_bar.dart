@@ -9,20 +9,17 @@ AppBar rootAppBar(BuildContext context) {
     title: PlatformText(kAppName),
     actions: <Widget>[
       PlatformIconButton(
-        onPressed: () {},
-        icon: Icon(PlatformIcons(context).share),
-      ),
-      PlatformIconButton(
         onPressed: () {
-          print(context);
-
           //this helps get nested navigator that is up one level
           //helpful if you have more than two navigators
           var state = Navigator.of(context);
 
           Navigator.of(state.context).pushNamed(SettingsPage.Id);
         },
-        icon: Icon(PlatformIcons(context).settings),
+        icon: Icon(
+          PlatformIcons(context).settings,
+          color: Colors.red,
+        ),
       ),
     ],
   );

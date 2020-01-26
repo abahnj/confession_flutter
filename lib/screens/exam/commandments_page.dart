@@ -3,6 +3,7 @@ import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:confession_flutter/viewmodels/commandments_page_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/avd.dart';
@@ -87,7 +88,6 @@ Card _buildCard(
             arguments: model.commandments[index].id);
       },
       child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
         child: ListTile(
           contentPadding:
               EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -115,18 +115,20 @@ Card _buildCard(
           title: Text(
             model.commandments[index].commandment,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: Row(
-            children: <Widget>[
-              Icon(Icons.linear_scale, color: Colors.yellowAccent),
-              Expanded(
-                child: Text(model.commandments[index].commandmentText,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.white)),
-              )
-            ],
-          ),
+          subtitle: model.commandments[index].commandmentText.isNotEmpty
+              ? Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        model.commandments[index].commandmentText,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  ],
+                )
+              : null,
           trailing:
               Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
         ),

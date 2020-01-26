@@ -3,6 +3,7 @@ import 'package:confession_flutter/provider_setup.dart';
 import 'package:confession_flutter/screens/app_intro_page.dart';
 import 'package:confession_flutter/screens/app_lock_page.dart';
 import 'package:confession_flutter/screens/home_page.dart';
+import 'package:confession_flutter/screens/profile_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark().copyWith(
         iconTheme: IconThemeData(color: Colors.red),
+        backgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black,
+        bottomAppBarColor: Colors.red,
       ),
       themeMode: _userThemeMode(context),
       theme: ThemeData(
@@ -38,17 +42,18 @@ class MyApp extends StatelessWidget {
         primaryIconTheme: IconThemeData(color: Colors.red),
         accentIconTheme: IconThemeData(color: Colors.red),
         primaryColor: Colors.white,
-        scaffoldBackgroundColor: Colors.white,
-        textTheme: Theme.of(context).textTheme.copyWith(
-              caption: TextStyle(color: Colors.black54),
-              subhead: TextStyle(fontFamily: 'Garamond', fontSize: 18.0),
-            ),
+        canvasColor: Utils.returnBrightness(context, _userThemeMode(context)) ==
+                Brightness.dark
+            ? Colors.red
+            : Colors.white,
+        scaffoldBackgroundColor: Color.fromRGBO(242, 242, 242, 1),
       ),
       routes: {
         HomePage.Id: (context) => HomePage(),
         AppIntroPage.Id: (context) => AppIntroPage(),
         AppLockPage.Id: (context) => AppLockPage(),
-        SettingsPage.Id: (context) => SettingsPage()
+        SettingsPage.Id: (context) => SettingsPage(),
+        ProfilePage.Id: (context) => ProfilePage()
       },
     );
   }
