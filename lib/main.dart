@@ -33,6 +33,18 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.black,
         bottomAppBarColor: Colors.red,
+        toggleableActiveColor: Colors.red,
+        cupertinoOverrideTheme: CupertinoThemeData(
+          textTheme: CupertinoTextThemeData(
+            dateTimePickerTextStyle: TextStyle(
+              inherit: false,
+              fontFamily: '.SF Pro Display',
+              fontSize: 21,
+              fontWeight: FontWeight.normal,
+              color: CupertinoColors.white,
+            ),
+          ),
+        ),
       ),
       themeMode: _userThemeMode(context),
       theme: ThemeData(
@@ -42,6 +54,17 @@ class MyApp extends StatelessWidget {
         primaryIconTheme: IconThemeData(color: Colors.red),
         accentIconTheme: IconThemeData(color: Colors.red),
         primaryColor: Colors.white,
+        cupertinoOverrideTheme: CupertinoThemeData(
+          textTheme: CupertinoTextThemeData(
+            dateTimePickerTextStyle: TextStyle(
+              inherit: false,
+              fontFamily: '.SF Pro Display',
+              fontSize: 21,
+              fontWeight: FontWeight.normal,
+              color: CupertinoColors.black,
+            ),
+          ),
+        ),
         canvasColor: Utils.returnBrightness(context, _userThemeMode(context)) ==
                 Brightness.dark
             ? Colors.red

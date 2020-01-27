@@ -1,4 +1,5 @@
 import 'package:confession_flutter/data/app_database.dart';
+import 'package:confession_flutter/data/user.dart';
 import 'package:moor/moor.dart';
 
 part 'examinations_dao.g.dart';
@@ -36,7 +37,9 @@ class Examinations extends Table {
   String get tableName => 'SIN';
 }
 
-@UseDao(tables: [Examinations])
+@UseDao(
+  tables: [Examinations],
+)
 class ExaminationsDao extends DatabaseAccessor<AppDatabase>
     with _$ExaminationsDaoMixin {
   ExaminationsDao(AppDatabase db) : super(db);
@@ -45,4 +48,61 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
       (select(examinations)
             ..where((t) => t.commandmentId.equals(commandmentId)))
           .get();
+
+  Future<List<Examination>> getExaminationsForUserAndId(
+      int commandmentId, User user) {
+    Expression<bool, BoolType> vocationQuery;
+    Expression<bool, BoolType> genderQuery;
+    Expression<bool, BoolType> ageQuery;
+
+    switch (user.vocation) {
+      case Vocation.single:
+        vocationQuery = $ExaminationsTable(db).single.equals(true);
+        break;
+      case Vocation.married:
+        vocationQuery = $ExaminationsTable(db).married.equals(true);
+        break;
+      case Vocation.priest:
+        vocationQuery = $ExaminationsTable(db).priest.equals(true);
+        break;
+      case Vocation.religious:
+        vocationQuery = $ExaminationsTable(db).religious.equals(true);
+        break;
+    }
+
+    switch (user.gender) {
+      case Gender.male:
+        genderQuery = $ExaminationsTable(db).male.equals(true);
+        break;
+      case Gender.female:
+        genderQuery = $ExaminationsTable(db).female.equals(true);
+        break;
+    }
+
+    switch (user.age) {
+      case Age.adult:
+        ageQuery = $ExaminationsTable(db).adult.equals(true);
+        break;
+      case Age.teen:
+        ageQuery = $ExaminationsTable(db).teen.equals(true);
+        break;
+      case Age.child:
+        ageQuery = $ExaminationsTable(db).child.equals(true);
+        break;
+    }
+
+    if (user.age != Age.adult) {
+      return (select(examinations)
+            ..where((t) => t.commandmentId.equals(commandmentId) & ageQuery))
+          .get();
+    }
+
+    return (select(examinations)
+          ..where((t) =>
+              t.commandmentId.equals(commandmentId) &
+              vocationQuery &
+              genderQuery &
+              ageQuery))
+        .get();
+  }
 }

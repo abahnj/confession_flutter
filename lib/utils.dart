@@ -17,4 +17,9 @@ class Utils {
         return Brightness.light;
     }
   }
+
+  static String getEnumTitle(String value) {
+    return value.split('.').last[0].toUpperCase() +
+        value.split('.').last.substring(1);
+  }
 }

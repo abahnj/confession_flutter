@@ -1,3 +1,5 @@
+import 'package:confession_flutter/utils.dart';
+
 enum Vocation { single, married, priest, religious }
 enum Age { adult, teen, child }
 enum Gender { male, female }
@@ -27,14 +29,11 @@ class User {
   @override
   String toString() {
     //Strip away class name and capitalize first letter
-    var gender = (this.gender.toString().split('.').last)[0].toUpperCase() +
-        this.gender.toString().split('.').last.substring(1);
+    var gender = Utils.getEnumTitle(this.gender.toString());
 
-    var age = (this.age.toString().split('.').last)[0].toUpperCase() +
-        this.age.toString().split('.').last.substring(1);
+    var age = Utils.getEnumTitle(this.age.toString());
 
-    var vocation = (this.vocation.toString().split('.').last)[0].toUpperCase() +
-        this.vocation.toString().split('.').last.substring(1);
+    var vocation = Utils.getEnumTitle(this.vocation.toString());
 
     return ('$gender, $age, $vocation');
   }

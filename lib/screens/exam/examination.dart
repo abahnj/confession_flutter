@@ -1,5 +1,6 @@
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
+import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/viewmodels/examination_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -20,9 +21,11 @@ class ExaminationPage extends StatelessWidget {
       ),
       body: ViewModelProvider<ExaminationPageViewModel>.withConsumer(
         viewModel: ExaminationPageViewModel(
-          Provider.of<AppDatabase>(context).examinationsDao,
+          dao: Provider.of<AppDatabase>(context).examinationsDao,
+          user: Provider.of<PrefsNotifier>(context).user,
         ),
-        onModelReady: (model) => model.getExaminationsForId(commandmentId),
+        onModelReady: (model) =>
+            model.getExaminationsForUserAndId(commandmentId),
         builder: (context, model, child) => Scaffold(
           appBar: child,
           body: SafeArea(

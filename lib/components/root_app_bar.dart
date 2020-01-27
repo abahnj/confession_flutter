@@ -8,6 +8,14 @@ AppBar rootAppBar(BuildContext context) {
   return AppBar(
     title: PlatformText(kAppName),
     actions: <Widget>[
+      if (Theme.of(context).platform == TargetPlatform.android)
+        IconButton(
+          icon: Icon(
+            Icons.share,
+            color: Colors.red,
+          ),
+          onPressed: () {},
+        ),
       PlatformIconButton(
         onPressed: () {
           //this helps get nested navigator that is up one level
