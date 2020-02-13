@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.black,
         bottomAppBarColor: Colors.red,
+        colorScheme: ColorScheme.dark(),
         toggleableActiveColor: Colors.red,
         cupertinoOverrideTheme: CupertinoThemeData(
           textTheme: CupertinoTextThemeData(
