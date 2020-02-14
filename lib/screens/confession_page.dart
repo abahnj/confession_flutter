@@ -30,41 +30,59 @@ class ConfessionPage extends StatelessWidget {
         title: Text('Confession'),
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    'In the Name of The Father and The Son and The Holy Spirit',
-                    style: Theme.of(context).textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Amen',
-                    style: Theme.of(context).textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Bless me Fatheer for I have sinned',
-                    style: Theme.of(context).textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Its been 6 days since my last confession',
-                    style: Theme.of(context).textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Here are my sins',
-                    style: Theme.of(context).textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+              child: Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'In the Name of The Father and The Son and The Holy Spirit',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline5,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Amen',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline5,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Bless me Father for I have sinned',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline5,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Its been 6 days since my last confession',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline5,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Here are my sins',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline5,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
             Text(
@@ -78,7 +96,12 @@ class ConfessionPage extends StatelessWidget {
             PlatformButton(
               child: Text(
                 'Next',
-                style: Theme.of(context).textTheme.button,
+                style:
+                Theme
+                    .of(context)
+                    .textTheme
+                    .button
+                    .copyWith(fontSize: 16),
               ),
               onPressed: () {},
             ),

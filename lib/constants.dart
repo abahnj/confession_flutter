@@ -9,3 +9,5 @@ final Color iconColorActive = Colors.red.withOpacity(.54);
 const Color iconColorDarkInactive = Color.fromRGBO(255, 255, 255, 0.3);
 
 const String vectorRoot = 'assets/vectors/';
+
+const String imagesRoot = 'assets/images/';

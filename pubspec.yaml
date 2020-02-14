@@ -57,6 +57,7 @@ flutter:
   assets:
     - assets/vectors/
     - assets/database/confession.db
+    - assets/images/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

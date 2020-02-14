@@ -26,8 +26,8 @@ class ExaminationPage extends StatelessWidget {
         ),
         onModelReady: (model) =>
             model.getExaminationsForUserAndId(commandmentId),
-        builder: (context, model, child) => Scaffold(
-          appBar: child,
+        builder: (context, model, _) =>
+            Scaffold(
           body: SafeArea(
             child: ListView.builder(
               scrollDirection: Axis.vertical,

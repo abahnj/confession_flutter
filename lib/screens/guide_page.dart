@@ -1,6 +1,7 @@
 import 'package:confession_flutter/constants.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class GuidePage extends StatefulWidget {
   static const String Id = '/guidePage';
@@ -27,9 +28,58 @@ class GuidePage extends StatefulWidget {
 class _GuidePageState extends State<GuidePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: PlatformText('GuidePage'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Guide'),
+      ),
+      body: Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            buildChild('as_said_by_pope.jpg', 'AS SAID BY POPES'),
+            buildChild('fulton_sheen.jpg',
+                'EXTRACTS FROM FREQUENT CONFESSION (FULTON SHEEN)'),
+            buildChild('faq.jpg', 'FAQ'),
+            buildChild('ccc.jpg', 'CATHECHISM OF THE CATHOLIC CHURCH'),
+            buildChild('confession.jpg', 'HOW TO MAKE A GOOD CONFESSION')
+          ],
+        ),
+      ),
+    );
+  }
+
+  Expanded buildChild(String imagePath, String text) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          alignment: Alignment.bottomRight,
+          children: <Widget>[
+            Image(
+              image: AssetImage(imagesRoot + imagePath),
+              color: Colors.red,
+              colorBlendMode: BlendMode.hue,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            Container(
+              color: Color.fromRGBO(0, 0, 0, .5),
+            ),
+            Container(
+              width: double.infinity,
+              color: Color.fromRGBO(0, 0, 0, .2),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  text,
+                  textAlign: TextAlign.end,
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
