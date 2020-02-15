@@ -1015,6 +1015,273 @@ class $ExaminationsTable extends Examinations
   }
 }
 
+class Prayer extends DataClass implements Insertable<Prayer> {
+  final int id;
+  final int prayerName;
+  final String prayerText;
+  final String groupName;
+
+  Prayer({@required this.id,
+    @required this.prayerName,
+    @required this.prayerText,
+    @required this.groupName});
+
+  factory Prayer.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return Prayer(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
+      prayerName:
+      intType.mapFromDatabaseResponse(data['${effectivePrefix}PRAYERNAME']),
+      prayerText: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}PRAYERTEXT']),
+      groupName: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}GROUPNAME']),
+    );
+  }
+
+  factory Prayer.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return Prayer(
+      id: serializer.fromJson<int>(json['id']),
+      prayerName: serializer.fromJson<int>(json['prayerName']),
+      prayerText: serializer.fromJson<String>(json['prayerText']),
+      groupName: serializer.fromJson<String>(json['groupName']),
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'prayerName': serializer.toJson<int>(prayerName),
+      'prayerText': serializer.toJson<String>(prayerText),
+      'groupName': serializer.toJson<String>(groupName),
+    };
+  }
+
+  @override
+  PrayersCompanion createCompanion(bool nullToAbsent) {
+    return PrayersCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      prayerName: prayerName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(prayerName),
+      prayerText: prayerText == null && nullToAbsent
+          ? const Value.absent()
+          : Value(prayerText),
+      groupName: groupName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupName),
+    );
+  }
+
+  Prayer copyWith(
+      {int id, int prayerName, String prayerText, String groupName}) =>
+      Prayer(
+        id: id ?? this.id,
+        prayerName: prayerName ?? this.prayerName,
+        prayerText: prayerText ?? this.prayerText,
+        groupName: groupName ?? this.groupName,
+      );
+
+  @override
+  String toString() {
+    return (StringBuffer('Prayer(')
+      ..write('id: $id, ')..write('prayerName: $prayerName, ')..write(
+          'prayerText: $prayerText, ')..write('groupName: $groupName')..write(
+          ')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      $mrjf($mrjc(
+          id.hashCode,
+          $mrjc(prayerName.hashCode,
+              $mrjc(prayerText.hashCode, groupName.hashCode))));
+
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+          (other is Prayer &&
+              other.id == this.id &&
+              other.prayerName == this.prayerName &&
+              other.prayerText == this.prayerText &&
+              other.groupName == this.groupName);
+}
+
+class PrayersCompanion extends UpdateCompanion<Prayer> {
+  final Value<int> id;
+  final Value<int> prayerName;
+  final Value<String> prayerText;
+  final Value<String> groupName;
+
+  const PrayersCompanion({
+    this.id = const Value.absent(),
+    this.prayerName = const Value.absent(),
+    this.prayerText = const Value.absent(),
+    this.groupName = const Value.absent(),
+  });
+
+  PrayersCompanion.insert({
+    this.id = const Value.absent(),
+    @required int prayerName,
+    @required String prayerText,
+    @required String groupName,
+  })
+      : prayerName = Value(prayerName),
+        prayerText = Value(prayerText),
+        groupName = Value(groupName);
+
+  PrayersCompanion copyWith({Value<int> id,
+    Value<int> prayerName,
+    Value<String> prayerText,
+    Value<String> groupName}) {
+    return PrayersCompanion(
+      id: id ?? this.id,
+      prayerName: prayerName ?? this.prayerName,
+      prayerText: prayerText ?? this.prayerText,
+      groupName: groupName ?? this.groupName,
+    );
+  }
+}
+
+class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
+  final GeneratedDatabase _db;
+  final String _alias;
+
+  $PrayersTable(this._db, [this._alias]);
+
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('_id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _prayerNameMeta = const VerificationMeta('prayerName');
+  GeneratedIntColumn _prayerName;
+
+  @override
+  GeneratedIntColumn get prayerName => _prayerName ??= _constructPrayerName();
+
+  GeneratedIntColumn _constructPrayerName() {
+    return GeneratedIntColumn(
+      'PRAYERNAME',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _prayerTextMeta = const VerificationMeta('prayerText');
+  GeneratedTextColumn _prayerText;
+
+  @override
+  GeneratedTextColumn get prayerText => _prayerText ??= _constructPrayerText();
+
+  GeneratedTextColumn _constructPrayerText() {
+    return GeneratedTextColumn(
+      'PRAYERTEXT',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _groupNameMeta = const VerificationMeta('groupName');
+  GeneratedTextColumn _groupName;
+
+  @override
+  GeneratedTextColumn get groupName => _groupName ??= _constructGroupName();
+
+  GeneratedTextColumn _constructGroupName() {
+    return GeneratedTextColumn(
+      'GROUPNAME',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, prayerName, prayerText, groupName];
+
+  @override
+  $PrayersTable get asDslTable => this;
+
+  @override
+  String get $tableName => _alias ?? 'PRAYERS';
+  @override
+  final String actualTableName = 'PRAYERS';
+
+  @override
+  VerificationContext validateIntegrity(PrayersCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.id.present) {
+      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    }
+    if (d.prayerName.present) {
+      context.handle(_prayerNameMeta,
+          prayerName.isAcceptableValue(d.prayerName.value, _prayerNameMeta));
+    } else if (isInserting) {
+      context.missing(_prayerNameMeta);
+    }
+    if (d.prayerText.present) {
+      context.handle(_prayerTextMeta,
+          prayerText.isAcceptableValue(d.prayerText.value, _prayerTextMeta));
+    } else if (isInserting) {
+      context.missing(_prayerTextMeta);
+    }
+    if (d.groupName.present) {
+      context.handle(_groupNameMeta,
+          groupName.isAcceptableValue(d.groupName.value, _groupNameMeta));
+    } else if (isInserting) {
+      context.missing(_groupNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+
+  @override
+  Prayer map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return Prayer.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(PrayersCompanion d) {
+    final map = <String, Variable>{};
+    if (d.id.present) {
+      map['_id'] = Variable<int, IntType>(d.id.value);
+    }
+    if (d.prayerName.present) {
+      map['PRAYERNAME'] = Variable<int, IntType>(d.prayerName.value);
+    }
+    if (d.prayerText.present) {
+      map['PRAYERTEXT'] = Variable<String, StringType>(d.prayerText.value);
+    }
+    if (d.groupName.present) {
+      map['GROUPNAME'] = Variable<String, StringType>(d.groupName.value);
+    }
+    return map;
+  }
+
+  @override
+  $PrayersTable createAlias(String alias) {
+    return $PrayersTable(_db, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $CommandmentsTable _commandments;
@@ -1023,15 +1290,21 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $ExaminationsTable _examinations;
   $ExaminationsTable get examinations =>
       _examinations ??= $ExaminationsTable(this);
+  $PrayersTable _prayers;
+
+  $PrayersTable get prayers => _prayers ??= $PrayersTable(this);
   CommandmentsDao _commandmentsDao;
   CommandmentsDao get commandmentsDao =>
       _commandmentsDao ??= CommandmentsDao(this as AppDatabase);
   ExaminationsDao _examinationsDao;
   ExaminationsDao get examinationsDao =>
       _examinationsDao ??= ExaminationsDao(this as AppDatabase);
+  PrayersDao _prayersDao;
+
+  PrayersDao get prayersDao => _prayersDao ??= PrayersDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [commandments, examinations];
+      [commandments, examinations, prayers];
 }
