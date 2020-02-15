@@ -5,7 +5,7 @@ import 'package:confession_flutter/data/daos/commandments_dao.dart';
 import 'package:confession_flutter/viewmodels/base_model.dart';
 
 class CommandmentsPageViewModel extends BaseModel {
-  CommandmentsPageViewModel(CommandmentsDao dao) : _dao = dao;
+  CommandmentsPageViewModel({CommandmentsDao dao}) : _dao = dao;
 
   final CommandmentsDao _dao;
 

@@ -50,7 +50,7 @@ class CommandmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelProvider<CommandmentsPageViewModel>.withConsumer(
       viewModel: CommandmentsPageViewModel(
-        Provider.of<AppDatabase>(context).commandmentsDao,
+        dao: Provider.of<AppDatabase>(context).commandmentsDao,
       ),
       onModelReady: (model) => model.getAllCommandment(),
       staticChild: rootAppBar(context),

@@ -6,7 +6,7 @@ part 'prayers_dao.g.dart';
 class Prayers extends Table {
   IntColumn get id => integer().named('_id').autoIncrement()();
 
-  IntColumn get prayerName => integer().named('PRAYERNAME')();
+  TextColumn get prayerName => text().named('PRAYERNAME')();
 
   TextColumn get prayerText => text().named('PRAYERTEXT')();
 
@@ -21,7 +21,4 @@ class PrayersDao extends DatabaseAccessor<AppDatabase> with _$PrayersDaoMixin {
   PrayersDao(AppDatabase db) : super(db);
 
   Future<List<Prayer>> getAllPrayers() => select(prayers).get();
-
-  Future insertCommandment(Insertable<Prayer> prayer) =>
-      into(prayers).insert(prayer);
 }

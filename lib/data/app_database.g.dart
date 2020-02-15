@@ -1017,15 +1017,15 @@ class $ExaminationsTable extends Examinations
 
 class Prayer extends DataClass implements Insertable<Prayer> {
   final int id;
-  final int prayerName;
+  final String prayerName;
   final String prayerText;
   final String groupName;
 
-  Prayer({@required this.id,
-    @required this.prayerName,
-    @required this.prayerText,
-    @required this.groupName});
-
+  Prayer(
+      {@required this.id,
+      @required this.prayerName,
+      @required this.prayerText,
+      @required this.groupName});
   factory Prayer.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -1033,32 +1033,30 @@ class Prayer extends DataClass implements Insertable<Prayer> {
     final stringType = db.typeSystem.forDartType<String>();
     return Prayer(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
-      prayerName:
-      intType.mapFromDatabaseResponse(data['${effectivePrefix}PRAYERNAME']),
+      prayerName: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}PRAYERNAME']),
       prayerText: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}PRAYERTEXT']),
       groupName: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}GROUPNAME']),
     );
   }
-
   factory Prayer.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return Prayer(
       id: serializer.fromJson<int>(json['id']),
-      prayerName: serializer.fromJson<int>(json['prayerName']),
+      prayerName: serializer.fromJson<String>(json['prayerName']),
       prayerText: serializer.fromJson<String>(json['prayerText']),
       groupName: serializer.fromJson<String>(json['groupName']),
     );
   }
-
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'prayerName': serializer.toJson<int>(prayerName),
+      'prayerName': serializer.toJson<String>(prayerName),
       'prayerText': serializer.toJson<String>(prayerText),
       'groupName': serializer.toJson<String>(groupName),
     };
@@ -1081,67 +1079,64 @@ class Prayer extends DataClass implements Insertable<Prayer> {
   }
 
   Prayer copyWith(
-      {int id, int prayerName, String prayerText, String groupName}) =>
+          {int id, String prayerName, String prayerText, String groupName}) =>
       Prayer(
         id: id ?? this.id,
         prayerName: prayerName ?? this.prayerName,
         prayerText: prayerText ?? this.prayerText,
         groupName: groupName ?? this.groupName,
       );
-
   @override
   String toString() {
     return (StringBuffer('Prayer(')
-      ..write('id: $id, ')..write('prayerName: $prayerName, ')..write(
-          'prayerText: $prayerText, ')..write('groupName: $groupName')..write(
-          ')'))
+          ..write('id: $id, ')
+          ..write('prayerName: $prayerName, ')
+          ..write('prayerText: $prayerText, ')
+          ..write('groupName: $groupName')
+          ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(
-          id.hashCode,
-          $mrjc(prayerName.hashCode,
-              $mrjc(prayerText.hashCode, groupName.hashCode))));
-
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(prayerName.hashCode,
+          $mrjc(prayerText.hashCode, groupName.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-          (other is Prayer &&
-              other.id == this.id &&
-              other.prayerName == this.prayerName &&
-              other.prayerText == this.prayerText &&
-              other.groupName == this.groupName);
+      (other is Prayer &&
+          other.id == this.id &&
+          other.prayerName == this.prayerName &&
+          other.prayerText == this.prayerText &&
+          other.groupName == this.groupName);
 }
 
 class PrayersCompanion extends UpdateCompanion<Prayer> {
   final Value<int> id;
-  final Value<int> prayerName;
+  final Value<String> prayerName;
   final Value<String> prayerText;
   final Value<String> groupName;
-
   const PrayersCompanion({
     this.id = const Value.absent(),
     this.prayerName = const Value.absent(),
     this.prayerText = const Value.absent(),
     this.groupName = const Value.absent(),
   });
-
   PrayersCompanion.insert({
     this.id = const Value.absent(),
-    @required int prayerName,
+    @required String prayerName,
     @required String prayerText,
     @required String groupName,
-  })
-      : prayerName = Value(prayerName),
+  })  : prayerName = Value(prayerName),
         prayerText = Value(prayerText),
         groupName = Value(groupName);
 
-  PrayersCompanion copyWith({Value<int> id,
-    Value<int> prayerName,
-    Value<String> prayerText,
-    Value<String> groupName}) {
+  PrayersCompanion copyWith(
+      {Value<int> id,
+      Value<String> prayerName,
+      Value<String> prayerText,
+      Value<String> groupName}) {
     return PrayersCompanion(
       id: id ?? this.id,
       prayerName: prayerName ?? this.prayerName,
@@ -1154,28 +1149,23 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
 class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   final GeneratedDatabase _db;
   final String _alias;
-
   $PrayersTable(this._db, [this._alias]);
-
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
-
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
-
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('_id', $tableName, false,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
   final VerificationMeta _prayerNameMeta = const VerificationMeta('prayerName');
-  GeneratedIntColumn _prayerName;
-
+  GeneratedTextColumn _prayerName;
   @override
-  GeneratedIntColumn get prayerName => _prayerName ??= _constructPrayerName();
+  GeneratedTextColumn get prayerName => _prayerName ??= _constructPrayerName();
 
-  GeneratedIntColumn _constructPrayerName() {
-    return GeneratedIntColumn(
+  GeneratedTextColumn _constructPrayerName() {
+    return GeneratedTextColumn(
       'PRAYERNAME',
       $tableName,
       false,
@@ -1184,10 +1174,8 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
 
   final VerificationMeta _prayerTextMeta = const VerificationMeta('prayerText');
   GeneratedTextColumn _prayerText;
-
   @override
   GeneratedTextColumn get prayerText => _prayerText ??= _constructPrayerText();
-
   GeneratedTextColumn _constructPrayerText() {
     return GeneratedTextColumn(
       'PRAYERTEXT',
@@ -1198,10 +1186,8 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
 
   final VerificationMeta _groupNameMeta = const VerificationMeta('groupName');
   GeneratedTextColumn _groupName;
-
   @override
   GeneratedTextColumn get groupName => _groupName ??= _constructGroupName();
-
   GeneratedTextColumn _constructGroupName() {
     return GeneratedTextColumn(
       'GROUPNAME',
@@ -1212,15 +1198,12 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
 
   @override
   List<GeneratedColumn> get $columns => [id, prayerName, prayerText, groupName];
-
   @override
   $PrayersTable get asDslTable => this;
-
   @override
   String get $tableName => _alias ?? 'PRAYERS';
   @override
   final String actualTableName = 'PRAYERS';
-
   @override
   VerificationContext validateIntegrity(PrayersCompanion d,
       {bool isInserting = false}) {
@@ -1251,7 +1234,6 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
-
   @override
   Prayer map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -1265,7 +1247,7 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
       map['_id'] = Variable<int, IntType>(d.id.value);
     }
     if (d.prayerName.present) {
-      map['PRAYERNAME'] = Variable<int, IntType>(d.prayerName.value);
+      map['PRAYERNAME'] = Variable<String, StringType>(d.prayerName.value);
     }
     if (d.prayerText.present) {
       map['PRAYERTEXT'] = Variable<String, StringType>(d.prayerText.value);
@@ -1291,7 +1273,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $ExaminationsTable get examinations =>
       _examinations ??= $ExaminationsTable(this);
   $PrayersTable _prayers;
-
   $PrayersTable get prayers => _prayers ??= $PrayersTable(this);
   CommandmentsDao _commandmentsDao;
   CommandmentsDao get commandmentsDao =>
@@ -1300,7 +1281,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   ExaminationsDao get examinationsDao =>
       _examinationsDao ??= ExaminationsDao(this as AppDatabase);
   PrayersDao _prayersDao;
-
   PrayersDao get prayersDao => _prayersDao ??= PrayersDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();

@@ -3,7 +3,7 @@ import 'package:confession_flutter/screens/confession_page.dart';
 import 'package:confession_flutter/screens/destination_view.dart';
 import 'package:confession_flutter/screens/exam/commandments_page.dart';
 import 'package:confession_flutter/screens/guide_page.dart';
-import 'package:confession_flutter/screens/prayers_page.dart';
+import 'package:confession_flutter/screens/prayers/prayers_page.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +111,12 @@ class _HomePageState extends State<HomePage>
           type: BottomNavigationBarType.fixed,
           onTap: (int index) {
             setState(() {
+              if (index == _currentIndex) {
+                _navigatorKeys[_currentIndex]
+                    .currentState
+                    .popUntil((route) => route.isFirst);
+                return;
+              }
               _currentIndex = index;
             });
           },

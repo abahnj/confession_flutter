@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/provider_setup.dart';
 import 'package:confession_flutter/screens/app_intro_page.dart';
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(WidgetsBinding.instance.window.devicePixelRatio);
     return MaterialApp(
       title: 'Confession',
       debugShowCheckedModeBanner: false,
