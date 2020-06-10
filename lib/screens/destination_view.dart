@@ -63,9 +63,8 @@ class _DestinationViewState extends State<DestinationView> {
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) {
-            return widget.destination.router(settings);
-          },
+          builder: (BuildContext context) =>
+              widget.destination.router(settings),
         );
       },
     );

@@ -1,4 +1,5 @@
 import 'package:confession_flutter/data/app_database.dart';
+import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -19,11 +20,25 @@ List<SingleChildWidget> independentServices = [
   ),
   ChangeNotifierProvider<PrefsNotifier>(
     create: (_) => PrefsNotifier(),
+  ),
+  ChangeNotifierProvider<ThemeStyle>(
+    create: (_) => ThemeStyle(),
   )
 ];
 
 //providers that need a dependency already instantiated above
-List<SingleChildWidget> dependentServices = [];
+List<SingleChildWidget> dependentServices = [
+  ProxyProvider<ThemeStyle, ThemeState>(
+    update: (context, value, previous) => ThemeState(
+      userThemeMode: value.userThemeMode,
+    ),
+  )
+];
 
 //providers that need to be directly  available to every UI view without the need for a viewModel
-List<SingleChildWidget> uiConsumableProviders = [];
+List<SingleChildWidget> uiConsumableProviders = [
+  Provider<User>(
+    create: (context) =>
+        Provider.of<PrefsNotifier>(context, listen: false).user,
+  )
+];

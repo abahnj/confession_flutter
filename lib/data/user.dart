@@ -1,29 +1,51 @@
 import 'package:confession_flutter/utils.dart';
+import 'package:flutter/cupertino.dart';
 
 enum Vocation { single, married, priest, religious }
 enum Age { adult, teen, child }
 enum Gender { male, female }
 
-class User {
-  final Vocation vocation;
-  final Age age;
-  final Gender gender;
+class User with ChangeNotifier {
+  Vocation _vocation;
+  Age _age;
+  Gender _gender;
 
-  const User(
-      {this.vocation = Vocation.single,
-      this.age = Age.adult,
-      this.gender = Gender.male});
+  User({vocation, age, gender})
+      : _vocation = vocation,
+        _age = age,
+        _gender = gender;
 
   User.initial()
-      : vocation = Vocation.single,
-        age = Age.adult,
-        gender = Gender.male;
+      : _vocation = Vocation.single,
+        _age = Age.adult,
+        _gender = Gender.male;
 
   User copyWith({Vocation vocation, Age age, Gender gender}) {
     return User(
-        vocation: vocation ?? this.vocation,
-        age: age ?? this.age,
-        gender: gender ?? this.gender);
+        vocation: vocation ?? _vocation,
+        age: age ?? _age,
+        gender: gender ?? _gender);
+  }
+
+  Vocation get vocation => _vocation;
+
+  set vocation(Vocation value) {
+    _vocation = value;
+    notifyListeners();
+  }
+
+  Age get age => _age;
+
+  set age(Age value) {
+    _age = value;
+    notifyListeners();
+  }
+
+  Gender get gender => _gender;
+
+  set gender(Gender value) {
+    _gender = value;
+    notifyListeners();
   }
 
   @override

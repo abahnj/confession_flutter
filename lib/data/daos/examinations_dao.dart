@@ -51,9 +51,9 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
 
   Future<List<Examination>> getExaminationsForUserAndId(
       int commandmentId, User user) {
-    Expression<bool, BoolType> vocationQuery;
-    Expression<bool, BoolType> genderQuery;
-    Expression<bool, BoolType> ageQuery;
+    Expression<bool> vocationQuery;
+    Expression<bool> genderQuery;
+    Expression<bool> ageQuery;
 
     switch (user.vocation) {
       case Vocation.single:

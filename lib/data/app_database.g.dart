@@ -39,6 +39,51 @@ class Commandment extends DataClass implements Insertable<Commandment> {
           intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
     );
   }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['_id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || number != null) {
+      map['NUMBER'] = Variable<int>(number);
+    }
+    if (!nullToAbsent || commandmentText != null) {
+      map['TEXT'] = Variable<String>(commandmentText);
+    }
+    if (!nullToAbsent || category != null) {
+      map['CATEGORY'] = Variable<String>(category);
+    }
+    if (!nullToAbsent || commandment != null) {
+      map['COMMANDMENT'] = Variable<String>(commandment);
+    }
+    if (!nullToAbsent || customId != null) {
+      map['CUSTOM_ID'] = Variable<int>(customId);
+    }
+    return map;
+  }
+
+  CommandmentsCompanion toCompanion(bool nullToAbsent) {
+    return CommandmentsCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      number:
+          number == null && nullToAbsent ? const Value.absent() : Value(number),
+      commandmentText: commandmentText == null && nullToAbsent
+          ? const Value.absent()
+          : Value(commandmentText),
+      category: category == null && nullToAbsent
+          ? const Value.absent()
+          : Value(category),
+      commandment: commandment == null && nullToAbsent
+          ? const Value.absent()
+          : Value(commandment),
+      customId: customId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(customId),
+    );
+  }
+
   factory Commandment.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -62,27 +107,6 @@ class Commandment extends DataClass implements Insertable<Commandment> {
       'commandment': serializer.toJson<String>(commandment),
       'customId': serializer.toJson<int>(customId),
     };
-  }
-
-  @override
-  CommandmentsCompanion createCompanion(bool nullToAbsent) {
-    return CommandmentsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      number:
-          number == null && nullToAbsent ? const Value.absent() : Value(number),
-      commandmentText: commandmentText == null && nullToAbsent
-          ? const Value.absent()
-          : Value(commandmentText),
-      category: category == null && nullToAbsent
-          ? const Value.absent()
-          : Value(category),
-      commandment: commandment == null && nullToAbsent
-          ? const Value.absent()
-          : Value(commandment),
-      customId: customId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(customId),
-    );
   }
 
   Commandment copyWith(
@@ -156,17 +180,36 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
     @required String category,
     @required String commandment,
     this.customId = const Value.absent(),
-  })  : number = Value(number),
+  })
+      : number = Value(number),
         commandmentText = Value(commandmentText),
         category = Value(category),
         commandment = Value(commandment);
-  CommandmentsCompanion copyWith(
-      {Value<int> id,
-      Value<int> number,
-      Value<String> commandmentText,
-      Value<String> category,
-      Value<String> commandment,
-      Value<int> customId}) {
+
+  static Insertable<Commandment> custom({
+    Expression<int> id,
+    Expression<int> number,
+    Expression<String> commandmentText,
+    Expression<String> category,
+    Expression<String> commandment,
+    Expression<int> customId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) '_id': id,
+      if (number != null) 'NUMBER': number,
+      if (commandmentText != null) 'TEXT': commandmentText,
+      if (category != null) 'CATEGORY': category,
+      if (commandment != null) 'COMMANDMENT': commandment,
+      if (customId != null) 'CUSTOM_ID': customId,
+    });
+  }
+
+  CommandmentsCompanion copyWith({Value<int> id,
+    Value<int> number,
+    Value<String> commandmentText,
+    Value<String> category,
+    Value<String> commandment,
+    Value<int> customId}) {
     return CommandmentsCompanion(
       id: id ?? this.id,
       number: number ?? this.number,
@@ -175,6 +218,30 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
       commandment: commandment ?? this.commandment,
       customId: customId ?? this.customId,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['_id'] = Variable<int>(id.value);
+    }
+    if (number.present) {
+      map['NUMBER'] = Variable<int>(number.value);
+    }
+    if (commandmentText.present) {
+      map['TEXT'] = Variable<String>(commandmentText.value);
+    }
+    if (category.present) {
+      map['CATEGORY'] = Variable<String>(category.value);
+    }
+    if (commandment.present) {
+      map['COMMANDMENT'] = Variable<String>(commandment.value);
+    }
+    if (customId.present) {
+      map['CUSTOM_ID'] = Variable<int>(customId.value);
+    }
+    return map;
   }
 }
 
@@ -265,42 +332,46 @@ class $CommandmentsTable extends Commandments
   String get $tableName => _alias ?? 'COMMANDMENTS';
   @override
   final String actualTableName = 'COMMANDMENTS';
+
   @override
-  VerificationContext validateIntegrity(CommandmentsCompanion d,
+  VerificationContext validateIntegrity(Insertable<Commandment> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('_id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
     }
-    if (d.number.present) {
-      context.handle(
-          _numberMeta, number.isAcceptableValue(d.number.value, _numberMeta));
+    if (data.containsKey('NUMBER')) {
+      context.handle(_numberMeta,
+          number.isAcceptableOrUnknown(data['NUMBER'], _numberMeta));
     } else if (isInserting) {
       context.missing(_numberMeta);
     }
-    if (d.commandmentText.present) {
+    if (data.containsKey('TEXT')) {
       context.handle(
           _commandmentTextMeta,
-          commandmentText.isAcceptableValue(
-              d.commandmentText.value, _commandmentTextMeta));
+          commandmentText.isAcceptableOrUnknown(
+              data['TEXT'], _commandmentTextMeta));
     } else if (isInserting) {
       context.missing(_commandmentTextMeta);
     }
-    if (d.category.present) {
+    if (data.containsKey('CATEGORY')) {
       context.handle(_categoryMeta,
-          category.isAcceptableValue(d.category.value, _categoryMeta));
+          category.isAcceptableOrUnknown(data['CATEGORY'], _categoryMeta));
     } else if (isInserting) {
       context.missing(_categoryMeta);
     }
-    if (d.commandment.present) {
-      context.handle(_commandmentMeta,
-          commandment.isAcceptableValue(d.commandment.value, _commandmentMeta));
+    if (data.containsKey('COMMANDMENT')) {
+      context.handle(
+          _commandmentMeta,
+          commandment.isAcceptableOrUnknown(
+              data['COMMANDMENT'], _commandmentMeta));
     } else if (isInserting) {
       context.missing(_commandmentMeta);
     }
-    if (d.customId.present) {
+    if (data.containsKey('CUSTOM_ID')) {
       context.handle(_customIdMeta,
-          customId.isAcceptableValue(d.customId.value, _customIdMeta));
+          customId.isAcceptableOrUnknown(data['CUSTOM_ID'], _customIdMeta));
     }
     return context;
   }
@@ -311,30 +382,6 @@ class $CommandmentsTable extends Commandments
   Commandment map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return Commandment.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(CommandmentsCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['_id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.number.present) {
-      map['NUMBER'] = Variable<int, IntType>(d.number.value);
-    }
-    if (d.commandmentText.present) {
-      map['TEXT'] = Variable<String, StringType>(d.commandmentText.value);
-    }
-    if (d.category.present) {
-      map['CATEGORY'] = Variable<String, StringType>(d.category.value);
-    }
-    if (d.commandment.present) {
-      map['COMMANDMENT'] = Variable<String, StringType>(d.commandment.value);
-    }
-    if (d.customId.present) {
-      map['CUSTOM_ID'] = Variable<int, IntType>(d.customId.value);
-    }
-    return map;
   }
 
   @override
@@ -394,16 +441,100 @@ class Examination extends DataClass implements Insertable<Examination> {
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}PRIEST']),
       teen: boolType.mapFromDatabaseResponse(data['${effectivePrefix}TEEN']),
       female:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}FEMALE']),
+      boolType.mapFromDatabaseResponse(data['${effectivePrefix}FEMALE']),
       male: boolType.mapFromDatabaseResponse(data['${effectivePrefix}MALE']),
       child: boolType.mapFromDatabaseResponse(data['${effectivePrefix}CHILD']),
       customId:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
+      intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
       description: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}DESCRIPTION']),
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}COUNT']),
     );
   }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['_id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || commandmentId != null) {
+      map['COMMANDMENT_ID'] = Variable<int>(commandmentId);
+    }
+    if (!nullToAbsent || adult != null) {
+      map['ADULT'] = Variable<bool>(adult);
+    }
+    if (!nullToAbsent || single != null) {
+      map['SINGLE'] = Variable<bool>(single);
+    }
+    if (!nullToAbsent || married != null) {
+      map['MARRIED'] = Variable<bool>(married);
+    }
+    if (!nullToAbsent || religious != null) {
+      map['RELIGIOUS'] = Variable<bool>(religious);
+    }
+    if (!nullToAbsent || priest != null) {
+      map['PRIEST'] = Variable<bool>(priest);
+    }
+    if (!nullToAbsent || teen != null) {
+      map['TEEN'] = Variable<bool>(teen);
+    }
+    if (!nullToAbsent || female != null) {
+      map['FEMALE'] = Variable<bool>(female);
+    }
+    if (!nullToAbsent || male != null) {
+      map['MALE'] = Variable<bool>(male);
+    }
+    if (!nullToAbsent || child != null) {
+      map['CHILD'] = Variable<bool>(child);
+    }
+    if (!nullToAbsent || customId != null) {
+      map['CUSTOM_ID'] = Variable<int>(customId);
+    }
+    if (!nullToAbsent || description != null) {
+      map['DESCRIPTION'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || count != null) {
+      map['COUNT'] = Variable<int>(count);
+    }
+    return map;
+  }
+
+  ExaminationsCompanion toCompanion(bool nullToAbsent) {
+    return ExaminationsCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      commandmentId: commandmentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(commandmentId),
+      adult:
+      adult == null && nullToAbsent ? const Value.absent() : Value(adult),
+      single:
+      single == null && nullToAbsent ? const Value.absent() : Value(single),
+      married: married == null && nullToAbsent
+          ? const Value.absent()
+          : Value(married),
+      religious: religious == null && nullToAbsent
+          ? const Value.absent()
+          : Value(religious),
+      priest:
+      priest == null && nullToAbsent ? const Value.absent() : Value(priest),
+      teen: teen == null && nullToAbsent ? const Value.absent() : Value(teen),
+      female:
+      female == null && nullToAbsent ? const Value.absent() : Value(female),
+      male: male == null && nullToAbsent ? const Value.absent() : Value(male),
+      child:
+      child == null && nullToAbsent ? const Value.absent() : Value(child),
+      customId: customId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(customId),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      count:
+      count == null && nullToAbsent ? const Value.absent() : Value(count),
+    );
+  }
+
   factory Examination.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -443,42 +574,6 @@ class Examination extends DataClass implements Insertable<Examination> {
       'description': serializer.toJson<String>(description),
       'count': serializer.toJson<int>(count),
     };
-  }
-
-  @override
-  ExaminationsCompanion createCompanion(bool nullToAbsent) {
-    return ExaminationsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      commandmentId: commandmentId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(commandmentId),
-      adult:
-          adult == null && nullToAbsent ? const Value.absent() : Value(adult),
-      single:
-          single == null && nullToAbsent ? const Value.absent() : Value(single),
-      married: married == null && nullToAbsent
-          ? const Value.absent()
-          : Value(married),
-      religious: religious == null && nullToAbsent
-          ? const Value.absent()
-          : Value(religious),
-      priest:
-          priest == null && nullToAbsent ? const Value.absent() : Value(priest),
-      teen: teen == null && nullToAbsent ? const Value.absent() : Value(teen),
-      female:
-          female == null && nullToAbsent ? const Value.absent() : Value(female),
-      male: male == null && nullToAbsent ? const Value.absent() : Value(male),
-      child:
-          child == null && nullToAbsent ? const Value.absent() : Value(child),
-      customId: customId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(customId),
-      description: description == null && nullToAbsent
-          ? const Value.absent()
-          : Value(description),
-      count:
-          count == null && nullToAbsent ? const Value.absent() : Value(count),
-    );
   }
 
   Examination copyWith(
@@ -639,15 +734,49 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
         male = Value(male),
         child = Value(child),
         description = Value(description);
-  ExaminationsCompanion copyWith(
-      {Value<int> id,
-      Value<int> commandmentId,
-      Value<bool> adult,
-      Value<bool> single,
-      Value<bool> married,
-      Value<bool> religious,
-      Value<bool> priest,
-      Value<bool> teen,
+
+  static Insertable<Examination> custom({
+    Expression<int> id,
+    Expression<int> commandmentId,
+    Expression<bool> adult,
+    Expression<bool> single,
+    Expression<bool> married,
+    Expression<bool> religious,
+    Expression<bool> priest,
+    Expression<bool> teen,
+    Expression<bool> female,
+    Expression<bool> male,
+    Expression<bool> child,
+    Expression<int> customId,
+    Expression<String> description,
+    Expression<int> count,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) '_id': id,
+      if (commandmentId != null) 'COMMANDMENT_ID': commandmentId,
+      if (adult != null) 'ADULT': adult,
+      if (single != null) 'SINGLE': single,
+      if (married != null) 'MARRIED': married,
+      if (religious != null) 'RELIGIOUS': religious,
+      if (priest != null) 'PRIEST': priest,
+      if (teen != null) 'TEEN': teen,
+      if (female != null) 'FEMALE': female,
+      if (male != null) 'MALE': male,
+      if (child != null) 'CHILD': child,
+      if (customId != null) 'CUSTOM_ID': customId,
+      if (description != null) 'DESCRIPTION': description,
+      if (count != null) 'COUNT': count,
+    });
+  }
+
+  ExaminationsCompanion copyWith({Value<int> id,
+    Value<int> commandmentId,
+    Value<bool> adult,
+    Value<bool> single,
+    Value<bool> married,
+    Value<bool> religious,
+    Value<bool> priest,
+    Value<bool> teen,
       Value<bool> female,
       Value<bool> male,
       Value<bool> child,
@@ -670,6 +799,54 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
       description: description ?? this.description,
       count: count ?? this.count,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['_id'] = Variable<int>(id.value);
+    }
+    if (commandmentId.present) {
+      map['COMMANDMENT_ID'] = Variable<int>(commandmentId.value);
+    }
+    if (adult.present) {
+      map['ADULT'] = Variable<bool>(adult.value);
+    }
+    if (single.present) {
+      map['SINGLE'] = Variable<bool>(single.value);
+    }
+    if (married.present) {
+      map['MARRIED'] = Variable<bool>(married.value);
+    }
+    if (religious.present) {
+      map['RELIGIOUS'] = Variable<bool>(religious.value);
+    }
+    if (priest.present) {
+      map['PRIEST'] = Variable<bool>(priest.value);
+    }
+    if (teen.present) {
+      map['TEEN'] = Variable<bool>(teen.value);
+    }
+    if (female.present) {
+      map['FEMALE'] = Variable<bool>(female.value);
+    }
+    if (male.present) {
+      map['MALE'] = Variable<bool>(male.value);
+    }
+    if (child.present) {
+      map['CHILD'] = Variable<bool>(child.value);
+    }
+    if (customId.present) {
+      map['CUSTOM_ID'] = Variable<int>(customId.value);
+    }
+    if (description.present) {
+      map['DESCRIPTION'] = Variable<String>(description.value);
+    }
+    if (count.present) {
+      map['COUNT'] = Variable<int>(count.value);
+    }
+    return map;
   }
 }
 
@@ -867,88 +1044,92 @@ class $ExaminationsTable extends Examinations
   String get $tableName => _alias ?? 'SIN';
   @override
   final String actualTableName = 'SIN';
+
   @override
-  VerificationContext validateIntegrity(ExaminationsCompanion d,
+  VerificationContext validateIntegrity(Insertable<Examination> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('_id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
     }
-    if (d.commandmentId.present) {
+    if (data.containsKey('COMMANDMENT_ID')) {
       context.handle(
           _commandmentIdMeta,
-          commandmentId.isAcceptableValue(
-              d.commandmentId.value, _commandmentIdMeta));
+          commandmentId.isAcceptableOrUnknown(
+              data['COMMANDMENT_ID'], _commandmentIdMeta));
     } else if (isInserting) {
       context.missing(_commandmentIdMeta);
     }
-    if (d.adult.present) {
+    if (data.containsKey('ADULT')) {
       context.handle(
-          _adultMeta, adult.isAcceptableValue(d.adult.value, _adultMeta));
+          _adultMeta, adult.isAcceptableOrUnknown(data['ADULT'], _adultMeta));
     } else if (isInserting) {
       context.missing(_adultMeta);
     }
-    if (d.single.present) {
-      context.handle(
-          _singleMeta, single.isAcceptableValue(d.single.value, _singleMeta));
+    if (data.containsKey('SINGLE')) {
+      context.handle(_singleMeta,
+          single.isAcceptableOrUnknown(data['SINGLE'], _singleMeta));
     } else if (isInserting) {
       context.missing(_singleMeta);
     }
-    if (d.married.present) {
+    if (data.containsKey('MARRIED')) {
       context.handle(_marriedMeta,
-          married.isAcceptableValue(d.married.value, _marriedMeta));
+          married.isAcceptableOrUnknown(data['MARRIED'], _marriedMeta));
     } else if (isInserting) {
       context.missing(_marriedMeta);
     }
-    if (d.religious.present) {
+    if (data.containsKey('RELIGIOUS')) {
       context.handle(_religiousMeta,
-          religious.isAcceptableValue(d.religious.value, _religiousMeta));
+          religious.isAcceptableOrUnknown(data['RELIGIOUS'], _religiousMeta));
     } else if (isInserting) {
       context.missing(_religiousMeta);
     }
-    if (d.priest.present) {
-      context.handle(
-          _priestMeta, priest.isAcceptableValue(d.priest.value, _priestMeta));
+    if (data.containsKey('PRIEST')) {
+      context.handle(_priestMeta,
+          priest.isAcceptableOrUnknown(data['PRIEST'], _priestMeta));
     } else if (isInserting) {
       context.missing(_priestMeta);
     }
-    if (d.teen.present) {
+    if (data.containsKey('TEEN')) {
       context.handle(
-          _teenMeta, teen.isAcceptableValue(d.teen.value, _teenMeta));
+          _teenMeta, teen.isAcceptableOrUnknown(data['TEEN'], _teenMeta));
     } else if (isInserting) {
       context.missing(_teenMeta);
     }
-    if (d.female.present) {
-      context.handle(
-          _femaleMeta, female.isAcceptableValue(d.female.value, _femaleMeta));
+    if (data.containsKey('FEMALE')) {
+      context.handle(_femaleMeta,
+          female.isAcceptableOrUnknown(data['FEMALE'], _femaleMeta));
     } else if (isInserting) {
       context.missing(_femaleMeta);
     }
-    if (d.male.present) {
+    if (data.containsKey('MALE')) {
       context.handle(
-          _maleMeta, male.isAcceptableValue(d.male.value, _maleMeta));
+          _maleMeta, male.isAcceptableOrUnknown(data['MALE'], _maleMeta));
     } else if (isInserting) {
       context.missing(_maleMeta);
     }
-    if (d.child.present) {
+    if (data.containsKey('CHILD')) {
       context.handle(
-          _childMeta, child.isAcceptableValue(d.child.value, _childMeta));
+          _childMeta, child.isAcceptableOrUnknown(data['CHILD'], _childMeta));
     } else if (isInserting) {
       context.missing(_childMeta);
     }
-    if (d.customId.present) {
+    if (data.containsKey('CUSTOM_ID')) {
       context.handle(_customIdMeta,
-          customId.isAcceptableValue(d.customId.value, _customIdMeta));
+          customId.isAcceptableOrUnknown(data['CUSTOM_ID'], _customIdMeta));
     }
-    if (d.description.present) {
-      context.handle(_descriptionMeta,
-          description.isAcceptableValue(d.description.value, _descriptionMeta));
+    if (data.containsKey('DESCRIPTION')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['DESCRIPTION'], _descriptionMeta));
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
-    if (d.count.present) {
+    if (data.containsKey('COUNT')) {
       context.handle(
-          _countMeta, count.isAcceptableValue(d.count.value, _countMeta));
+          _countMeta, count.isAcceptableOrUnknown(data['COUNT'], _countMeta));
     }
     return context;
   }
@@ -962,54 +1143,6 @@ class $ExaminationsTable extends Examinations
   }
 
   @override
-  Map<String, Variable> entityToSql(ExaminationsCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['_id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.commandmentId.present) {
-      map['COMMANDMENT_ID'] = Variable<int, IntType>(d.commandmentId.value);
-    }
-    if (d.adult.present) {
-      map['ADULT'] = Variable<bool, BoolType>(d.adult.value);
-    }
-    if (d.single.present) {
-      map['SINGLE'] = Variable<bool, BoolType>(d.single.value);
-    }
-    if (d.married.present) {
-      map['MARRIED'] = Variable<bool, BoolType>(d.married.value);
-    }
-    if (d.religious.present) {
-      map['RELIGIOUS'] = Variable<bool, BoolType>(d.religious.value);
-    }
-    if (d.priest.present) {
-      map['PRIEST'] = Variable<bool, BoolType>(d.priest.value);
-    }
-    if (d.teen.present) {
-      map['TEEN'] = Variable<bool, BoolType>(d.teen.value);
-    }
-    if (d.female.present) {
-      map['FEMALE'] = Variable<bool, BoolType>(d.female.value);
-    }
-    if (d.male.present) {
-      map['MALE'] = Variable<bool, BoolType>(d.male.value);
-    }
-    if (d.child.present) {
-      map['CHILD'] = Variable<bool, BoolType>(d.child.value);
-    }
-    if (d.customId.present) {
-      map['CUSTOM_ID'] = Variable<int, IntType>(d.customId.value);
-    }
-    if (d.description.present) {
-      map['DESCRIPTION'] = Variable<String, StringType>(d.description.value);
-    }
-    if (d.count.present) {
-      map['COUNT'] = Variable<int, IntType>(d.count.value);
-    }
-    return map;
-  }
-
-  @override
   $ExaminationsTable createAlias(String alias) {
     return $ExaminationsTable(_db, alias);
   }
@@ -1020,7 +1153,6 @@ class Prayer extends DataClass implements Insertable<Prayer> {
   final String prayerName;
   final String prayerText;
   final String groupName;
-
   Prayer(
       {@required this.id,
       @required this.prayerName,
@@ -1041,6 +1173,40 @@ class Prayer extends DataClass implements Insertable<Prayer> {
           .mapFromDatabaseResponse(data['${effectivePrefix}GROUPNAME']),
     );
   }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['_id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || prayerName != null) {
+      map['PRAYERNAME'] = Variable<String>(prayerName);
+    }
+    if (!nullToAbsent || prayerText != null) {
+      map['PRAYERTEXT'] = Variable<String>(prayerText);
+    }
+    if (!nullToAbsent || groupName != null) {
+      map['GROUPNAME'] = Variable<String>(groupName);
+    }
+    return map;
+  }
+
+  PrayersCompanion toCompanion(bool nullToAbsent) {
+    return PrayersCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      prayerName: prayerName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(prayerName),
+      prayerText: prayerText == null && nullToAbsent
+          ? const Value.absent()
+          : Value(prayerText),
+      groupName: groupName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupName),
+    );
+  }
+
   factory Prayer.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -1060,22 +1226,6 @@ class Prayer extends DataClass implements Insertable<Prayer> {
       'prayerText': serializer.toJson<String>(prayerText),
       'groupName': serializer.toJson<String>(groupName),
     };
-  }
-
-  @override
-  PrayersCompanion createCompanion(bool nullToAbsent) {
-    return PrayersCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      prayerName: prayerName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(prayerName),
-      prayerText: prayerText == null && nullToAbsent
-          ? const Value.absent()
-          : Value(prayerText),
-      groupName: groupName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(groupName),
-    );
   }
 
   Prayer copyWith(
@@ -1123,26 +1273,59 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
     this.prayerText = const Value.absent(),
     this.groupName = const Value.absent(),
   });
+
   PrayersCompanion.insert({
     this.id = const Value.absent(),
     @required String prayerName,
     @required String prayerText,
     @required String groupName,
-  })  : prayerName = Value(prayerName),
+  })
+      : prayerName = Value(prayerName),
         prayerText = Value(prayerText),
         groupName = Value(groupName);
 
-  PrayersCompanion copyWith(
-      {Value<int> id,
-      Value<String> prayerName,
-      Value<String> prayerText,
-      Value<String> groupName}) {
+  static Insertable<Prayer> custom({
+    Expression<int> id,
+    Expression<String> prayerName,
+    Expression<String> prayerText,
+    Expression<String> groupName,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) '_id': id,
+      if (prayerName != null) 'PRAYERNAME': prayerName,
+      if (prayerText != null) 'PRAYERTEXT': prayerText,
+      if (groupName != null) 'GROUPNAME': groupName,
+    });
+  }
+
+  PrayersCompanion copyWith({Value<int> id,
+    Value<String> prayerName,
+    Value<String> prayerText,
+    Value<String> groupName}) {
     return PrayersCompanion(
       id: id ?? this.id,
       prayerName: prayerName ?? this.prayerName,
       prayerText: prayerText ?? this.prayerText,
       groupName: groupName ?? this.groupName,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['_id'] = Variable<int>(id.value);
+    }
+    if (prayerName.present) {
+      map['PRAYERNAME'] = Variable<String>(prayerName.value);
+    }
+    if (prayerText.present) {
+      map['PRAYERTEXT'] = Variable<String>(prayerText.value);
+    }
+    if (groupName.present) {
+      map['GROUPNAME'] = Variable<String>(groupName.value);
+    }
+    return map;
   }
 }
 
@@ -1163,7 +1346,6 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   GeneratedTextColumn _prayerName;
   @override
   GeneratedTextColumn get prayerName => _prayerName ??= _constructPrayerName();
-
   GeneratedTextColumn _constructPrayerName() {
     return GeneratedTextColumn(
       'PRAYERNAME',
@@ -1204,28 +1386,34 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   String get $tableName => _alias ?? 'PRAYERS';
   @override
   final String actualTableName = 'PRAYERS';
+
   @override
-  VerificationContext validateIntegrity(PrayersCompanion d,
+  VerificationContext validateIntegrity(Insertable<Prayer> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('_id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
     }
-    if (d.prayerName.present) {
-      context.handle(_prayerNameMeta,
-          prayerName.isAcceptableValue(d.prayerName.value, _prayerNameMeta));
+    if (data.containsKey('PRAYERNAME')) {
+      context.handle(
+          _prayerNameMeta,
+          prayerName.isAcceptableOrUnknown(
+              data['PRAYERNAME'], _prayerNameMeta));
     } else if (isInserting) {
       context.missing(_prayerNameMeta);
     }
-    if (d.prayerText.present) {
-      context.handle(_prayerTextMeta,
-          prayerText.isAcceptableValue(d.prayerText.value, _prayerTextMeta));
+    if (data.containsKey('PRAYERTEXT')) {
+      context.handle(
+          _prayerTextMeta,
+          prayerText.isAcceptableOrUnknown(
+              data['PRAYERTEXT'], _prayerTextMeta));
     } else if (isInserting) {
       context.missing(_prayerTextMeta);
     }
-    if (d.groupName.present) {
+    if (data.containsKey('GROUPNAME')) {
       context.handle(_groupNameMeta,
-          groupName.isAcceptableValue(d.groupName.value, _groupNameMeta));
+          groupName.isAcceptableOrUnknown(data['GROUPNAME'], _groupNameMeta));
     } else if (isInserting) {
       context.missing(_groupNameMeta);
     }
@@ -1238,24 +1426,6 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   Prayer map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return Prayer.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(PrayersCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['_id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.prayerName.present) {
-      map['PRAYERNAME'] = Variable<String, StringType>(d.prayerName.value);
-    }
-    if (d.prayerText.present) {
-      map['PRAYERTEXT'] = Variable<String, StringType>(d.prayerText.value);
-    }
-    if (d.groupName.present) {
-      map['GROUPNAME'] = Variable<String, StringType>(d.groupName.value);
-    }
-    return map;
   }
 
   @override

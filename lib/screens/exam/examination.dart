@@ -20,7 +20,7 @@ class ExaminationPage extends StatelessWidget {
         title: PlatformText(kAppName),
       ),
       body: ViewModelProvider<ExaminationPageViewModel>.withConsumer(
-        viewModel: ExaminationPageViewModel(
+        viewModelBuilder: () => ExaminationPageViewModel(
           dao: Provider.of<AppDatabase>(context).examinationsDao,
           user: Provider.of<PrefsNotifier>(context).user,
         ),

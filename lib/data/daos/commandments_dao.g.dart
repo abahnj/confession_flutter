@@ -7,5 +7,5 @@ part of 'commandments_dao.dart';
 // **************************************************************************
 
 mixin _$CommandmentsDaoMixin on DatabaseAccessor<AppDatabase> {
-  $CommandmentsTable get commandments => db.commandments;
+  $CommandmentsTable get commandments => attachedDatabase.commandments;
 }

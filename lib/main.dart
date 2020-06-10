@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print(WidgetsBinding.instance.window.devicePixelRatio);
     return MaterialApp(
       title: 'Confession',
       debugShowCheckedModeBanner: false,
@@ -87,7 +86,7 @@ class MyApp extends StatelessWidget {
 }
 
 ThemeMode _userThemeMode(context) =>
-    Provider.of<PrefsNotifier>(context).userThemeMode;
+    Provider.of<ThemeState>(context).userThemeMode;
 
 Brightness _setBrightness(BuildContext context) {
   var themeMode = _userThemeMode(context);

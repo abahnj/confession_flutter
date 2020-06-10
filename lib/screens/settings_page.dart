@@ -30,11 +30,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 CSHeader('APPEARANCE'),
                 CSSelection<ThemeMode>(
                   onSelected: (themeMode) {
-                    Provider.of<PrefsNotifier>(context, listen: false)
+                    Provider.of<ThemeStyle>(context, listen: false)
                         .userThemeMode = themeMode;
                   },
                   currentSelection:
-                      Provider.of<PrefsNotifier>(context).userThemeMode,
+                      Provider.of<ThemeState>(context).userThemeMode,
                   items: [
                     CSSelectionItem(
                       value: ThemeMode.system,
@@ -87,11 +87,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 CSHeader(''),
                 CSButton(
-                  CSButtonType.DEFAULT,
-                  'Share',
-                  () {
+                  child: Text('Share'),
+                  pressed: () {
                     print('It works!');
                   },
+                  buttonType: CSButtonType.DEFAULT,
                   style: CSWidgetStyle(
                     icon: Icon(
                       CupertinoIcons.share,
@@ -100,11 +100,11 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
                 CSButton(
-                  CSButtonType.DEFAULT,
-                  'Send Feedback',
-                  () {
+                  child: Text('Send Feedback'),
+                  pressed: () {
                     print('It works!');
                   },
+                  buttonType: CSButtonType.DEFAULT,
                   style: CSWidgetStyle(
                     icon: Icon(
                       CupertinoIcons.reply,
@@ -116,33 +116,37 @@ class _SettingsPageState extends State<SettingsPage> {
                   'Report technical issues or suggest new features.',
                 ),
                 CSHeader(''),
-                CSButton(CSButtonType.DESTRUCTIVE, 'Reset App', () {
-                  showCupertinoDialog(
-                      context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                            title: Text('Reset App'),
-                            content: Text('Are you sure?'),
-                            actions: <Widget>[
-                              CupertinoDialogAction(
-                                child: Text('No'),
-                                isDefaultAction: true,
-                                onPressed: () {
-                                  UnimplementedError('Implement me');
-                                  Navigator.of(context).pop();
-                                },
+                CSButton(
+                    buttonType: CSButtonType.DESTRUCTIVE,
+                    child: Text('Reset App'),
+                    pressed: () {
+                      showCupertinoDialog(
+                          context: context,
+                          builder: (context) =>
+                              CupertinoAlertDialog(
+                                title: Text('Reset App'),
+                                content: Text('Are you sure?'),
+                                actions: <Widget>[
+                                  CupertinoDialogAction(
+                                    child: Text('No'),
+                                    isDefaultAction: true,
+                                    onPressed: () {
+                                      UnimplementedError('Implement me');
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  CupertinoDialogAction(
+                                    child: Text('Yes'),
+                                    isDestructiveAction: true,
+                                    onPressed: () {
+                                      UnimplementedError('Implement me');
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
                               ),
-                              CupertinoDialogAction(
-                                child: Text('Yes'),
-                                isDestructiveAction: true,
-                                onPressed: () {
-                                  UnimplementedError('Implement me');
-                                  Navigator.of(context).pop();
-                                },
-                              )
-                            ],
-                          ),
-                      useRootNavigator: false);
-                }),
+                          useRootNavigator: false);
+                    }),
                 CSDescription(
                   'WARNING! This will delete all personal application data including added examinations',
                 ),

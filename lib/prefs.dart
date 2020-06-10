@@ -13,8 +13,54 @@ class PrefsState {
   final ThemeMode userThemeMode;
   final User user;
 
-  const PrefsState(
-      {this.user = const User(), this.userThemeMode = ThemeMode.system});
+  PrefsState({this.user, this.userThemeMode = ThemeMode.system});
+}
+
+class ThemeState {
+  final ThemeMode userThemeMode;
+
+  ThemeState({this.userThemeMode = ThemeMode.system});
+}
+
+class ThemeStyle with ChangeNotifier {
+  static const String THEME_PREF = 'AppTheme';
+  PrefsState _currentPrefs = PrefsState();
+  ThemeMode _userThemeMode;
+
+  ThemeStyle() {
+    _loadSharedPrefs();
+  }
+
+  ThemeMode get userThemeMode {
+    return _userThemeMode;
+  }
+
+  set userThemeMode(ThemeMode newValue) {
+    if (newValue == _userThemeMode) return;
+    _userThemeMode = newValue;
+
+    _currentPrefs = PrefsState(userThemeMode: newValue);
+    notifyListeners();
+    _saveNewPrefs();
+  }
+
+  Future<void> _loadSharedPrefs() async {
+    var sharedPrefs = await SharedPreferences.getInstance();
+
+    var userThemeMode = ThemeMode.values[(sharedPrefs.getInt(THEME_PREF)) ?? 0];
+    _userThemeMode = userThemeMode;
+
+    _currentPrefs = PrefsState(
+      userThemeMode: userThemeMode,
+    );
+
+    notifyListeners();
+  }
+
+  Future<void> _saveNewPrefs() async {
+    var sharedPrefs = await SharedPreferences.getInstance();
+    await sharedPrefs.setInt(THEME_PREF, _userThemeMode.index);
+  }
 }
 
 class PrefsNotifier with ChangeNotifier {
@@ -24,26 +70,19 @@ class PrefsNotifier with ChangeNotifier {
     _loadSharedPrefs();
   }
 
-  static const String THEME_PREF = 'AppTheme';
   static const String GENDER_PREF = 'GENDER_PREF';
   static const String VOCATION_PREF = 'VOCATION_PREF';
   static const String AGE_PREF = 'AGE_PREF';
 
-  ThemeMode get userThemeMode => _currentPrefs.userThemeMode;
   User get user => _currentPrefs.user;
-
-  set userThemeMode(ThemeMode newValue) {
-    if (newValue == _currentPrefs.userThemeMode) return;
-    _currentPrefs = PrefsState(userThemeMode: newValue);
-    notifyListeners();
-    _saveNewPrefs();
-  }
 
   set userGender(Gender gender) {
     if (gender == _currentPrefs.user.gender) return;
     _currentPrefs = PrefsState(
       user: _currentPrefs.user.copyWith(gender: gender),
     );
+    notifyListeners();
+    _saveNewPrefs();
   }
 
   set userAge(Age age) {
@@ -67,23 +106,19 @@ class PrefsNotifier with ChangeNotifier {
   Future<void> _loadSharedPrefs() async {
     var sharedPrefs = await SharedPreferences.getInstance();
 
-    var userThemeMode = ThemeMode.values[(sharedPrefs.getInt(THEME_PREF)) ?? 0];
     var genderPref = Gender.values[(sharedPrefs.getInt(GENDER_PREF)) ?? 0];
     var vocationPref =
         Vocation.values[(sharedPrefs.getInt(VOCATION_PREF)) ?? 3];
     var agePref = Age.values[(sharedPrefs.getInt(AGE_PREF)) ?? 0];
     _currentPrefs = PrefsState(
-      userThemeMode: userThemeMode,
       user: User(vocation: vocationPref, gender: genderPref, age: agePref),
     );
 
-    print(_currentPrefs.user.toString());
     notifyListeners();
   }
 
   Future<void> _saveNewPrefs() async {
     var sharedPrefs = await SharedPreferences.getInstance();
-    await sharedPrefs.setInt(THEME_PREF, _currentPrefs.userThemeMode.index);
     await sharedPrefs.setInt(GENDER_PREF, _currentPrefs.user.gender.index);
     await sharedPrefs.setInt(AGE_PREF, _currentPrefs.user.age.index);
     await sharedPrefs.setInt(VOCATION_PREF, _currentPrefs.user.vocation.index);

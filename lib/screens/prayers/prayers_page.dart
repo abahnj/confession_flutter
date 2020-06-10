@@ -28,7 +28,7 @@ class PrayersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<PrayersPageViewModel>.withConsumer(
-      viewModel: PrayersPageViewModel(
+      viewModelBuilder: () => PrayersPageViewModel(
         dao: Provider.of<AppDatabase>(context).prayersDao,
       ),
       onModelReady: (model) {

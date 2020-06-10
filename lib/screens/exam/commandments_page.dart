@@ -1,6 +1,7 @@
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
+import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:confession_flutter/screens/exam/list_card.dart';
 import 'package:confession_flutter/viewmodels/commandments_page_model.dart';
@@ -48,9 +49,11 @@ class CommandmentsPage extends StatelessWidget {
   };
   @override
   Widget build(BuildContext context) {
+    print('build called');
     return ViewModelProvider<CommandmentsPageViewModel>.withConsumer(
-      viewModel: CommandmentsPageViewModel(
+      viewModelBuilder: () => CommandmentsPageViewModel(
         dao: Provider.of<AppDatabase>(context).commandmentsDao,
+        user: Provider.of<User>(context),
       ),
       onModelReady: (model) => model.getAllCommandment(),
       staticChild: rootAppBar(context),

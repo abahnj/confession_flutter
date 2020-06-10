@@ -112,9 +112,12 @@ class _HomePageState extends State<HomePage>
           onTap: (int index) {
             setState(() {
               if (index == _currentIndex) {
-                _navigatorKeys[_currentIndex]
-                    .currentState
-                    .popUntil((route) => route.isFirst);
+                var currentNavigator = _navigatorKeys[_currentIndex];
+                if (currentNavigator.currentState.canPop()) {
+                  currentNavigator.currentState
+                      .popUntil((route) => route.isFirst);
+                }
+
                 return;
               }
               _currentIndex = index;
@@ -128,7 +131,7 @@ class _HomePageState extends State<HomePage>
 }
 
 List<BottomNavigationBarItem> _buildItems(context) {
-  var themeMode = Provider.of<PrefsNotifier>(context).userThemeMode;
+  var themeMode = Provider.of<ThemeState>(context).userThemeMode;
   var brightness = Utils.returnBrightness(context, themeMode);
 
   var inactiveColor = brightness == Brightness.dark
