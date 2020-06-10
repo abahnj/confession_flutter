@@ -1,9 +1,9 @@
+import 'package:confession_flutter/components/list_card.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/screens/exam/examination.dart';
-import 'package:confession_flutter/screens/exam/list_card.dart';
 import 'package:confession_flutter/viewmodels/commandments_page_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

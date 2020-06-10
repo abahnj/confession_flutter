@@ -180,8 +180,7 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
     @required String category,
     @required String commandment,
     this.customId = const Value.absent(),
-  })
-      : number = Value(number),
+  })  : number = Value(number),
         commandmentText = Value(commandmentText),
         category = Value(category),
         commandment = Value(commandment);
@@ -204,12 +203,13 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
     });
   }
 
-  CommandmentsCompanion copyWith({Value<int> id,
-    Value<int> number,
-    Value<String> commandmentText,
-    Value<String> category,
-    Value<String> commandment,
-    Value<int> customId}) {
+  CommandmentsCompanion copyWith(
+      {Value<int> id,
+      Value<int> number,
+      Value<String> commandmentText,
+      Value<String> category,
+      Value<String> commandment,
+      Value<int> customId}) {
     return CommandmentsCompanion(
       id: id ?? this.id,
       number: number ?? this.number,
@@ -441,11 +441,11 @@ class Examination extends DataClass implements Insertable<Examination> {
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}PRIEST']),
       teen: boolType.mapFromDatabaseResponse(data['${effectivePrefix}TEEN']),
       female:
-      boolType.mapFromDatabaseResponse(data['${effectivePrefix}FEMALE']),
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}FEMALE']),
       male: boolType.mapFromDatabaseResponse(data['${effectivePrefix}MALE']),
       child: boolType.mapFromDatabaseResponse(data['${effectivePrefix}CHILD']),
       customId:
-      intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
       description: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}DESCRIPTION']),
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}COUNT']),
@@ -507,9 +507,9 @@ class Examination extends DataClass implements Insertable<Examination> {
           ? const Value.absent()
           : Value(commandmentId),
       adult:
-      adult == null && nullToAbsent ? const Value.absent() : Value(adult),
+          adult == null && nullToAbsent ? const Value.absent() : Value(adult),
       single:
-      single == null && nullToAbsent ? const Value.absent() : Value(single),
+          single == null && nullToAbsent ? const Value.absent() : Value(single),
       married: married == null && nullToAbsent
           ? const Value.absent()
           : Value(married),
@@ -517,13 +517,13 @@ class Examination extends DataClass implements Insertable<Examination> {
           ? const Value.absent()
           : Value(religious),
       priest:
-      priest == null && nullToAbsent ? const Value.absent() : Value(priest),
+          priest == null && nullToAbsent ? const Value.absent() : Value(priest),
       teen: teen == null && nullToAbsent ? const Value.absent() : Value(teen),
       female:
-      female == null && nullToAbsent ? const Value.absent() : Value(female),
+          female == null && nullToAbsent ? const Value.absent() : Value(female),
       male: male == null && nullToAbsent ? const Value.absent() : Value(male),
       child:
-      child == null && nullToAbsent ? const Value.absent() : Value(child),
+          child == null && nullToAbsent ? const Value.absent() : Value(child),
       customId: customId == null && nullToAbsent
           ? const Value.absent()
           : Value(customId),
@@ -531,7 +531,7 @@ class Examination extends DataClass implements Insertable<Examination> {
           ? const Value.absent()
           : Value(description),
       count:
-      count == null && nullToAbsent ? const Value.absent() : Value(count),
+          count == null && nullToAbsent ? const Value.absent() : Value(count),
     );
   }
 
@@ -769,14 +769,15 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
     });
   }
 
-  ExaminationsCompanion copyWith({Value<int> id,
-    Value<int> commandmentId,
-    Value<bool> adult,
-    Value<bool> single,
-    Value<bool> married,
-    Value<bool> religious,
-    Value<bool> priest,
-    Value<bool> teen,
+  ExaminationsCompanion copyWith(
+      {Value<int> id,
+      Value<int> commandmentId,
+      Value<bool> adult,
+      Value<bool> single,
+      Value<bool> married,
+      Value<bool> religious,
+      Value<bool> priest,
+      Value<bool> teen,
       Value<bool> female,
       Value<bool> male,
       Value<bool> child,
@@ -1279,8 +1280,7 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
     @required String prayerName,
     @required String prayerText,
     @required String groupName,
-  })
-      : prayerName = Value(prayerName),
+  })  : prayerName = Value(prayerName),
         prayerText = Value(prayerText),
         groupName = Value(groupName);
 
@@ -1298,10 +1298,11 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
     });
   }
 
-  PrayersCompanion copyWith({Value<int> id,
-    Value<String> prayerName,
-    Value<String> prayerText,
-    Value<String> groupName}) {
+  PrayersCompanion copyWith(
+      {Value<int> id,
+      Value<String> prayerName,
+      Value<String> prayerText,
+      Value<String> groupName}) {
     return PrayersCompanion(
       id: id ?? this.id,
       prayerName: prayerName ?? this.prayerName,

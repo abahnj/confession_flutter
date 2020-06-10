@@ -5,7 +5,7 @@ import 'package:confession_flutter/provider_setup.dart';
 import 'package:confession_flutter/screens/app_intro_page.dart';
 import 'package:confession_flutter/screens/app_lock_page.dart';
 import 'package:confession_flutter/screens/home_page.dart';
-import 'package:confession_flutter/screens/profile_page.dart';
+import 'package:confession_flutter/screens/settings/profile_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';

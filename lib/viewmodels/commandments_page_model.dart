@@ -25,4 +25,6 @@ class CommandmentsPageViewModel extends BaseModel {
       notifyListeners();
     });
   }
+
+  void getCommandmentsForUser(_user) {}
 }
