@@ -1,4 +1,3 @@
-import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/screens/confession_page.dart';
 import 'package:confession_flutter/screens/destination_view.dart';
 import 'package:confession_flutter/screens/exam/commandments_page.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_svg/avd.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../theme_prefs.dart';
 
 final List<Destination> _allDestinations = <Destination>[
   Destination(0, CommandmentsPage.title, CommandmentsPage.iconAsset,

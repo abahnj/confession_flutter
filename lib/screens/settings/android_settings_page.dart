@@ -50,7 +50,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Gender.male,
                     groupValue: prefs.user.gender,
                     onChanged: (gender) {
-                      prefs.userGender = gender;
+                      prefs.setUserGender(gender);
                       Navigator.pop(context);
                     },
                   ),
@@ -59,7 +59,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Gender.female,
                     groupValue: prefs.user.gender,
                     onChanged: (gender) {
-                      prefs.userGender = gender;
+                      prefs.setUserGender(gender);
                       Navigator.pop(context);
                     },
                   ),
@@ -145,7 +145,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Vocation.single,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
-                      prefs.userVocation = vocation;
+                      prefs.setUserVocation(vocation);
                       Navigator.pop(context);
                     },
                   ),
@@ -154,7 +154,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Vocation.married,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
-                      prefs.userVocation = vocation;
+                      prefs.setUserVocation(vocation);
                       Navigator.pop(context);
                     },
                   ),
@@ -163,7 +163,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Vocation.priest,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
-                      prefs.userVocation = vocation;
+                      prefs.setUserVocation(vocation);
                       Navigator.pop(context);
                     },
                   ),
@@ -172,7 +172,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Vocation.religious,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
-                      prefs.userVocation = vocation;
+                      prefs.setUserVocation(vocation);
                       Navigator.pop(context);
                     },
                   )

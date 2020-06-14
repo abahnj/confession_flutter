@@ -6,9 +6,12 @@ import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   static const String Id = '/profilePage';
+
   @override
   Widget build(BuildContext context) {
     var prefs = Provider.of<PrefsNotifier>(context, listen: false);
+    var user = context.watch<PrefsState>().user;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -18,8 +21,8 @@ class ProfilePage extends StatelessWidget {
         items: <Widget>[
           CSHeader('Gender'),
           CSSelection<Gender>(
-            currentSelection: prefs.user.gender,
-            onSelected: (gender) => prefs.userGender = gender,
+            currentSelection: user.gender,
+            onSelected: prefs.setUserGender,
             items: [
               CSSelectionItem(
                 value: Gender.male,
@@ -33,7 +36,7 @@ class ProfilePage extends StatelessWidget {
           ),
           CSHeader('Age'),
           CSSelection<Age>(
-            currentSelection: prefs.user.age,
+            currentSelection: user.age,
             onSelected: (age) => prefs.userAge = age,
             items: [
               CSSelectionItem(
@@ -52,8 +55,8 @@ class ProfilePage extends StatelessWidget {
           ),
           CSHeader('Vocation'),
           CSSelection<Vocation>(
-            currentSelection: prefs.user.vocation,
-            onSelected: (vocation) => prefs.userVocation = vocation,
+            currentSelection: user.vocation,
+            onSelected: prefs.setUserVocation,
             items: [
               CSSelectionItem(
                 value: Vocation.single,

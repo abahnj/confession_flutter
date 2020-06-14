@@ -1,6 +1,7 @@
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/prefs.dart';
+import 'package:confession_flutter/theme_prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -32,6 +33,9 @@ List<SingleChildWidget> dependentServices = [
     update: (context, value, previous) => ThemeState(
       userThemeMode: value.userThemeMode,
     ),
+  ),
+  ProxyProvider<PrefsNotifier, PrefsState>(
+    update: (context, value, previous) => PrefsState(user: value.user),
   )
 ];
 
@@ -39,6 +43,8 @@ List<SingleChildWidget> dependentServices = [
 List<SingleChildWidget> uiConsumableProviders = [
   Provider<User>(
     create: (context) =>
-        Provider.of<PrefsNotifier>(context, listen: false).user,
+    Provider
+        .of<PrefsState>(context)
+        .user,
   )
 ];

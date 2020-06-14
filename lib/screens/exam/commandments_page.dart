@@ -2,14 +2,14 @@ import 'package:confession_flutter/components/list_card.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
-import 'package:confession_flutter/data/user.dart';
+import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:confession_flutter/viewmodels/commandments_page_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 /// An interactive button within either material's [BottomNavigationBar]
 /// or the iOS themed [CupertinoTabBar] with an icon and title.
@@ -49,32 +49,31 @@ class CommandmentsPage extends StatelessWidget {
   };
   @override
   Widget build(BuildContext context) {
-    print('build called');
-    return ViewModelProvider<CommandmentsPageViewModel>.withConsumer(
+    return ViewModelBuilder<CommandmentsPageViewModel>.reactive(
       viewModelBuilder: () => CommandmentsPageViewModel(
-        dao: Provider.of<AppDatabase>(context).commandmentsDao,
-        user: Provider.of<User>(context),
+        dao: Provider.of<AppDatabase>(context, listen: false).commandmentsDao,
+        user: Provider.of<PrefsState>(context).user,
       ),
-      onModelReady: (model) => model.getAllCommandment(),
       staticChild: rootAppBar(context),
+      onModelReady: (model) => model.getAllCommandment(),
       builder: (context, model, child) {
+        var commandments =
+            model.filterCommandments(Provider.of<PrefsState>(context).user);
         return Scaffold(
           appBar: child,
           body: SafeArea(
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: model.commandments.length,
-              itemBuilder: (context, index) {
-                return ListCard(
-                  onTap: () {
-                    Navigator.pushNamed(context, ExaminationPage.Id,
-                        arguments: model.commandments[index].id);
-                  },
-                  title: model.commandments[index].commandment,
-                  subtitle: model.commandments[index].commandmentText,
-                );
-              },
+              itemCount: commandments.length,
+              itemBuilder: (context, index) => ListCard(
+                onTap: () {
+                  Navigator.pushNamed(context, ExaminationPage.Id,
+                      arguments: commandments[index].id);
+                },
+                title: commandments[index].commandment,
+                subtitle: commandments[index].commandmentText,
+              ),
             ),
           ),
         );

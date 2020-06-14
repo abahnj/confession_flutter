@@ -1,3 +1,4 @@
+import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,9 +27,7 @@ class ConfessionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Confession'),
-      ),
+      appBar: rootAppBar(context),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -73,16 +72,16 @@ class ConfessionPage extends StatelessWidget {
             Text(
               'THIS APP IS INTENDED TO BE USED DURING THE SACRAMENT OF RECONCILIATION WITH A CATHOLIC PRIEST ONLY. THIS IS NOT A SUBSTITUE FOR A VALID CONFESSION',
               style: Theme.of(context).textTheme.subtitle2.copyWith(
-                    fontSize: 12,
-                    color: Colors.red,
-                  ),
+                fontSize: 12,
+                color: Colors.red,
+              ),
               textAlign: TextAlign.center,
             ),
             PlatformButton(
               child: Text(
                 'Next',
                 style:
-                    Theme.of(context).textTheme.button.copyWith(fontSize: 16),
+                Theme.of(context).textTheme.button.copyWith(fontSize: 16),
               ),
               onPressed: () {},
             ),

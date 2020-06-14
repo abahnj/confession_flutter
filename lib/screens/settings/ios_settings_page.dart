@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../theme_prefs.dart';
+
 class iOSSettingsPage extends StatelessWidget {
   const iOSSettingsPage({
     Key key,
@@ -42,7 +44,7 @@ class iOSSettingsPage extends StatelessWidget {
         CSHeader('PROFILE'),
         CSLink(
           title: 'Profile',
-          detail: prefs.user.toString(),
+          detail: context.watch<PrefsState>().user.toString(),
           cellType: CellType.detailRightStyle,
           onPressed: () => Navigator.of(context).pushNamed(ProfilePage.Id),
         ),

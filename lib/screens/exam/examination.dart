@@ -5,7 +5,7 @@ import 'package:confession_flutter/viewmodels/examination_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class ExaminationPage extends StatelessWidget {
   static const String Id = '/examinationPage';
@@ -19,10 +19,10 @@ class ExaminationPage extends StatelessWidget {
       appBar: AppBar(
         title: PlatformText(kAppName),
       ),
-      body: ViewModelProvider<ExaminationPageViewModel>.withConsumer(
+      body: ViewModelBuilder<ExaminationPageViewModel>.reactive(
         viewModelBuilder: () => ExaminationPageViewModel(
           dao: Provider.of<AppDatabase>(context).examinationsDao,
-          user: Provider.of<PrefsNotifier>(context).user,
+          user: Provider.of<PrefsState>(context).user,
         ),
         onModelReady: (model) =>
             model.getExaminationsForUserAndId(commandmentId),

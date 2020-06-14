@@ -11,3 +11,7 @@ const Color iconColorDarkInactive = Color.fromRGBO(255, 255, 255, 0.3);
 const String vectorRoot = 'assets/vectors/';
 
 const String imagesRoot = 'assets/images/';
+
+const String GENDER_PREF = 'GENDER_PREF';
+const String VOCATION_PREF = 'VOCATION_PREF';
+const String AGE_PREF = 'AGE_PREF';

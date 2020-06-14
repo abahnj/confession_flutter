@@ -1,9 +1,10 @@
+import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class GuidePage extends StatefulWidget {
+class GuidePage extends StatelessWidget {
   static const String Id = '/guidePage';
 
   static const String title = 'Guide';
@@ -21,17 +22,11 @@ class GuidePage extends StatefulWidget {
         return null;
     }
   };
-  @override
-  _GuidePageState createState() => _GuidePageState();
-}
 
-class _GuidePageState extends State<GuidePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Guide'),
-      ),
+      appBar: rootAppBar(context),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
