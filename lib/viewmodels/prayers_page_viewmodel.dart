@@ -27,9 +27,11 @@ class PrayersPageViewModel extends BaseModel {
 
         _prayers.add(
           PrayerItem(
-              prayerName: prayer.prayerName,
-              prayerText: prayer.prayerText,
-              groupName: prayer.groupName),
+            prayerName: prayer.prayerName,
+            prayerText: prayer.prayerText,
+            groupName: prayer.groupName,
+            itemId: prayer.id,
+          ),
         );
       }
       ;

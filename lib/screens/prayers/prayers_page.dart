@@ -1,6 +1,8 @@
+import 'package:confession_flutter/components/list_card.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
+import 'package:confession_flutter/screens/prayers/prayer_detail_page.dart';
 import 'package:confession_flutter/viewmodels/prayers_page_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,8 +21,10 @@ class PrayersPage extends StatelessWidget {
     switch (settings.name) {
       case '/':
         return PrayersPage();
-      case '/list':
-        return null;
+      case PrayersDetailPage.Id:
+        return PrayersDetailPage(
+          prayerId: settings.arguments,
+        );
       case '/text':
         return null;
     }
@@ -49,28 +53,32 @@ class PrayersPage extends StatelessWidget {
 
             if (item is HeadingItem) {
               return ListTile(
-                    title: Center(
-                      child: Text(
-                        item.heading,
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                    ),
-                  );
-                } else if (item is PrayerItem) {
-                  return ListTile(
-                    title: Text(item.prayerName),
-                  );
-                }
-              },
-            ),
-          ),
+                title: Center(
+                  child: Text(
+                    item.heading,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ),
+              );
+            } else if (item is PrayerItem) {
+              return ListCard(
+                title: item.prayerName,
+                onTap: () => {
+                  Navigator.pushNamed(context, PrayersDetailPage.Id,
+                      arguments: item.itemId)
+                },
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }
 
 // The base class for the different types of items the list can contain.
 abstract class ListItem {
-  int listId;
+  int itemId;
 }
 
 // A ListItem that contains data to display a heading.
@@ -85,6 +93,8 @@ class PrayerItem extends ListItem {
   final String prayerName;
   final String prayerText;
   final String groupName;
+  @override
+  final int itemId;
 
-  PrayerItem({this.prayerName, this.prayerText, this.groupName});
+  PrayerItem({this.prayerName, this.prayerText, this.groupName, this.itemId});
 }

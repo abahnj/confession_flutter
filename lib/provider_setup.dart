@@ -42,9 +42,6 @@ List<SingleChildWidget> dependentServices = [
 //providers that need to be directly  available to every UI view without the need for a viewModel
 List<SingleChildWidget> uiConsumableProviders = [
   Provider<User>(
-    create: (context) =>
-    Provider
-        .of<PrefsState>(context)
-        .user,
+    create: (context) => Provider.of<PrefsState>(context).user,
   )
 ];

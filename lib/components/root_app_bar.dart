@@ -1,4 +1,4 @@
-import 'package:confession_flutter/screens/settings_page.dart';
+import 'package:confession_flutter/screens/app_intro_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
@@ -21,8 +21,11 @@ AppBar rootAppBar(BuildContext context) {
           //this helps get nested navigator that is up one level
           //helpful if you have more than two navigators
           var state = Navigator.of(context);
+          var state2 = Navigator.of(state.context);
 
-          Navigator.of(state.context).pushNamed(SettingsPage.Id);
+          Navigator.of(
+            state2.context,
+          ).pushNamed(AppIntroPage.Id);
         },
         icon: Icon(
           PlatformIcons(context).settings,
