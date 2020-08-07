@@ -39,7 +39,6 @@ class Commandment extends DataClass implements Insertable<Commandment> {
           intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
     );
   }
-
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -184,7 +183,6 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
         commandmentText = Value(commandmentText),
         category = Value(category),
         commandment = Value(commandment);
-
   static Insertable<Commandment> custom({
     Expression<int> id,
     Expression<int> number,
@@ -242,6 +240,19 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
       map['CUSTOM_ID'] = Variable<int>(customId.value);
     }
     return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommandmentsCompanion(')
+          ..write('id: $id, ')
+          ..write('number: $number, ')
+          ..write('commandmentText: $commandmentText, ')
+          ..write('category: $category, ')
+          ..write('commandment: $commandment, ')
+          ..write('customId: $customId')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -332,7 +343,6 @@ class $CommandmentsTable extends Commandments
   String get $tableName => _alias ?? 'COMMANDMENTS';
   @override
   final String actualTableName = 'COMMANDMENTS';
-
   @override
   VerificationContext validateIntegrity(Insertable<Commandment> instance,
       {bool isInserting = false}) {
@@ -451,7 +461,6 @@ class Examination extends DataClass implements Insertable<Examination> {
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}COUNT']),
     );
   }
-
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -734,7 +743,6 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
         male = Value(male),
         child = Value(child),
         description = Value(description);
-
   static Insertable<Examination> custom({
     Expression<int> id,
     Expression<int> commandmentId,
@@ -848,6 +856,27 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
       map['COUNT'] = Variable<int>(count.value);
     }
     return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExaminationsCompanion(')
+          ..write('id: $id, ')
+          ..write('commandmentId: $commandmentId, ')
+          ..write('adult: $adult, ')
+          ..write('single: $single, ')
+          ..write('married: $married, ')
+          ..write('religious: $religious, ')
+          ..write('priest: $priest, ')
+          ..write('teen: $teen, ')
+          ..write('female: $female, ')
+          ..write('male: $male, ')
+          ..write('child: $child, ')
+          ..write('customId: $customId, ')
+          ..write('description: $description, ')
+          ..write('count: $count')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -1045,7 +1074,6 @@ class $ExaminationsTable extends Examinations
   String get $tableName => _alias ?? 'SIN';
   @override
   final String actualTableName = 'SIN';
-
   @override
   VerificationContext validateIntegrity(Insertable<Examination> instance,
       {bool isInserting = false}) {
@@ -1174,7 +1202,6 @@ class Prayer extends DataClass implements Insertable<Prayer> {
           .mapFromDatabaseResponse(data['${effectivePrefix}GROUPNAME']),
     );
   }
-
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1274,7 +1301,6 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
     this.prayerText = const Value.absent(),
     this.groupName = const Value.absent(),
   });
-
   PrayersCompanion.insert({
     this.id = const Value.absent(),
     @required String prayerName,
@@ -1283,7 +1309,6 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
   })  : prayerName = Value(prayerName),
         prayerText = Value(prayerText),
         groupName = Value(groupName);
-
   static Insertable<Prayer> custom({
     Expression<int> id,
     Expression<String> prayerName,
@@ -1327,6 +1352,17 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
       map['GROUPNAME'] = Variable<String>(groupName.value);
     }
     return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrayersCompanion(')
+          ..write('id: $id, ')
+          ..write('prayerName: $prayerName, ')
+          ..write('prayerText: $prayerText, ')
+          ..write('groupName: $groupName')
+          ..write(')'))
+        .toString();
   }
 }
 
@@ -1387,7 +1423,6 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   String get $tableName => _alias ?? 'PRAYERS';
   @override
   final String actualTableName = 'PRAYERS';
-
   @override
   VerificationContext validateIntegrity(Insertable<Prayer> instance,
       {bool isInserting = false}) {
@@ -1435,6 +1470,293 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   }
 }
 
+class Guide extends DataClass implements Insertable<Guide> {
+  final int id;
+  final String guideTitle;
+  final String guideText;
+  final int headerId;
+  Guide(
+      {@required this.id,
+      @required this.guideTitle,
+      @required this.guideText,
+      @required this.headerId});
+  factory Guide.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return Guide(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
+      guideTitle:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}g_title']),
+      guideText:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}text']),
+      headerId: intType.mapFromDatabaseResponse(data['${effectivePrefix}h_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['_id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || guideTitle != null) {
+      map['g_title'] = Variable<String>(guideTitle);
+    }
+    if (!nullToAbsent || guideText != null) {
+      map['text'] = Variable<String>(guideText);
+    }
+    if (!nullToAbsent || headerId != null) {
+      map['h_id'] = Variable<int>(headerId);
+    }
+    return map;
+  }
+
+  GuidesCompanion toCompanion(bool nullToAbsent) {
+    return GuidesCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      guideTitle: guideTitle == null && nullToAbsent
+          ? const Value.absent()
+          : Value(guideTitle),
+      guideText: guideText == null && nullToAbsent
+          ? const Value.absent()
+          : Value(guideText),
+      headerId: headerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(headerId),
+    );
+  }
+
+  factory Guide.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return Guide(
+      id: serializer.fromJson<int>(json['id']),
+      guideTitle: serializer.fromJson<String>(json['guideTitle']),
+      guideText: serializer.fromJson<String>(json['guideText']),
+      headerId: serializer.fromJson<int>(json['headerId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'guideTitle': serializer.toJson<String>(guideTitle),
+      'guideText': serializer.toJson<String>(guideText),
+      'headerId': serializer.toJson<int>(headerId),
+    };
+  }
+
+  Guide copyWith({int id, String guideTitle, String guideText, int headerId}) =>
+      Guide(
+        id: id ?? this.id,
+        guideTitle: guideTitle ?? this.guideTitle,
+        guideText: guideText ?? this.guideText,
+        headerId: headerId ?? this.headerId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Guide(')
+          ..write('id: $id, ')
+          ..write('guideTitle: $guideTitle, ')
+          ..write('guideText: $guideText, ')
+          ..write('headerId: $headerId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          guideTitle.hashCode, $mrjc(guideText.hashCode, headerId.hashCode))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is Guide &&
+          other.id == this.id &&
+          other.guideTitle == this.guideTitle &&
+          other.guideText == this.guideText &&
+          other.headerId == this.headerId);
+}
+
+class GuidesCompanion extends UpdateCompanion<Guide> {
+  final Value<int> id;
+  final Value<String> guideTitle;
+  final Value<String> guideText;
+  final Value<int> headerId;
+  const GuidesCompanion({
+    this.id = const Value.absent(),
+    this.guideTitle = const Value.absent(),
+    this.guideText = const Value.absent(),
+    this.headerId = const Value.absent(),
+  });
+  GuidesCompanion.insert({
+    this.id = const Value.absent(),
+    @required String guideTitle,
+    @required String guideText,
+    @required int headerId,
+  })  : guideTitle = Value(guideTitle),
+        guideText = Value(guideText),
+        headerId = Value(headerId);
+  static Insertable<Guide> custom({
+    Expression<int> id,
+    Expression<String> guideTitle,
+    Expression<String> guideText,
+    Expression<int> headerId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) '_id': id,
+      if (guideTitle != null) 'g_title': guideTitle,
+      if (guideText != null) 'text': guideText,
+      if (headerId != null) 'h_id': headerId,
+    });
+  }
+
+  GuidesCompanion copyWith(
+      {Value<int> id,
+      Value<String> guideTitle,
+      Value<String> guideText,
+      Value<int> headerId}) {
+    return GuidesCompanion(
+      id: id ?? this.id,
+      guideTitle: guideTitle ?? this.guideTitle,
+      guideText: guideText ?? this.guideText,
+      headerId: headerId ?? this.headerId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['_id'] = Variable<int>(id.value);
+    }
+    if (guideTitle.present) {
+      map['g_title'] = Variable<String>(guideTitle.value);
+    }
+    if (guideText.present) {
+      map['text'] = Variable<String>(guideText.value);
+    }
+    if (headerId.present) {
+      map['h_id'] = Variable<int>(headerId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GuidesCompanion(')
+          ..write('id: $id, ')
+          ..write('guideTitle: $guideTitle, ')
+          ..write('guideText: $guideText, ')
+          ..write('headerId: $headerId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $GuidesTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('_id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _guideTitleMeta = const VerificationMeta('guideTitle');
+  GeneratedTextColumn _guideTitle;
+  @override
+  GeneratedTextColumn get guideTitle => _guideTitle ??= _constructGuideTitle();
+  GeneratedTextColumn _constructGuideTitle() {
+    return GeneratedTextColumn(
+      'g_title',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _guideTextMeta = const VerificationMeta('guideText');
+  GeneratedTextColumn _guideText;
+  @override
+  GeneratedTextColumn get guideText => _guideText ??= _constructGuideText();
+  GeneratedTextColumn _constructGuideText() {
+    return GeneratedTextColumn(
+      'text',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _headerIdMeta = const VerificationMeta('headerId');
+  GeneratedIntColumn _headerId;
+  @override
+  GeneratedIntColumn get headerId => _headerId ??= _constructHeaderId();
+  GeneratedIntColumn _constructHeaderId() {
+    return GeneratedIntColumn(
+      'h_id',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, guideTitle, guideText, headerId];
+  @override
+  $GuidesTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'guide_main';
+  @override
+  final String actualTableName = 'guide_main';
+  @override
+  VerificationContext validateIntegrity(Insertable<Guide> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('_id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
+    }
+    if (data.containsKey('g_title')) {
+      context.handle(_guideTitleMeta,
+          guideTitle.isAcceptableOrUnknown(data['g_title'], _guideTitleMeta));
+    } else if (isInserting) {
+      context.missing(_guideTitleMeta);
+    }
+    if (data.containsKey('text')) {
+      context.handle(_guideTextMeta,
+          guideText.isAcceptableOrUnknown(data['text'], _guideTextMeta));
+    } else if (isInserting) {
+      context.missing(_guideTextMeta);
+    }
+    if (data.containsKey('h_id')) {
+      context.handle(_headerIdMeta,
+          headerId.isAcceptableOrUnknown(data['h_id'], _headerIdMeta));
+    } else if (isInserting) {
+      context.missing(_headerIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Guide map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return Guide.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $GuidesTable createAlias(String alias) {
+    return $GuidesTable(_db, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $CommandmentsTable _commandments;
@@ -1445,6 +1767,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       _examinations ??= $ExaminationsTable(this);
   $PrayersTable _prayers;
   $PrayersTable get prayers => _prayers ??= $PrayersTable(this);
+  $GuidesTable _guides;
+  $GuidesTable get guides => _guides ??= $GuidesTable(this);
   CommandmentsDao _commandmentsDao;
   CommandmentsDao get commandmentsDao =>
       _commandmentsDao ??= CommandmentsDao(this as AppDatabase);
@@ -1453,9 +1777,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       _examinationsDao ??= ExaminationsDao(this as AppDatabase);
   PrayersDao _prayersDao;
   PrayersDao get prayersDao => _prayersDao ??= PrayersDao(this as AppDatabase);
+  GuidesDao _guidesDao;
+  GuidesDao get guidesDao => _guidesDao ??= GuidesDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [commandments, examinations, prayers];
+      [commandments, examinations, prayers, guides];
 }

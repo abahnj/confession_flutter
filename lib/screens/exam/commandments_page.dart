@@ -54,7 +54,7 @@ class CommandmentsPage extends StatelessWidget {
         dao: Provider.of<AppDatabase>(context, listen: false).commandmentsDao,
         user: Provider.of<PrefsState>(context).user,
       ),
-      staticChild: rootAppBar(context),
+      staticChild: rootAppBar(),
       onModelReady: (model) => model.getAllCommandment(),
       builder: (context, model, child) {
         var commandments =

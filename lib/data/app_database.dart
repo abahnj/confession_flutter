@@ -4,10 +4,12 @@ import 'package:confession_flutter/data/daos/commandments_dao.dart';
 import 'package:confession_flutter/data/daos/examinations_dao.dart';
 import 'package:confession_flutter/data/daos/prayers_dao.dart';
 import 'package:flutter/services.dart';
+import 'package:moor/ffi.dart';
 import 'package:moor/moor.dart';
-import 'package:moor_ffi/moor_ffi.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'daos/guides_dao.dart';
 
 part 'app_database.g.dart';
 
@@ -44,8 +46,8 @@ LazyDatabase _openConnection() {
 }
 
 @UseMoor(
-    tables: [Commandments, Examinations, Prayers],
-    daos: [CommandmentsDao, ExaminationsDao, PrayersDao])
+    tables: [Commandments, Examinations, Prayers, Guides],
+    daos: [CommandmentsDao, ExaminationsDao, PrayersDao, GuidesDao])
 class AppDatabase extends _$AppDatabase {
   static final AppDatabase _instance = AppDatabase._internal();
 

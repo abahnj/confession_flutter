@@ -27,7 +27,7 @@ class ConfessionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: rootAppBar(context),
+      appBar: rootAppBar(),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,

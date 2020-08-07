@@ -15,3 +15,9 @@ const String imagesRoot = 'assets/images/';
 const String GENDER_PREF = 'GENDER_PREF';
 const String VOCATION_PREF = 'VOCATION_PREF';
 const String AGE_PREF = 'AGE_PREF';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+//Route constants
+const String guideListPage = '/listPage';
+const String guideDetailPage = '/detailPage';

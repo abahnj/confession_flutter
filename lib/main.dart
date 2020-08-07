@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'constants.dart';
+
 void main() => runApp(
       MultiProvider(
         providers: providers,
@@ -74,6 +76,7 @@ class MyApp extends StatelessWidget {
             : Colors.white,
         scaffoldBackgroundColor: Color.fromRGBO(242, 242, 242, 1),
       ),
+      navigatorKey: navigatorKey,
       routes: {
         HomePage.Id: (context) => HomePage(),
         AppIntroPage.Id: (context) => AppIntroPage(),

@@ -1,7 +1,7 @@
 import 'package:confession_flutter/screens/confession_page.dart';
 import 'package:confession_flutter/screens/destination_view.dart';
 import 'package:confession_flutter/screens/exam/commandments_page.dart';
-import 'package:confession_flutter/screens/guide_page.dart';
+import 'package:confession_flutter/screens/guide/guide_page.dart';
 import 'package:confession_flutter/screens/prayers/prayers_page.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -119,8 +119,9 @@ class _HomePageState extends State<HomePage>
                 }
 
                 return;
+              } else {
+                _currentIndex = index;
               }
-              _currentIndex = index;
             });
           },
           items: _buildItems(context),
