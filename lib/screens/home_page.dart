@@ -1,4 +1,4 @@
-import 'package:confession_flutter/screens/confession_page.dart';
+import 'package:confession_flutter/screens/confession/confession_page.dart';
 import 'package:confession_flutter/screens/destination_view.dart';
 import 'package:confession_flutter/screens/exam/commandments_page.dart';
 import 'package:confession_flutter/screens/guide/guide_page.dart';

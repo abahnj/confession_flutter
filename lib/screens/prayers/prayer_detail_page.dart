@@ -1,3 +1,4 @@
+import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/screens/prayers/prayers_detail_page_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class PrayersDetailPage extends StatelessWidget {
       onModelReady: (model) => model.getPrayerForId(prayerId),
       builder: (context, model, _) => Scaffold(
         body: Scaffold(
-          appBar: AppBar(
-            title: Text(model.prayer.prayerName),
+          appBar: rootAppBar(
+            title: model.prayer.prayerName,
           ),
           body: SingleChildScrollView(
             child: Container(

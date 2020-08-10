@@ -1,26 +1,27 @@
-import 'dart:ui';
-
 import 'package:confession_flutter/provider_setup.dart';
 import 'package:confession_flutter/screens/app_intro_page.dart';
 import 'package:confession_flutter/screens/app_lock_page.dart';
 import 'package:confession_flutter/screens/home_page.dart';
 import 'package:confession_flutter/screens/settings/profile_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
-import 'package:confession_flutter/theme_prefs.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:provider/provider.dart';
 
 import 'constants.dart';
+import 'utils.dart';
 
 void main() => runApp(
       MultiProvider(
         providers: providers,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: MyApp(),
+          home: AppLock(
+            builder: (args) => MyApp(),
+            lockScreen: PassCodeScreen(),
+          ),
         ),
       ),
     );
@@ -32,67 +33,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Confession',
       debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData.dark().copyWith(
-        iconTheme: IconThemeData(color: Colors.red),
-        backgroundColor: Colors.black,
-        scaffoldBackgroundColor: Colors.black,
-        bottomAppBarColor: Colors.red,
-        colorScheme: ColorScheme.dark(),
-        toggleableActiveColor: Colors.red,
-        cupertinoOverrideTheme: CupertinoThemeData(
-          textTheme: CupertinoTextThemeData(
-            dateTimePickerTextStyle: TextStyle(
-              inherit: false,
-              fontFamily: '.SF Pro Display',
-              fontSize: 21,
-              fontWeight: FontWeight.normal,
-              color: CupertinoColors.white,
-            ),
-          ),
-        ),
-      ),
-      themeMode: _userThemeMode(context),
-      theme: ThemeData(
-        brightness: _setBrightness(context),
-        bottomAppBarColor: Colors.red,
-        primarySwatch: Colors.red,
-        primaryIconTheme: IconThemeData(color: Colors.red),
-        accentIconTheme: IconThemeData(color: Colors.red),
-        primaryColor: Colors.white,
-        cupertinoOverrideTheme: CupertinoThemeData(
-          textTheme: CupertinoTextThemeData(
-            dateTimePickerTextStyle: TextStyle(
-              inherit: false,
-              fontFamily: '.SF Pro Display',
-              fontSize: 21,
-              fontWeight: FontWeight.normal,
-              color: CupertinoColors.black,
-            ),
-          ),
-        ),
-        canvasColor: Utils.returnBrightness(context, _userThemeMode(context)) ==
-                Brightness.dark
-            ? Colors.red
-            : Colors.white,
-        scaffoldBackgroundColor: Color.fromRGBO(242, 242, 242, 1),
-      ),
+      darkTheme: themeDataDark,
+      themeMode: userThemeMode(context),
+      theme: themeData(context),
       navigatorKey: navigatorKey,
       routes: {
         HomePage.Id: (context) => HomePage(),
         AppIntroPage.Id: (context) => AppIntroPage(),
-        AppLockPage.Id: (context) => AppLockPage(),
         SettingsPage.Id: (context) => SettingsPage(),
         ProfilePage.Id: (context) => ProfilePage()
       },
     );
   }
-}
-
-ThemeMode _userThemeMode(context) =>
-    Provider.of<ThemeState>(context).userThemeMode;
-
-Brightness _setBrightness(BuildContext context) {
-  var themeMode = _userThemeMode(context);
-
-  return Utils.returnBrightness(context, themeMode);
 }

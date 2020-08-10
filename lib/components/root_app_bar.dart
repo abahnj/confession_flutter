@@ -9,7 +9,40 @@ import '../constants.dart';
 
 AppBar rootAppBar({String title = kAppName}) {
   return AppBar(
-    title: PlatformText(title),
+    title: PlatformText(
+      title,
+      style: TextStyle(fontFamily: 'RobotoMono', fontSize: 34),
+    ),
+    actions: <Widget>[
+      if (Platform.isAndroid)
+        IconButton(
+          icon: Icon(
+            Icons.share,
+            color: Colors.red,
+          ),
+          onPressed: () {},
+        ),
+      PlatformIconButton(
+        onPressed: () {
+          //this helps get nested navigator that is up one level
+          //helpful if you have more than two navigators
+          navigatorKey.currentState.pushNamed(SettingsPage.Id);
+        },
+        icon: Icon(
+          Platform.isAndroid ? Icons.settings : CupertinoIcons.settings,
+          color: Colors.red,
+        ),
+      ),
+    ],
+  );
+}
+
+AppBar defaultAppBar({String title = kAppName}) {
+  return AppBar(
+    title: PlatformText(
+      title,
+      style: TextStyle(fontFamily: 'RobotoMono', fontSize: 34),
+    ),
     actions: <Widget>[
       if (Platform.isAndroid)
         IconButton(

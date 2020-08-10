@@ -1,20 +1,81 @@
-import 'package:flutter/widgets.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'dart:io' show Platform;
 
-class AppLockPage extends StatefulWidget {
-  static const String Id = 'appLockPage';
+import 'package:confession_flutter/constants.dart';
+import 'package:confession_flutter/screens/lock_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_app_lock/flutter_app_lock.dart';
+import 'package:local_auth/local_auth.dart';
+
+class PassCodeScreen extends StatefulWidget {
+  PassCodeScreen({Key key, this.title}) : super(key: key);
+
+  final String title;
 
   @override
-  _AppLockPageState createState() => _AppLockPageState();
+  _PassCodeScreenState createState() => _PassCodeScreenState();
 }
 
-class _AppLockPageState extends State<AppLockPage> {
+class _PassCodeScreenState extends State<PassCodeScreen> {
+  bool isFingerprint = false;
+
+  Future<Null> biometrics() async {
+    final auth = LocalAuthentication();
+    var authenticated = false;
+
+    var availableBiometrics = await auth.getAvailableBiometrics();
+
+    if (Platform.isIOS) {
+      if (availableBiometrics.contains(BiometricType.face)) {
+        // Face ID.
+      } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
+        // Touch ID.
+      }
+    }
+
+    try {
+      authenticated = await auth.authenticateWithBiometrics(
+          localizedReason: 'Scan your fingerprint to authenticate',
+          useErrorDialogs: true,
+          iOSAuthStrings: iosStrings,
+          stickyAuth: false);
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+    if (authenticated) {
+      setState(() {
+        isFingerprint = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: PlatformText('AppLockPage'),
-      ),
-    );
+    var myPass = [1, 2, 3, 4];
+    return LockScreen(
+        title: 'Enter Pin Code',
+        passLength: myPass.length,
+        bgImage: imagesRoot + "confession_lock.png",
+        fingerPrintImage: imagesRoot + "fingerprint.png",
+        showFingerPass: true,
+        fingerFunction: biometrics,
+        fingerVerify: isFingerprint,
+        borderColor: Colors.white,
+        showWrongPassDialog: false,
+        wrongPassContent: "Wrong pass please try again.",
+        wrongPassTitle: "Opps!",
+        wrongPassCancelButtonText: "Cancel",
+        passCodeVerify: (passcode) async {
+          for (var i = 0; i < myPass.length; i++) {
+            if (passcode[i] != myPass[i]) {
+              return false;
+            }
+          }
+
+          return true;
+        },
+        onSuccess: () => AppLock.of(context).didUnlock());
   }
 }

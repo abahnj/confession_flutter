@@ -1,9 +1,8 @@
-import 'package:confession_flutter/constants.dart';
+import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/viewmodels/examination_page_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -16,9 +15,7 @@ class ExaminationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: PlatformText(kAppName),
-      ),
+      appBar: rootAppBar(),
       body: ViewModelBuilder<ExaminationPageViewModel>.reactive(
         viewModelBuilder: () => ExaminationPageViewModel(
           dao: Provider.of<AppDatabase>(context).examinationsDao,

@@ -1,8 +1,10 @@
+import 'package:confession_flutter/components/confession_page_button.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
+import 'package:confession_flutter/screens/confession/confession_page_four.dart';
+import 'package:confession_flutter/screens/confession/confession_page_three.dart';
+import 'package:confession_flutter/screens/confession/confession_page_two.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 ///Confession page widget
 class ConfessionPage extends StatelessWidget {
@@ -15,12 +17,14 @@ class ConfessionPage extends StatelessWidget {
   // ignore: missing_return
   static Function router = (RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case confessionPage:
         return ConfessionPage();
-      case '/list':
-        return null;
-      case '/text':
-        return null;
+      case confessionPageTwo:
+        return ConfessionPageTwo();
+      case confessionPageThree:
+        return ConfessionPageThree();
+      case confessionPageFour:
+        return ConfessionPageFour();
     }
   };
 
@@ -70,20 +74,18 @@ class ConfessionPage extends StatelessWidget {
               ),
             ),
             Text(
-              'THIS APP IS INTENDED TO BE USED DURING THE SACRAMENT OF RECONCILIATION WITH A CATHOLIC PRIEST ONLY. THIS IS NOT A SUBSTITUE FOR A VALID CONFESSION',
+              'THIS APP IS INTENDED TO BE USED DURING THE SACRAMENT OF '
+              'RECONCILIATION WITH A CATHOLIC PRIEST ONLY. '
+              'THIS IS NOT A SUBSTITUTE FOR A VALID CONFESSION',
               style: Theme.of(context).textTheme.subtitle2.copyWith(
                     fontSize: 12,
                     color: Colors.red,
                   ),
               textAlign: TextAlign.center,
             ),
-            PlatformButton(
-              child: Text(
-                'Next',
-                style:
-                    Theme.of(context).textTheme.button.copyWith(fontSize: 16),
-              ),
-              onPressed: () {},
+            ConfessionPageButton(
+              destination: confessionPageTwo,
+              text: 'Next',
             ),
           ],
         ),

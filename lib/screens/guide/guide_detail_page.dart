@@ -10,8 +10,12 @@ class GuideDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: rootAppBar(),
-      body: Center(
-        child: Text(guideText),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        child: Text(
+          guideText,
+          style: Theme.of(context).textTheme.headline6,
+        ),
       ),
     );
   }
