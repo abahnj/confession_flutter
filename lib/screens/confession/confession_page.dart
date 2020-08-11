@@ -84,7 +84,7 @@ class ConfessionPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             ConfessionPageButton(
-              destination: confessionPageTwo,
+              onTap: () => Navigator.pushNamed(context, confessionPageTwo),
               text: 'Next',
             ),
           ],

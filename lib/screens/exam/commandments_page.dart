@@ -39,7 +39,7 @@ class CommandmentsPage extends StatelessWidget {
       case '/':
         return CommandmentsPage();
       case ExaminationPage.Id:
-        var commandmentId = settings.arguments;
+        int commandmentId = settings.arguments;
         return ExaminationPage(
           commandmentId: commandmentId,
         );
@@ -68,8 +68,11 @@ class CommandmentsPage extends StatelessWidget {
               itemCount: commandments.length,
               itemBuilder: (context, index) => ListCard(
                 onTap: () {
-                  Navigator.pushNamed(context, ExaminationPage.Id,
-                      arguments: commandments[index].id);
+                  Navigator.pushNamed(
+                    context,
+                    ExaminationPage.Id,
+                    arguments: commandments[index].id,
+                  );
                 },
                 title: commandments[index].commandment,
                 subtitle: commandments[index].commandmentText,
@@ -80,4 +83,11 @@ class CommandmentsPage extends StatelessWidget {
       },
     );
   }
+}
+
+class ExaminationArguments {
+  final String title;
+  final int commandmentId;
+
+  ExaminationArguments(this.title, this.commandmentId);
 }

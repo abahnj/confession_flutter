@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class ConfessionPageButton extends StatelessWidget {
-  final String destination;
+  final VoidCallback onTap;
   final String text;
-  final bool previous;
 
   const ConfessionPageButton({
     Key key,
-    @required this.destination,
+    @required this.onTap,
     @required this.text,
-    this.previous = false,
   }) : super(key: key);
 
   @override
@@ -23,11 +21,7 @@ class ConfessionPageButton extends StatelessWidget {
             .button
             .copyWith(fontSize: 24, color: Colors.red),
       ),
-      onPressed: () {
-        previous
-            ? Navigator.of(context).pop()
-            : Navigator.pushNamed(context, destination);
-      },
+      onPressed: onTap,
     );
   }
 }

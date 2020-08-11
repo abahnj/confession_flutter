@@ -4,10 +4,18 @@ import 'package:flutter_svg/avd.dart';
 
 class ListCard extends StatelessWidget {
   final VoidCallback onTap;
+  final VoidCallback onLongPress;
   final String title;
   final String subtitle;
+  final Widget trailing;
 
-  const ListCard({Key key, this.onTap, this.title, this.subtitle})
+  const ListCard(
+      {Key key,
+      this.onTap,
+      this.title,
+      this.subtitle,
+      this.trailing,
+      this.onLongPress})
       : super(key: key);
 
   @override
@@ -20,9 +28,8 @@ class ListCard extends StatelessWidget {
       ),
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: InkWell(
-        highlightColor: Colors.red,
-        splashColor: Colors.green,
         onTap: onTap,
+        onLongPress: onLongPress,
         child: Container(
           child: ListTile(
             contentPadding:
@@ -64,8 +71,9 @@ class ListCard extends StatelessWidget {
                     ],
                   )
                 : null,
-            trailing: Icon(Icons.keyboard_arrow_right,
-                color: Colors.white, size: 30.0),
+            trailing: trailing ??
+                Icon(Icons.keyboard_arrow_right,
+                    color: Colors.white, size: 30.0),
           ),
         ),
       ),

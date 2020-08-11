@@ -53,7 +53,7 @@ class _PassCodeScreenState extends State<PassCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var myPass = [1, 2, 3, 4];
+    var myPass = [1, 1, 1, 1];
     return LockScreen(
         title: 'Enter Pin Code',
         passLength: myPass.length,

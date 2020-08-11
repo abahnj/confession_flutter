@@ -48,6 +48,16 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
+  List<int> returnCommandmentsForUser() {
+    if (age == Age.child) {
+      return [11, 14];
+    } else if (vocation == Vocation.priest || vocation == Vocation.religious) {
+      return [11, 12, 13, 14, 15];
+    } else {
+      return [for (var i = 1; i <= 10; i += 1) i];
+    }
+  }
+
   @override
   String toString() {
     //Strip away class name and capitalize first letter

@@ -47,12 +47,12 @@ class ConfessionPageTwo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ConfessionPageButton(
-                        destination: confessionPage,
+                        onTap: () => Navigator.pop(context),
                         text: 'Previous',
-                        previous: true,
                       ),
                       ConfessionPageButton(
-                        destination: confessionPageThree,
+                        onTap: () =>
+                            Navigator.pushNamed(context, confessionPageThree),
                         text: 'Next',
                       )
                     ],

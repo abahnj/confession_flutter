@@ -12,6 +12,8 @@ class ExaminationPageViewModel extends BaseModel {
 
   final ExaminationsDao _dao;
   final User _user;
+  int nextCommandmentId;
+  int previousCommandmentId;
 
   List<Examination> _examinations = [];
 
@@ -30,5 +32,36 @@ class ExaminationPageViewModel extends BaseModel {
       _examinations = examinations;
       notifyListeners();
     });
+  }
+
+  void setNeighbouringIds(int commandmentId) {
+    var commandments = _user.returnCommandmentsForUser();
+    nextCommandmentId = commandments[
+        (commandments.indexOf(commandmentId) + 1) % commandments.length];
+
+    previousCommandmentId = commandments[
+        (commandments.indexOf(commandmentId) - 1) % commandments.length];
+  }
+
+  String getCommandmentTitle(int commandmentId) {
+    var titles = {
+      1: '1st Commandment',
+      2: '2nd Commandment',
+      3: '3rd Commandment',
+      4: '4th Commandment',
+      5: '5th Commandment',
+      6: '6th Commandment',
+      7: '7th Commandment',
+      8: '8th Commandment',
+      9: '9th Commandment',
+      10: '10th Commandment',
+      11: 'Responsibilities to God',
+      12: 'Responsibilities to Promises and Vows',
+      13: 'Responsibilities to My Ministry',
+      14: 'Responsibilities to Others',
+      15: 'Responsibilities to Society',
+    };
+
+    return titles[commandmentId];
   }
 }
