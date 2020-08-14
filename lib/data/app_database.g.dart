@@ -1757,6 +1757,236 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   }
 }
 
+class Count extends DataClass implements Insertable<Count> {
+  final int id;
+  final int sinId;
+  final int count;
+  Count({@required this.id, @required this.sinId, @required this.count});
+  factory Count.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    return Count(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
+      sinId: intType.mapFromDatabaseResponse(data['${effectivePrefix}SINS_ID']),
+      count: intType.mapFromDatabaseResponse(data['${effectivePrefix}COUNT']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['_id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || sinId != null) {
+      map['SINS_ID'] = Variable<int>(sinId);
+    }
+    if (!nullToAbsent || count != null) {
+      map['COUNT'] = Variable<int>(count);
+    }
+    return map;
+  }
+
+  CountsCompanion toCompanion(bool nullToAbsent) {
+    return CountsCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      sinId:
+          sinId == null && nullToAbsent ? const Value.absent() : Value(sinId),
+      count:
+          count == null && nullToAbsent ? const Value.absent() : Value(count),
+    );
+  }
+
+  factory Count.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return Count(
+      id: serializer.fromJson<int>(json['id']),
+      sinId: serializer.fromJson<int>(json['sinId']),
+      count: serializer.fromJson<int>(json['count']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'sinId': serializer.toJson<int>(sinId),
+      'count': serializer.toJson<int>(count),
+    };
+  }
+
+  Count copyWith({int id, int sinId, int count}) => Count(
+        id: id ?? this.id,
+        sinId: sinId ?? this.sinId,
+        count: count ?? this.count,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Count(')
+          ..write('id: $id, ')
+          ..write('sinId: $sinId, ')
+          ..write('count: $count')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      $mrjf($mrjc(id.hashCode, $mrjc(sinId.hashCode, count.hashCode)));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is Count &&
+          other.id == this.id &&
+          other.sinId == this.sinId &&
+          other.count == this.count);
+}
+
+class CountsCompanion extends UpdateCompanion<Count> {
+  final Value<int> id;
+  final Value<int> sinId;
+  final Value<int> count;
+  const CountsCompanion({
+    this.id = const Value.absent(),
+    this.sinId = const Value.absent(),
+    this.count = const Value.absent(),
+  });
+  CountsCompanion.insert({
+    @required int id,
+    this.sinId = const Value.absent(),
+    @required int count,
+  })  : id = Value(id),
+        count = Value(count);
+  static Insertable<Count> custom({
+    Expression<int> id,
+    Expression<int> sinId,
+    Expression<int> count,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) '_id': id,
+      if (sinId != null) 'SINS_ID': sinId,
+      if (count != null) 'COUNT': count,
+    });
+  }
+
+  CountsCompanion copyWith(
+      {Value<int> id, Value<int> sinId, Value<int> count}) {
+    return CountsCompanion(
+      id: id ?? this.id,
+      sinId: sinId ?? this.sinId,
+      count: count ?? this.count,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['_id'] = Variable<int>(id.value);
+    }
+    if (sinId.present) {
+      map['SINS_ID'] = Variable<int>(sinId.value);
+    }
+    if (count.present) {
+      map['COUNT'] = Variable<int>(count.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CountsCompanion(')
+          ..write('id: $id, ')
+          ..write('sinId: $sinId, ')
+          ..write('count: $count')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CountsTable extends Counts with TableInfo<$CountsTable, Count> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $CountsTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('_id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _sinIdMeta = const VerificationMeta('sinId');
+  GeneratedIntColumn _sinId;
+  @override
+  GeneratedIntColumn get sinId => _sinId ??= _constructSinId();
+  GeneratedIntColumn _constructSinId() {
+    return GeneratedIntColumn(
+      'SINS_ID',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _countMeta = const VerificationMeta('count');
+  GeneratedIntColumn _count;
+  @override
+  GeneratedIntColumn get count => _count ??= _constructCount();
+  GeneratedIntColumn _constructCount() {
+    return GeneratedIntColumn(
+      'COUNT',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, sinId, count];
+  @override
+  $CountsTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'person_2_sin';
+  @override
+  final String actualTableName = 'person_2_sin';
+  @override
+  VerificationContext validateIntegrity(Insertable<Count> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('_id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('SINS_ID')) {
+      context.handle(
+          _sinIdMeta, sinId.isAcceptableOrUnknown(data['SINS_ID'], _sinIdMeta));
+    }
+    if (data.containsKey('COUNT')) {
+      context.handle(
+          _countMeta, count.isAcceptableOrUnknown(data['COUNT'], _countMeta));
+    } else if (isInserting) {
+      context.missing(_countMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {sinId};
+  @override
+  Count map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return Count.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $CountsTable createAlias(String alias) {
+    return $CountsTable(_db, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $CommandmentsTable _commandments;
@@ -1769,6 +1999,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $PrayersTable get prayers => _prayers ??= $PrayersTable(this);
   $GuidesTable _guides;
   $GuidesTable get guides => _guides ??= $GuidesTable(this);
+  $CountsTable _counts;
+  $CountsTable get counts => _counts ??= $CountsTable(this);
   CommandmentsDao _commandmentsDao;
   CommandmentsDao get commandmentsDao =>
       _commandmentsDao ??= CommandmentsDao(this as AppDatabase);
@@ -1779,9 +2011,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   PrayersDao get prayersDao => _prayersDao ??= PrayersDao(this as AppDatabase);
   GuidesDao _guidesDao;
   GuidesDao get guidesDao => _guidesDao ??= GuidesDao(this as AppDatabase);
+  CountsDao _countsDao;
+  CountsDao get countsDao => _countsDao ??= CountsDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [commandments, examinations, prayers, guides];
+      [commandments, examinations, prayers, guides, counts];
 }

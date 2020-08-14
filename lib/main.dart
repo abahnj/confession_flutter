@@ -7,11 +7,10 @@ import 'package:confession_flutter/screens/settings_page.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:provider/provider.dart';
 
 import 'constants.dart';
-import 'utils.dart';
+import 'screens/app_lock.dart';
 
 void main() => runApp(
       MultiProvider(

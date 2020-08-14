@@ -3,15 +3,10 @@ import 'package:confession_flutter/screens/destination_view.dart';
 import 'package:confession_flutter/screens/exam/commandments_page.dart';
 import 'package:confession_flutter/screens/guide/guide_page.dart';
 import 'package:confession_flutter/screens/prayers/prayers_page.dart';
-import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_svg/avd.dart';
-import 'package:provider/provider.dart';
-
-import '../constants.dart';
-import '../theme_prefs.dart';
 
 final List<Destination> _allDestinations = <Destination>[
   Destination(0, CommandmentsPage.title, CommandmentsPage.iconAsset,
@@ -107,7 +102,6 @@ class _HomePageState extends State<HomePage>
             }).toList()),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
-          selectedItemColor: Colors.red,
           type: BottomNavigationBarType.fixed,
           onTap: (int index) {
             setState(() {
@@ -132,13 +126,6 @@ class _HomePageState extends State<HomePage>
 }
 
 List<BottomNavigationBarItem> _buildItems(context) {
-  var themeMode = Provider.of<ThemeState>(context).userThemeMode;
-  var brightness = Utils.returnBrightness(context, themeMode);
-
-  var inactiveColor = brightness == Brightness.dark
-      ? iconColorDarkInactive
-      : iconColorLightInactive;
-
   return _allDestinations.map((Destination destination) {
     return BottomNavigationBarItem(
       title: PlatformText(destination.title),
@@ -147,7 +134,7 @@ List<BottomNavigationBarItem> _buildItems(context) {
         width: 24,
         child: AvdPicture.asset(
           destination.iconAsset,
-          color: inactiveColor,
+          color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
         ),
       ),
       activeIcon: SizedBox(
@@ -155,7 +142,7 @@ List<BottomNavigationBarItem> _buildItems(context) {
         width: 24,
         child: AvdPicture.asset(
           destination.iconAsset,
-          color: iconColorActive,
+          color: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
         ),
       ),
     );

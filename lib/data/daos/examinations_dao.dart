@@ -49,7 +49,7 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
             ..where((t) => t.commandmentId.equals(commandmentId)))
           .get();
 
-  Future<List<Examination>> getExaminationsForUserAndId(
+  Stream<List<Examination>> getExaminationsForUserAndId(
       int commandmentId, User user) {
     Expression<bool> vocationQuery;
     Expression<bool> genderQuery;
@@ -94,7 +94,7 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
     if (user.age != Age.adult) {
       return (select(examinations)
             ..where((t) => t.commandmentId.equals(commandmentId) & ageQuery))
-          .get();
+          .watch();
     }
 
     return (select(examinations)
@@ -103,6 +103,10 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
               vocationQuery &
               genderQuery &
               ageQuery))
-        .get();
+        .watch();
+  }
+
+  Future<int> updateCountForExamination(Examination examination) {
+    return into(examinations).insertOnConflictUpdate(examination);
   }
 }

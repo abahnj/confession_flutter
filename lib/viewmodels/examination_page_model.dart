@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/daos/examinations_dao.dart';
@@ -28,7 +29,9 @@ class ExaminationPageViewModel extends BaseModel {
   }
 
   void getExaminationsForUserAndId(int commandmentId) {
-    _dao.getExaminationsForUserAndId(commandmentId, _user).then((examinations) {
+    _dao
+        .getExaminationsForUserAndId(commandmentId, _user)
+        .listen((examinations) {
       _examinations = examinations;
       notifyListeners();
     });
@@ -63,5 +66,13 @@ class ExaminationPageViewModel extends BaseModel {
     };
 
     return titles[commandmentId];
+  }
+
+  void updateCountForExamination(Examination examination) {
+    var modifiedCount =
+        _dao.updateCountForExamination(examination).then((value) {
+      log(value.toString());
+      notifyListeners();
+    });
   }
 }

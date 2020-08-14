@@ -1,11 +1,11 @@
 import 'dart:io' show Platform;
 
 import 'package:confession_flutter/constants.dart';
+import 'package:confession_flutter/screens/app_lock.dart';
 import 'package:confession_flutter/screens/lock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:local_auth/local_auth.dart';
 
 class PassCodeScreen extends StatefulWidget {

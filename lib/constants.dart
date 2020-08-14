@@ -1,4 +1,3 @@
-import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:local_auth/auth_strings.dart';
@@ -6,7 +5,7 @@ import 'package:local_auth/auth_strings.dart';
 ///Constants file
 const kAppName = 'Confession';
 
-const Color iconColorLightInactive = Color.fromRGBO(0, 0, 0, .26);
+const Color iconColorLightInactive = Color.fromRGBO(0, 0, 0, .9);
 final Color iconColorActive = Colors.red.withOpacity(.54);
 const Color iconColorDarkInactive = Color.fromRGBO(255, 255, 255, 0.3);
 
@@ -35,14 +34,18 @@ const iosStrings = IOSAuthMessages(
     lockOut: 'Please re-enable your Touch ID');
 
 ///Themes
+///
 
 final themeData = (BuildContext context) => ThemeData(
-      brightness: setBrightness(context),
-      bottomAppBarColor: Colors.red,
+      brightness: Brightness.light,
       primarySwatch: Colors.red,
       primaryIconTheme: IconThemeData(color: Colors.red),
       accentIconTheme: IconThemeData(color: Colors.red),
       primaryColor: Colors.white,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: Colors.red,
+        unselectedItemColor: iconColorLightInactive,
+      ),
       cupertinoOverrideTheme: CupertinoThemeData(
         textTheme: CupertinoTextThemeData(
           dateTimePickerTextStyle: TextStyle(
@@ -54,20 +57,18 @@ final themeData = (BuildContext context) => ThemeData(
           ),
         ),
       ),
-      canvasColor: Utils.returnBrightness(context, userThemeMode(context)) ==
-              Brightness.dark
-          ? Colors.red
-          : Colors.white,
-      scaffoldBackgroundColor: Color.fromRGBO(242, 242, 242, 1),
     );
 
 final themeDataDark = ThemeData.dark().copyWith(
   iconTheme: IconThemeData(color: Colors.red),
   backgroundColor: Colors.black,
   scaffoldBackgroundColor: Colors.black,
-  bottomAppBarColor: Colors.red,
   colorScheme: ColorScheme.dark(),
   toggleableActiveColor: Colors.red,
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: Colors.red,
+    unselectedItemColor: iconColorDarkInactive,
+  ),
   cupertinoOverrideTheme: CupertinoThemeData(
     textTheme: CupertinoTextThemeData(
       dateTimePickerTextStyle: TextStyle(
