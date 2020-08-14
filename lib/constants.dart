@@ -34,7 +34,6 @@ const iosStrings = IOSAuthMessages(
     lockOut: 'Please re-enable your Touch ID');
 
 ///Themes
-///
 
 final themeData = (BuildContext context) => ThemeData(
       brightness: Brightness.light,

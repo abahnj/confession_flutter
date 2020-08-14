@@ -17,6 +17,7 @@ void main() => runApp(
         providers: providers,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          themeMode: ThemeMode.system,
           home: AppLock(
             builder: (args) => MyApp(),
             lockScreen: PassCodeScreen(),
