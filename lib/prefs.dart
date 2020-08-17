@@ -11,12 +11,6 @@ class PrefsBlocError extends Error {
   PrefsBlocError(this.message);
 }
 
-class PrefsState {
-  final User user;
-
-  PrefsState({this.user});
-}
-
 class PrefsNotifier with ChangeNotifier {
   User _user = User.initial();
 
@@ -26,25 +20,35 @@ class PrefsNotifier with ChangeNotifier {
 
   User get user => _user;
 
+  set lastConfession(String lastConfession) =>
+      _setLastConfession(lastConfession);
+
   void setUserGender(Gender gender) {
     if (gender == _user.gender) return;
-    _user = _user.copyWith(gender: gender);
-    notifyListeners();
+    _user.gender = gender;
     _saveNewPrefs();
+    notifyListeners();
   }
 
   set userAge(Age age) {
     if (age == _user.age) return;
-    _user = _user.copyWith(age: age);
-    notifyListeners();
+    _user.age = age;
     _saveNewPrefs();
+    notifyListeners();
+  }
+
+  Future<void> _setLastConfession(String date) async {
+    var sharedPrefs = await SharedPreferences.getInstance();
+    await sharedPrefs.setString(LAST_CONFESSION, date);
+    _user.lastConfession = date;
+    notifyListeners();
   }
 
   void setUserVocation(Vocation vocation) {
     if (vocation == _user.vocation) return;
-    _user = _user.copyWith(vocation: vocation);
-    notifyListeners();
+    _user.vocation = vocation;
     _saveNewPrefs();
+    notifyListeners();
   }
 
   Future<void> _loadSharedPrefs() async {
@@ -54,8 +58,14 @@ class PrefsNotifier with ChangeNotifier {
     var vocationPref =
         Vocation.values[(sharedPrefs.getInt(VOCATION_PREF)) ?? 0];
     var agePref = Age.values[(sharedPrefs.getInt(AGE_PREF)) ?? 0];
+    var lastConfessionPref =
+        sharedPrefs.getString(LAST_CONFESSION) ?? DateTime.now().toString();
 
-    _user = User(vocation: vocationPref, gender: genderPref, age: agePref);
+    _user = User(
+        vocation: vocationPref,
+        gender: genderPref,
+        age: agePref,
+        lastConfession: lastConfessionPref);
 
     notifyListeners();
   }
@@ -65,5 +75,6 @@ class PrefsNotifier with ChangeNotifier {
     await sharedPrefs.setInt(GENDER_PREF, _user.gender.index);
     await sharedPrefs.setInt(AGE_PREF, _user.age.index);
     await sharedPrefs.setInt(VOCATION_PREF, _user.vocation.index);
+    await sharedPrefs.setString(LAST_CONFESSION, _user.lastConfession);
   }
 }

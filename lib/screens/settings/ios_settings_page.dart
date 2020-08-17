@@ -1,8 +1,10 @@
+import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/screens/settings/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../theme_prefs.dart';
@@ -22,8 +24,7 @@ class iOSSettingsPage extends StatelessWidget {
         CSHeader('APPEARANCE'),
         CSSelection<ThemeMode>(
           onSelected: (themeMode) {
-            Provider.of<ThemeStyle>(context, listen: false).userThemeMode =
-                themeMode;
+            context.read<ThemeStyle>().userThemeMode = themeMode;
           },
           currentSelection: Provider.of<ThemeState>(context).userThemeMode,
           items: [
@@ -44,35 +45,36 @@ class iOSSettingsPage extends StatelessWidget {
         CSHeader('PROFILE'),
         CSLink(
           title: 'Profile',
-          detail: context.watch<PrefsState>().user.toString(),
+          detail: context.watch<User>().toString(),
           cellType: CellType.detailRightStyle,
           onPressed: () => Navigator.of(context).pushNamed(ProfilePage.Id),
         ),
         CSLink(
-          //todo make adaptive to platform brightness
           title: 'Date of Last Confession',
-          detail: '1st january 1970',
+          detail: context.select((User user) {
+            var myLocale = Localizations.localeOf(context);
+
+            return DateFormat.yMMMEd(myLocale.toLanguageTag())
+                .format(DateTime.parse(user.lastConfession));
+          }),
           cellType: CellType.detailRightStyle,
-          onPressed: () {
-            return showCupertinoModalPopup(
-              context: context,
-              useRootNavigator: false,
-              builder: (context) => Container(
-                height: 300,
-                child: CupertinoDatePicker(
-                  backgroundColor:
-                      CupertinoColors.secondarySystemBackground.darkColor,
-                  minimumYear: 2000,
-                  initialDateTime: DateTime.now(),
-                  maximumDate: DateTime.now(),
-                  onDateTimeChanged: (date) {
-                    print(date);
-                  },
-                  mode: CupertinoDatePickerMode.date,
-                ),
+          onPressed: () => showCupertinoModalPopup(
+            context: context,
+            useRootNavigator: false,
+            builder: (context) => Container(
+              height: 300,
+              child: CupertinoDatePicker(
+                backgroundColor: CupertinoColors.secondarySystemBackground,
+                minimumYear: 2000,
+                initialDateTime: DateTime.now(),
+                maximumDate: DateTime.now(),
+                onDateTimeChanged: (date) => context
+                    .read<PrefsNotifier>()
+                    .lastConfession = date.toString(),
+                mode: CupertinoDatePickerMode.date,
               ),
-            );
-          },
+            ),
+          ),
         ),
         CSHeader(''),
         CSButton(

@@ -16,6 +16,7 @@ const String imagesRoot = 'assets/images/';
 const String GENDER_PREF = 'GENDER_PREF';
 const String VOCATION_PREF = 'VOCATION_PREF';
 const String AGE_PREF = 'AGE_PREF';
+const String LAST_CONFESSION = 'LAST_CONFESSION';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -45,17 +46,6 @@ final themeData = (BuildContext context) => ThemeData(
         selectedItemColor: Colors.red,
         unselectedItemColor: iconColorLightInactive,
       ),
-      cupertinoOverrideTheme: CupertinoThemeData(
-        textTheme: CupertinoTextThemeData(
-          dateTimePickerTextStyle: TextStyle(
-            inherit: false,
-            fontFamily: '.SF Pro Display',
-            fontSize: 21,
-            fontWeight: FontWeight.normal,
-            color: CupertinoColors.black,
-          ),
-        ),
-      ),
     );
 
 final themeDataDark = ThemeData.dark().copyWith(
@@ -71,12 +61,15 @@ final themeDataDark = ThemeData.dark().copyWith(
   cupertinoOverrideTheme: CupertinoThemeData(
     textTheme: CupertinoTextThemeData(
       dateTimePickerTextStyle: TextStyle(
-        inherit: false,
-        fontFamily: '.SF Pro Display',
         fontSize: 21,
-        fontWeight: FontWeight.normal,
-        color: CupertinoColors.white,
       ),
     ),
   ),
 );
+
+// TimeOfDay const
+const int SECOND_IN_MILLIS = 1000;
+const int MINUTE_IN_MILLIS = 60 * SECOND_IN_MILLIS;
+const int HOUR_IN_MILLIS = 60 * MINUTE_IN_MILLIS;
+const int DAY_IN_MILLIS = HOUR_IN_MILLIS * 24;
+const int WEEK_IN_MILLIS = 7 * DAY_IN_MILLIS;

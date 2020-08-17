@@ -2,12 +2,11 @@ import 'package:confession_flutter/components/confession_page_button.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
+import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/viewmodels/examination_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../prefs.dart';
 
 class ConfessionPageTwo extends StatelessWidget {
   @override
@@ -15,7 +14,7 @@ class ConfessionPageTwo extends StatelessWidget {
     return ViewModelBuilder<ExaminationPageViewModel>.reactive(
       viewModelBuilder: () => ExaminationPageViewModel(
         dao: Provider.of<AppDatabase>(context).examinationsDao,
-        user: Provider.of<PrefsState>(context).user,
+        user: Provider.of<User>(context),
       ),
       onModelReady: (model) => model.getExaminationsForUserAndId(1),
       builder: (context, model, _) => Scaffold(

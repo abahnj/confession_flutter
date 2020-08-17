@@ -6,12 +6,9 @@ import 'package:confession_flutter/data/user.dart';
 import 'package:stacked/stacked.dart';
 
 class CommandmentsPageViewModel extends BaseViewModel {
-  CommandmentsPageViewModel({CommandmentsDao dao, User user})
-      : _dao = dao,
-        _user = user;
+  CommandmentsPageViewModel({CommandmentsDao dao}) : _dao = dao;
 
   final CommandmentsDao _dao;
-  final User _user;
 
   List<Commandment> _commandments = [];
 
@@ -20,13 +17,6 @@ class CommandmentsPageViewModel extends BaseViewModel {
 
   void getAllCommandment() {
     _dao.getAllCommandments().then((commandments) {
-      _commandments = commandments;
-      notifyListeners();
-    });
-  }
-
-  void getCommandmentsForUser() {
-    _dao.getCommandmentsForUser(_user).then((commandments) {
       _commandments = commandments;
       notifyListeners();
     });

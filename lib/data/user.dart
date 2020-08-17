@@ -9,16 +9,19 @@ class User with ChangeNotifier {
   Vocation _vocation;
   Age _age;
   Gender _gender;
+  String _lastConfession;
 
-  User({vocation, age, gender})
+  User({vocation, age, gender, lastConfession})
       : _vocation = vocation,
         _age = age,
-        _gender = gender;
+        _gender = gender,
+        _lastConfession = lastConfession;
 
   User.initial()
       : _vocation = Vocation.single,
         _age = Age.adult,
-        _gender = Gender.male;
+        _gender = Gender.male,
+        _lastConfession = DateTime.now().toString();
 
   User copyWith({Vocation vocation, Age age, Gender gender}) {
     return User(
@@ -35,6 +38,13 @@ class User with ChangeNotifier {
   }
 
   Age get age => _age;
+
+  String get lastConfession => _lastConfession;
+
+  set lastConfession(String value) {
+    _lastConfession = value;
+    notifyListeners();
+  }
 
   set age(Age value) {
     _age = value;

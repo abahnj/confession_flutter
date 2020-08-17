@@ -2,7 +2,7 @@ import 'package:confession_flutter/components/list_card.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
-import 'package:confession_flutter/prefs.dart';
+import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:confession_flutter/viewmodels/commandments_page_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,14 +51,13 @@ class CommandmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<CommandmentsPageViewModel>.reactive(
       viewModelBuilder: () => CommandmentsPageViewModel(
-        dao: Provider.of<AppDatabase>(context, listen: false).commandmentsDao,
-        user: Provider.of<PrefsState>(context).user,
-      ),
+          dao: context.read<AppDatabase>().commandmentsDao),
       staticChild: rootAppBar(),
-      onModelReady: (model) => model.getAllCommandment(),
+      onModelReady: (model) {
+        model.getAllCommandment();
+      },
       builder: (context, model, child) {
-        var commandments =
-            model.filterCommandments(Provider.of<PrefsState>(context).user);
+        var commandments = model.filterCommandments(context.watch<User>());
         return Scaffold(
           appBar: child,
           body: SafeArea(

@@ -34,3 +34,28 @@ Brightness setBrightness(BuildContext context) {
 
   return Utils.returnBrightness(context, themeMode);
 }
+
+String getTimeAgo(String time) {
+  var diff = DateTime.now().difference(DateTime.parse(time));
+
+  if (diff.isNegative) {
+    return 'invalid';
+  }
+
+  var days = diff.inDays;
+  var weeks = (days / 7).floor();
+  var months = (days / 30).floor();
+  var years = (days / 365).floor();
+
+  if (years > 0) {
+    return years == 1 ? 'a year' : '$years years';
+  } else if (months > 0) {
+    return months == 1 ? 'a month' : '$months months';
+  } else if (weeks > 0) {
+    return weeks == 1 ? 'a week' : '$weeks weeks';
+  } else if (days > 1) {
+    return '$days days';
+  } else {
+    return 'a day';
+  }
+}

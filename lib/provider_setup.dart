@@ -34,14 +34,11 @@ List<SingleChildWidget> dependentServices = [
       userThemeMode: value.userThemeMode,
     ),
   ),
-  ProxyProvider<PrefsNotifier, PrefsState>(
-    update: (context, value, previous) => PrefsState(user: value.user),
+  ChangeNotifierProxyProvider<PrefsNotifier, User>(
+    create: (_) => User.initial(),
+    update: (context, value, previous) => value.user,
   )
 ];
 
 //providers that need to be directly  available to every UI view without the need for a viewModel
-List<SingleChildWidget> uiConsumableProviders = [
-  Provider<User>(
-    create: (context) => Provider.of<PrefsState>(context).user,
-  )
-];
+List<SingleChildWidget> uiConsumableProviders = [];

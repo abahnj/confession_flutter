@@ -10,7 +10,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var prefs = Provider.of<PrefsNotifier>(context, listen: false);
-    var user = context.watch<PrefsState>().user;
+    var user = context.watch<User>();
 
     return Scaffold(
       appBar: AppBar(
