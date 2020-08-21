@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 import '../../theme_prefs.dart';
 
@@ -93,7 +94,7 @@ class iOSSettingsPage extends StatelessWidget {
         CSButton(
           child: Text('Send Feedback'),
           pressed: () {
-            print('It works!');
+            Share.share('Check this out', subject: 'Feedback');
           },
           buttonType: CSButtonType.DEFAULT,
           style: CSWidgetStyle(

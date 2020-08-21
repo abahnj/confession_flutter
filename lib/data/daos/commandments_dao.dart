@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/user.dart';
 import 'package:moor/moor.dart';
@@ -34,7 +32,6 @@ class CommandmentsDao extends DatabaseAccessor<AppDatabase>
       into(commandments).insert(commandment);
 
   Future<List<Commandment>> getCommandmentsForUser(User user) {
-    log("commadmentsuser " + user.toString());
     if (user.age == Age.child) {
       return (select(commandments)..where((tbl) => tbl.id.isIn([11, 14])))
           .get();

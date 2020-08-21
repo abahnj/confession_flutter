@@ -19,23 +19,32 @@ class PrayersDetailPage extends StatelessWidget {
       ),
       onModelReady: (model) => model.getPrayerForId(prayerId),
       builder: (context, model, _) => Scaffold(
-        body: Scaffold(
-          appBar: rootAppBar(
-            title: model.prayer.prayerName,
-          ),
-          body: SingleChildScrollView(
-            child: Container(
-              // height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              // color: Theme.of(context).primaryColor,
-              padding: EdgeInsets.all(40.0),
-              child: Center(
+        appBar: rootAppBar(),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                 child: Text(
-                  model.prayer.prayerText,
-                  style: TextStyle(fontSize: 24.0),
+                  model.prayer?.prayerName ?? '',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-            ),
+              Card(
+                margin: EdgeInsets.all(16),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    model.prayer?.prayerText ?? '',
+                    style: TextStyle(fontSize: 24.0),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

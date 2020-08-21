@@ -11,10 +11,15 @@ class GuideDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: rootAppBar(),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        child: Text(
-          guideText,
-          style: Theme.of(context).textTheme.headline6,
+        child: Card(
+          margin: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              guideText,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
         ),
       ),
     );

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:confession_flutter/components/confession_page_button.dart';
@@ -26,6 +25,7 @@ class ExaminationPage extends StatelessWidget {
       appBar: rootAppBar(),
       body: SafeArea(
         child: ViewModelBuilder<ExaminationPageViewModel>.reactive(
+          createNewModelOnInsert: true,
           viewModelBuilder: () => ExaminationPageViewModel(
             dao: Provider.of<AppDatabase>(context).examinationsDao,
             user: Provider.of<User>(context),
@@ -64,15 +64,14 @@ class ExaminationPage extends StatelessWidget {
                           return ListCard(
                             onTap: () => model.updateCountForExamination(
                               examination.copyWith(
-                                  count: examination.count + 1),
+                                count: examination.count + 1,
+                              ),
                             ),
                             onLongPress: (details) async {
                               var selection = Platform.isIOS
                                   ? await iOSDialog(context)
                                   : await showAndroidMenu(
                                       context, overlay, details);
-
-                              log(selection.toString());
                             },
                             title: examination.description,
                             trailing: Column(

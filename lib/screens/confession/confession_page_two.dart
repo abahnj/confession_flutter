@@ -1,4 +1,5 @@
 import 'package:confession_flutter/components/confession_page_button.dart';
+import 'package:confession_flutter/components/list_card.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
@@ -12,11 +13,12 @@ class ConfessionPageTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExaminationPageViewModel>.reactive(
+      createNewModelOnInsert: true,
       viewModelBuilder: () => ExaminationPageViewModel(
         dao: Provider.of<AppDatabase>(context).examinationsDao,
         user: Provider.of<User>(context),
       ),
-      onModelReady: (model) => model.getExaminationsForUserAndId(1),
+      onModelReady: (model) => model.getActiveExaminations(),
       builder: (context, model, _) => Scaffold(
         body: Scaffold(
           appBar: rootAppBar(),
@@ -25,18 +27,32 @@ class ConfessionPageTwo extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: model.examinations.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(model.examinations[index].description),
-                        subtitle:
-                            Text(model.examinations[index].married.toString()),
-                      );
-                    },
-                  ),
+                  child: model.activeExaminations.isNotEmpty
+                      ? ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: model.activeExaminations.length,
+                          itemBuilder: (context, index) {
+                            var examination = model.activeExaminations[index];
+                            return ListCard(
+                              title: examination.activeText,
+                              trailing: Text(examination.count.toString()),
+                            );
+                          },
+                        )
+                      : Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              'No data to display\n Please make an Examination of Conscience',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,

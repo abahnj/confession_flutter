@@ -8,7 +8,6 @@ class ViewNavigatorObserver extends NavigatorObserver {
   @override
   void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
     if (route.settings.name != '/') {
-      print('didPush $route');
       onNavigation();
     }
     //onNavigation();
@@ -17,7 +16,6 @@ class ViewNavigatorObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
     if (route.settings.name != '/') {
-      print('didPush $route');
       onNavigation();
     }
   }

@@ -57,16 +57,16 @@ class _PassCodeScreenState extends State<PassCodeScreen> {
     return LockScreen(
         title: 'Enter Pin Code',
         passLength: myPass.length,
-        bgImage: imagesRoot + "confession_lock.png",
-        fingerPrintImage: imagesRoot + "fingerprint.png",
+        bgImage: imagesRoot + 'confession_lock.png',
+        fingerPrintImage: imagesRoot + 'fingerprint.png',
         showFingerPass: true,
         fingerFunction: biometrics,
         fingerVerify: isFingerprint,
         borderColor: Colors.white,
         showWrongPassDialog: false,
-        wrongPassContent: "Wrong pass please try again.",
-        wrongPassTitle: "Opps!",
-        wrongPassCancelButtonText: "Cancel",
+        wrongPassContent: 'Wrong pass please try again.',
+        wrongPassTitle: 'Opps!',
+        wrongPassCancelButtonText: 'Cancel',
         passCodeVerify: (passcode) async {
           for (var i = 0; i < myPass.length; i++) {
             if (passcode[i] != myPass[i]) {

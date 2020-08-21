@@ -414,6 +414,7 @@ class Examination extends DataClass implements Insertable<Examination> {
   final bool child;
   final int customId;
   final String description;
+  final String activeText;
   final int count;
   Examination(
       {@required this.id,
@@ -429,6 +430,7 @@ class Examination extends DataClass implements Insertable<Examination> {
       @required this.child,
       this.customId,
       @required this.description,
+      @required this.activeText,
       @required this.count});
   factory Examination.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -458,6 +460,8 @@ class Examination extends DataClass implements Insertable<Examination> {
           intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
       description: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}DESCRIPTION']),
+      activeText: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}DESCRIPTION_ACTIVE']),
       count: intType.mapFromDatabaseResponse(data['${effectivePrefix}COUNT']),
     );
   }
@@ -503,6 +507,9 @@ class Examination extends DataClass implements Insertable<Examination> {
     if (!nullToAbsent || description != null) {
       map['DESCRIPTION'] = Variable<String>(description);
     }
+    if (!nullToAbsent || activeText != null) {
+      map['DESCRIPTION_ACTIVE'] = Variable<String>(activeText);
+    }
     if (!nullToAbsent || count != null) {
       map['COUNT'] = Variable<int>(count);
     }
@@ -539,6 +546,9 @@ class Examination extends DataClass implements Insertable<Examination> {
       description: description == null && nullToAbsent
           ? const Value.absent()
           : Value(description),
+      activeText: activeText == null && nullToAbsent
+          ? const Value.absent()
+          : Value(activeText),
       count:
           count == null && nullToAbsent ? const Value.absent() : Value(count),
     );
@@ -561,6 +571,7 @@ class Examination extends DataClass implements Insertable<Examination> {
       child: serializer.fromJson<bool>(json['child']),
       customId: serializer.fromJson<int>(json['customId']),
       description: serializer.fromJson<String>(json['description']),
+      activeText: serializer.fromJson<String>(json['activeText']),
       count: serializer.fromJson<int>(json['count']),
     );
   }
@@ -581,6 +592,7 @@ class Examination extends DataClass implements Insertable<Examination> {
       'child': serializer.toJson<bool>(child),
       'customId': serializer.toJson<int>(customId),
       'description': serializer.toJson<String>(description),
+      'activeText': serializer.toJson<String>(activeText),
       'count': serializer.toJson<int>(count),
     };
   }
@@ -599,6 +611,7 @@ class Examination extends DataClass implements Insertable<Examination> {
           bool child,
           int customId,
           String description,
+          String activeText,
           int count}) =>
       Examination(
         id: id ?? this.id,
@@ -614,6 +627,7 @@ class Examination extends DataClass implements Insertable<Examination> {
         child: child ?? this.child,
         customId: customId ?? this.customId,
         description: description ?? this.description,
+        activeText: activeText ?? this.activeText,
         count: count ?? this.count,
       );
   @override
@@ -632,6 +646,7 @@ class Examination extends DataClass implements Insertable<Examination> {
           ..write('child: $child, ')
           ..write('customId: $customId, ')
           ..write('description: $description, ')
+          ..write('activeText: $activeText, ')
           ..write('count: $count')
           ..write(')'))
         .toString();
@@ -664,8 +679,10 @@ class Examination extends DataClass implements Insertable<Examination> {
                                                   customId.hashCode,
                                                   $mrjc(
                                                       description.hashCode,
-                                                      count
-                                                          .hashCode))))))))))))));
+                                                      $mrjc(
+                                                          activeText.hashCode,
+                                                          count
+                                                              .hashCode)))))))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -683,6 +700,7 @@ class Examination extends DataClass implements Insertable<Examination> {
           other.child == this.child &&
           other.customId == this.customId &&
           other.description == this.description &&
+          other.activeText == this.activeText &&
           other.count == this.count);
 }
 
@@ -700,6 +718,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
   final Value<bool> child;
   final Value<int> customId;
   final Value<String> description;
+  final Value<String> activeText;
   final Value<int> count;
   const ExaminationsCompanion({
     this.id = const Value.absent(),
@@ -715,6 +734,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
     this.child = const Value.absent(),
     this.customId = const Value.absent(),
     this.description = const Value.absent(),
+    this.activeText = const Value.absent(),
     this.count = const Value.absent(),
   });
   ExaminationsCompanion.insert({
@@ -731,6 +751,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
     @required bool child,
     this.customId = const Value.absent(),
     @required String description,
+    @required String activeText,
     this.count = const Value.absent(),
   })  : commandmentId = Value(commandmentId),
         adult = Value(adult),
@@ -742,7 +763,8 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
         female = Value(female),
         male = Value(male),
         child = Value(child),
-        description = Value(description);
+        description = Value(description),
+        activeText = Value(activeText);
   static Insertable<Examination> custom({
     Expression<int> id,
     Expression<int> commandmentId,
@@ -757,6 +779,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
     Expression<bool> child,
     Expression<int> customId,
     Expression<String> description,
+    Expression<String> activeText,
     Expression<int> count,
   }) {
     return RawValuesInsertable({
@@ -773,6 +796,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
       if (child != null) 'CHILD': child,
       if (customId != null) 'CUSTOM_ID': customId,
       if (description != null) 'DESCRIPTION': description,
+      if (activeText != null) 'DESCRIPTION_ACTIVE': activeText,
       if (count != null) 'COUNT': count,
     });
   }
@@ -791,6 +815,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
       Value<bool> child,
       Value<int> customId,
       Value<String> description,
+      Value<String> activeText,
       Value<int> count}) {
     return ExaminationsCompanion(
       id: id ?? this.id,
@@ -806,6 +831,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
       child: child ?? this.child,
       customId: customId ?? this.customId,
       description: description ?? this.description,
+      activeText: activeText ?? this.activeText,
       count: count ?? this.count,
     );
   }
@@ -852,6 +878,9 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
     if (description.present) {
       map['DESCRIPTION'] = Variable<String>(description.value);
     }
+    if (activeText.present) {
+      map['DESCRIPTION_ACTIVE'] = Variable<String>(activeText.value);
+    }
     if (count.present) {
       map['COUNT'] = Variable<int>(count.value);
     }
@@ -874,6 +903,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
           ..write('child: $child, ')
           ..write('customId: $customId, ')
           ..write('description: $description, ')
+          ..write('activeText: $activeText, ')
           ..write('count: $count')
           ..write(')'))
         .toString();
@@ -1042,6 +1072,18 @@ class $ExaminationsTable extends Examinations
     );
   }
 
+  final VerificationMeta _activeTextMeta = const VerificationMeta('activeText');
+  GeneratedTextColumn _activeText;
+  @override
+  GeneratedTextColumn get activeText => _activeText ??= _constructActiveText();
+  GeneratedTextColumn _constructActiveText() {
+    return GeneratedTextColumn(
+      'DESCRIPTION_ACTIVE',
+      $tableName,
+      false,
+    );
+  }
+
   final VerificationMeta _countMeta = const VerificationMeta('count');
   GeneratedIntColumn _count;
   @override
@@ -1066,6 +1108,7 @@ class $ExaminationsTable extends Examinations
         child,
         customId,
         description,
+        activeText,
         count
       ];
   @override
@@ -1155,6 +1198,14 @@ class $ExaminationsTable extends Examinations
               data['DESCRIPTION'], _descriptionMeta));
     } else if (isInserting) {
       context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('DESCRIPTION_ACTIVE')) {
+      context.handle(
+          _activeTextMeta,
+          activeText.isAcceptableOrUnknown(
+              data['DESCRIPTION_ACTIVE'], _activeTextMeta));
+    } else if (isInserting) {
+      context.missing(_activeTextMeta);
     }
     if (data.containsKey('COUNT')) {
       context.handle(
@@ -1757,19 +1808,22 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   }
 }
 
-class Count extends DataClass implements Insertable<Count> {
+class Inspiration extends DataClass implements Insertable<Inspiration> {
   final int id;
-  final int sinId;
-  final int count;
-  Count({@required this.id, @required this.sinId, @required this.count});
-  factory Count.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  final String author;
+  final String quote;
+  Inspiration({@required this.id, @required this.author, @required this.quote});
+  factory Inspiration.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
-    return Count(
+    final stringType = db.typeSystem.forDartType<String>();
+    return Inspiration(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
-      sinId: intType.mapFromDatabaseResponse(data['${effectivePrefix}SINS_ID']),
-      count: intType.mapFromDatabaseResponse(data['${effectivePrefix}COUNT']),
+      author:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}AUTHOR']),
+      quote:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}QUOTE']),
     );
   }
   @override
@@ -1778,32 +1832,32 @@ class Count extends DataClass implements Insertable<Count> {
     if (!nullToAbsent || id != null) {
       map['_id'] = Variable<int>(id);
     }
-    if (!nullToAbsent || sinId != null) {
-      map['SINS_ID'] = Variable<int>(sinId);
+    if (!nullToAbsent || author != null) {
+      map['AUTHOR'] = Variable<String>(author);
     }
-    if (!nullToAbsent || count != null) {
-      map['COUNT'] = Variable<int>(count);
+    if (!nullToAbsent || quote != null) {
+      map['QUOTE'] = Variable<String>(quote);
     }
     return map;
   }
 
-  CountsCompanion toCompanion(bool nullToAbsent) {
-    return CountsCompanion(
+  InspirationsCompanion toCompanion(bool nullToAbsent) {
+    return InspirationsCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      sinId:
-          sinId == null && nullToAbsent ? const Value.absent() : Value(sinId),
-      count:
-          count == null && nullToAbsent ? const Value.absent() : Value(count),
+      author:
+          author == null && nullToAbsent ? const Value.absent() : Value(author),
+      quote:
+          quote == null && nullToAbsent ? const Value.absent() : Value(quote),
     );
   }
 
-  factory Count.fromJson(Map<String, dynamic> json,
+  factory Inspiration.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return Count(
+    return Inspiration(
       id: serializer.fromJson<int>(json['id']),
-      sinId: serializer.fromJson<int>(json['sinId']),
-      count: serializer.fromJson<int>(json['count']),
+      author: serializer.fromJson<String>(json['author']),
+      quote: serializer.fromJson<String>(json['quote']),
     );
   }
   @override
@@ -1811,71 +1865,71 @@ class Count extends DataClass implements Insertable<Count> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'sinId': serializer.toJson<int>(sinId),
-      'count': serializer.toJson<int>(count),
+      'author': serializer.toJson<String>(author),
+      'quote': serializer.toJson<String>(quote),
     };
   }
 
-  Count copyWith({int id, int sinId, int count}) => Count(
+  Inspiration copyWith({int id, String author, String quote}) => Inspiration(
         id: id ?? this.id,
-        sinId: sinId ?? this.sinId,
-        count: count ?? this.count,
+        author: author ?? this.author,
+        quote: quote ?? this.quote,
       );
   @override
   String toString() {
-    return (StringBuffer('Count(')
+    return (StringBuffer('Inspiration(')
           ..write('id: $id, ')
-          ..write('sinId: $sinId, ')
-          ..write('count: $count')
+          ..write('author: $author, ')
+          ..write('quote: $quote')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(sinId.hashCode, count.hashCode)));
+      $mrjf($mrjc(id.hashCode, $mrjc(author.hashCode, quote.hashCode)));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is Count &&
+      (other is Inspiration &&
           other.id == this.id &&
-          other.sinId == this.sinId &&
-          other.count == this.count);
+          other.author == this.author &&
+          other.quote == this.quote);
 }
 
-class CountsCompanion extends UpdateCompanion<Count> {
+class InspirationsCompanion extends UpdateCompanion<Inspiration> {
   final Value<int> id;
-  final Value<int> sinId;
-  final Value<int> count;
-  const CountsCompanion({
+  final Value<String> author;
+  final Value<String> quote;
+  const InspirationsCompanion({
     this.id = const Value.absent(),
-    this.sinId = const Value.absent(),
-    this.count = const Value.absent(),
+    this.author = const Value.absent(),
+    this.quote = const Value.absent(),
   });
-  CountsCompanion.insert({
-    @required int id,
-    this.sinId = const Value.absent(),
-    @required int count,
-  })  : id = Value(id),
-        count = Value(count);
-  static Insertable<Count> custom({
+  InspirationsCompanion.insert({
+    this.id = const Value.absent(),
+    @required String author,
+    @required String quote,
+  })  : author = Value(author),
+        quote = Value(quote);
+  static Insertable<Inspiration> custom({
     Expression<int> id,
-    Expression<int> sinId,
-    Expression<int> count,
+    Expression<String> author,
+    Expression<String> quote,
   }) {
     return RawValuesInsertable({
       if (id != null) '_id': id,
-      if (sinId != null) 'SINS_ID': sinId,
-      if (count != null) 'COUNT': count,
+      if (author != null) 'AUTHOR': author,
+      if (quote != null) 'QUOTE': quote,
     });
   }
 
-  CountsCompanion copyWith(
-      {Value<int> id, Value<int> sinId, Value<int> count}) {
-    return CountsCompanion(
+  InspirationsCompanion copyWith(
+      {Value<int> id, Value<String> author, Value<String> quote}) {
+    return InspirationsCompanion(
       id: id ?? this.id,
-      sinId: sinId ?? this.sinId,
-      count: count ?? this.count,
+      author: author ?? this.author,
+      quote: quote ?? this.quote,
     );
   }
 
@@ -1885,30 +1939,31 @@ class CountsCompanion extends UpdateCompanion<Count> {
     if (id.present) {
       map['_id'] = Variable<int>(id.value);
     }
-    if (sinId.present) {
-      map['SINS_ID'] = Variable<int>(sinId.value);
+    if (author.present) {
+      map['AUTHOR'] = Variable<String>(author.value);
     }
-    if (count.present) {
-      map['COUNT'] = Variable<int>(count.value);
+    if (quote.present) {
+      map['QUOTE'] = Variable<String>(quote.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('CountsCompanion(')
+    return (StringBuffer('InspirationsCompanion(')
           ..write('id: $id, ')
-          ..write('sinId: $sinId, ')
-          ..write('count: $count')
+          ..write('author: $author, ')
+          ..write('quote: $quote')
           ..write(')'))
         .toString();
   }
 }
 
-class $CountsTable extends Counts with TableInfo<$CountsTable, Count> {
+class $InspirationsTable extends Inspirations
+    with TableInfo<$InspirationsTable, Inspiration> {
   final GeneratedDatabase _db;
   final String _alias;
-  $CountsTable(this._db, [this._alias]);
+  $InspirationsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -1918,72 +1973,72 @@ class $CountsTable extends Counts with TableInfo<$CountsTable, Count> {
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
-  final VerificationMeta _sinIdMeta = const VerificationMeta('sinId');
-  GeneratedIntColumn _sinId;
+  final VerificationMeta _authorMeta = const VerificationMeta('author');
+  GeneratedTextColumn _author;
   @override
-  GeneratedIntColumn get sinId => _sinId ??= _constructSinId();
-  GeneratedIntColumn _constructSinId() {
-    return GeneratedIntColumn(
-      'SINS_ID',
+  GeneratedTextColumn get author => _author ??= _constructAuthor();
+  GeneratedTextColumn _constructAuthor() {
+    return GeneratedTextColumn(
+      'AUTHOR',
       $tableName,
       false,
     );
   }
 
-  final VerificationMeta _countMeta = const VerificationMeta('count');
-  GeneratedIntColumn _count;
+  final VerificationMeta _quoteMeta = const VerificationMeta('quote');
+  GeneratedTextColumn _quote;
   @override
-  GeneratedIntColumn get count => _count ??= _constructCount();
-  GeneratedIntColumn _constructCount() {
-    return GeneratedIntColumn(
-      'COUNT',
+  GeneratedTextColumn get quote => _quote ??= _constructQuote();
+  GeneratedTextColumn _constructQuote() {
+    return GeneratedTextColumn(
+      'QUOTE',
       $tableName,
       false,
     );
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, sinId, count];
+  List<GeneratedColumn> get $columns => [id, author, quote];
   @override
-  $CountsTable get asDslTable => this;
+  $InspirationsTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'person_2_sin';
+  String get $tableName => _alias ?? 'INSPIRATION';
   @override
-  final String actualTableName = 'person_2_sin';
+  final String actualTableName = 'INSPIRATION';
   @override
-  VerificationContext validateIntegrity(Insertable<Count> instance,
+  VerificationContext validateIntegrity(Insertable<Inspiration> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
-    if (data.containsKey('SINS_ID')) {
-      context.handle(
-          _sinIdMeta, sinId.isAcceptableOrUnknown(data['SINS_ID'], _sinIdMeta));
-    }
-    if (data.containsKey('COUNT')) {
-      context.handle(
-          _countMeta, count.isAcceptableOrUnknown(data['COUNT'], _countMeta));
+    if (data.containsKey('AUTHOR')) {
+      context.handle(_authorMeta,
+          author.isAcceptableOrUnknown(data['AUTHOR'], _authorMeta));
     } else if (isInserting) {
-      context.missing(_countMeta);
+      context.missing(_authorMeta);
+    }
+    if (data.containsKey('QUOTE')) {
+      context.handle(
+          _quoteMeta, quote.isAcceptableOrUnknown(data['QUOTE'], _quoteMeta));
+    } else if (isInserting) {
+      context.missing(_quoteMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {sinId};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Count map(Map<String, dynamic> data, {String tablePrefix}) {
+  Inspiration map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Count.fromData(data, _db, prefix: effectivePrefix);
+    return Inspiration.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $CountsTable createAlias(String alias) {
-    return $CountsTable(_db, alias);
+  $InspirationsTable createAlias(String alias) {
+    return $InspirationsTable(_db, alias);
   }
 }
 
@@ -1999,8 +2054,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $PrayersTable get prayers => _prayers ??= $PrayersTable(this);
   $GuidesTable _guides;
   $GuidesTable get guides => _guides ??= $GuidesTable(this);
-  $CountsTable _counts;
-  $CountsTable get counts => _counts ??= $CountsTable(this);
+  $InspirationsTable _inspirations;
+  $InspirationsTable get inspirations =>
+      _inspirations ??= $InspirationsTable(this);
   CommandmentsDao _commandmentsDao;
   CommandmentsDao get commandmentsDao =>
       _commandmentsDao ??= CommandmentsDao(this as AppDatabase);
@@ -2011,11 +2067,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   PrayersDao get prayersDao => _prayersDao ??= PrayersDao(this as AppDatabase);
   GuidesDao _guidesDao;
   GuidesDao get guidesDao => _guidesDao ??= GuidesDao(this as AppDatabase);
-  CountsDao _countsDao;
-  CountsDao get countsDao => _countsDao ??= CountsDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [commandments, examinations, prayers, guides, counts];
+      [commandments, examinations, prayers, guides, inspirations];
 }

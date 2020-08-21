@@ -8,4 +8,5 @@ part of 'prayers_dao.dart';
 
 mixin _$PrayersDaoMixin on DatabaseAccessor<AppDatabase> {
   $PrayersTable get prayers => attachedDatabase.prayers;
+  $InspirationsTable get inspirations => attachedDatabase.inspirations;
 }

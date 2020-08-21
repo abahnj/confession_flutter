@@ -31,6 +31,8 @@ class Examinations extends Table {
 
   TextColumn get description => text().named('DESCRIPTION')();
 
+  TextColumn get activeText => text().named('DESCRIPTION_ACTIVE')();
+
   IntColumn get count => integer().named('COUNT').withDefault(Constant(0))();
 
   @override
@@ -108,5 +110,11 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
 
   Future<int> updateCountForExamination(Examination examination) {
     return into(examinations).insertOnConflictUpdate(examination);
+  }
+
+  Stream<List<Examination>> getActiveExaminations() {
+    return (select(examinations)
+          ..where((tbl) => tbl.count.isBiggerThanValue(0)))
+        .watch();
   }
 }
