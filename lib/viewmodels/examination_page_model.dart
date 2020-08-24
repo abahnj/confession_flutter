@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/daos/examinations_dao.dart';
 import 'package:confession_flutter/data/user.dart';
+import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:confession_flutter/viewmodels/base_model.dart';
 
 class ExaminationPageViewModel extends BaseModel {
@@ -78,7 +79,17 @@ class ExaminationPageViewModel extends BaseModel {
     return titles[commandmentId];
   }
 
-  void updateCountForExamination(Examination examination) {
+  void updateCountForExamination(int index, countValue) {
+    var examination = examinations[index];
+
+    if (countValue == CountValue.decrement && examination.count > 0) {
+      examination = examination.copyWith(count: examination.count - 1);
+    } else if (countValue == CountValue.increment) {
+      examination = examination.copyWith(count: examination.count + 1);
+    } else {
+      return;
+    }
+
     _dao.updateCountForExamination(examination).then((value) {
       notifyListeners();
     });

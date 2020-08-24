@@ -21,7 +21,7 @@ class ConfessionPageTwo extends StatelessWidget {
       onModelReady: (model) => model.getActiveExaminations(),
       builder: (context, model, _) => Scaffold(
         body: Scaffold(
-          appBar: rootAppBar(),
+          appBar: rootAppBar(context),
           body: Container(
             child: Column(
               mainAxisSize: MainAxisSize.max,

@@ -16,11 +16,11 @@ class ConfessionPageThree extends StatelessWidget {
         dao: context.read<AppDatabase>().prayersDao,
       ),
       onModelReady: (model) {
-        model.getPrayerForId(5);
+        model.getPrayerForId(2);
         model.getRandomInspiration();
       },
       builder: (context, model, _) => Scaffold(
-        appBar: rootAppBar(),
+        appBar: rootAppBar(context),
         body: Container(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 16, 16, 0),

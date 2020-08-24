@@ -52,7 +52,7 @@ class CommandmentsPage extends StatelessWidget {
     return ViewModelBuilder<CommandmentsPageViewModel>.reactive(
       viewModelBuilder: () => CommandmentsPageViewModel(
           dao: context.read<AppDatabase>().commandmentsDao),
-      staticChild: rootAppBar(),
+      staticChild: rootAppBar(context),
       onModelReady: (model) {
         model.getAllCommandment();
       },

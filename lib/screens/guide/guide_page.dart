@@ -35,7 +35,7 @@ class GuidePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: rootAppBar(title: title),
+      appBar: rootAppBar(context, title: title),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,

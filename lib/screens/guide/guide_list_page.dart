@@ -15,7 +15,7 @@ class GuideListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: rootAppBar(title: 'Guide'),
+      appBar: rootAppBar(context, title: 'Guide'),
       body: ViewModelBuilder<GuideListViewModel>.reactive(
         viewModelBuilder: () => GuideListViewModel(
           dao: Provider.of<AppDatabase>(context).guidesDao,

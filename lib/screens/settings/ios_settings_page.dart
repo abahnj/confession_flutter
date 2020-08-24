@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
+import '../../constants.dart';
 import '../../theme_prefs.dart';
 
 class iOSSettingsPage extends StatelessWidget {
@@ -27,7 +28,7 @@ class iOSSettingsPage extends StatelessWidget {
           onSelected: (themeMode) {
             context.read<ThemeStyle>().userThemeMode = themeMode;
           },
-          currentSelection: Provider.of<ThemeState>(context).userThemeMode,
+          currentSelection: context.watch<ThemeState>().userThemeMode,
           items: [
             CSSelectionItem(
               value: ThemeMode.system,
@@ -81,7 +82,7 @@ class iOSSettingsPage extends StatelessWidget {
         CSButton(
           child: Text('Share'),
           pressed: () {
-            print('It works!');
+            Share.share(SHARE_TEXT, subject: 'Feedback');
           },
           buttonType: CSButtonType.DEFAULT,
           style: CSWidgetStyle(
@@ -93,9 +94,7 @@ class iOSSettingsPage extends StatelessWidget {
         ),
         CSButton(
           child: Text('Send Feedback'),
-          pressed: () {
-            Share.share('Check this out', subject: 'Feedback');
-          },
+          pressed: () {},
           buttonType: CSButtonType.DEFAULT,
           style: CSWidgetStyle(
             icon: Icon(

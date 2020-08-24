@@ -39,7 +39,7 @@ class PrayersPage extends StatelessWidget {
       onModelReady: (model) {
         model.getAllPrayers();
       },
-      staticChild: rootAppBar(),
+      staticChild: rootAppBar(context),
       builder: (context, model, child) => Scaffold(
         appBar: child,
         body: ListView.builder(

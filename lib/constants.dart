@@ -73,3 +73,6 @@ const int MINUTE_IN_MILLIS = 60 * SECOND_IN_MILLIS;
 const int HOUR_IN_MILLIS = 60 * MINUTE_IN_MILLIS;
 const int DAY_IN_MILLIS = HOUR_IN_MILLIS * 24;
 const int WEEK_IN_MILLIS = 7 * DAY_IN_MILLIS;
+
+const String SHARE_TEXT =
+    'An app that helps you become the best Catholic possible. Designed to be used in the confessional, this app is the perfect aid for every penitent. \nhttps://play.google.com/store/apps/details?id=com.abahnj.confession ';

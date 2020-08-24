@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 enum MenuOptions { edit, delete, decrement, resetCount }
+enum CountValue { increment, decrement }
 
 class ExaminationPage extends StatelessWidget {
   static const String Id = '/examinationPage';
@@ -22,7 +23,7 @@ class ExaminationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: rootAppBar(),
+      appBar: rootAppBar(context),
       body: SafeArea(
         child: ViewModelBuilder<ExaminationPageViewModel>.reactive(
           createNewModelOnInsert: true,
@@ -47,7 +48,7 @@ class ExaminationPage extends StatelessWidget {
                         model.getCommandmentTitle(commandmentId),
                         style: Theme.of(context)
                             .textTheme
-                            .headline5
+                            .headline6
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -63,15 +64,13 @@ class ExaminationPage extends StatelessWidget {
 
                           return ListCard(
                             onTap: () => model.updateCountForExamination(
-                              examination.copyWith(
-                                count: examination.count + 1,
-                              ),
-                            ),
+                                index, CountValue.increment),
                             onLongPress: (details) async {
                               var selection = Platform.isIOS
                                   ? await iOSDialog(context)
                                   : await showAndroidMenu(
                                       context, overlay, details);
+                              performMenuAction(selection, model, index);
                             },
                             title: examination.description,
                             trailing: Column(
@@ -120,6 +119,24 @@ class ExaminationPage extends StatelessWidget {
   }
 }
 
+void performMenuAction(
+    MenuOptions selection, ExaminationPageViewModel model, int index) {
+  switch (selection) {
+    case MenuOptions.edit:
+      // TODO: Handle this case.
+      break;
+    case MenuOptions.delete:
+      // TODO: Handle this case.
+      break;
+    case MenuOptions.decrement:
+      model.updateCountForExamination(index, CountValue.decrement);
+      break;
+    case MenuOptions.resetCount:
+      // TODO: Handle this case.
+      break;
+  }
+}
+
 const Text decrementText = Text('Count - 1');
 const Text editText = Text('Edit');
 const Text deleteText = Text('Delete');
@@ -132,7 +149,9 @@ Future<MenuOptions> iOSDialog(BuildContext context) async =>
       builder: (BuildContext context) => CupertinoActionSheet(
         actions: [
           CupertinoActionSheetAction(
-            onPressed: () => Navigator.pop(context, MenuOptions.decrement),
+            onPressed: () {
+              Navigator.pop(context, MenuOptions.decrement);
+            },
             child: decrementText,
           ),
           CupertinoActionSheetAction(

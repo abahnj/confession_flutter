@@ -19,7 +19,7 @@ class PrayersDetailPage extends StatelessWidget {
       ),
       onModelReady: (model) => model.getPrayerForId(prayerId),
       builder: (context, model, _) => Scaffold(
-        appBar: rootAppBar(),
+        appBar: rootAppBar(context),
         body: SingleChildScrollView(
           child: Column(
             children: [

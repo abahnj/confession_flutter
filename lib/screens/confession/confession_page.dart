@@ -2,7 +2,6 @@ import 'package:confession_flutter/components/confession_page_button.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/user.dart';
-import 'package:confession_flutter/screens/confession/confession_page_four.dart';
 import 'package:confession_flutter/screens/confession/confession_page_three.dart';
 import 'package:confession_flutter/screens/confession/confession_page_two.dart';
 import 'package:confession_flutter/utils.dart';
@@ -26,8 +25,6 @@ class ConfessionPage extends StatelessWidget {
         return ConfessionPageTwo();
       case confessionPageThree:
         return ConfessionPageThree();
-      case confessionPageFour:
-        return ConfessionPageFour();
     }
   };
 
@@ -36,7 +33,7 @@ class ConfessionPage extends StatelessWidget {
     var timeSinceLast = context.select((User user) => user.lastConfession);
     var timeSinceRepresentation = getTimeAgo(timeSinceLast);
     return Scaffold(
-      appBar: rootAppBar(),
+      appBar: rootAppBar(context),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,

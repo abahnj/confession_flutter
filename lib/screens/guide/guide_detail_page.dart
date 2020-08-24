@@ -9,7 +9,7 @@ class GuideDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: rootAppBar(),
+      appBar: rootAppBar(context),
       body: SingleChildScrollView(
         child: Card(
           margin: EdgeInsets.symmetric(vertical: 16, horizontal: 16),

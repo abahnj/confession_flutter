@@ -4,14 +4,18 @@ import 'package:confession_flutter/screens/settings_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:share/share.dart';
 
 import '../constants.dart';
 
-AppBar rootAppBar({String title = kAppName}) {
+AppBar rootAppBar(BuildContext context, {String title = kAppName}) {
   return AppBar(
     title: PlatformText(
       title,
-      style: TextStyle(fontFamily: 'RobotoMono', fontSize: 34),
+      style: Theme.of(context)
+          .textTheme
+          .headline6
+          .copyWith(fontFamily: 'RobotoMono'),
     ),
     actions: <Widget>[
       if (Platform.isAndroid)
@@ -20,7 +24,9 @@ AppBar rootAppBar({String title = kAppName}) {
             Icons.share,
             color: Colors.red,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Share.share(SHARE_TEXT, subject: 'Share');
+          },
         ),
       PlatformIconButton(
         onPressed: () {

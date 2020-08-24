@@ -1,7 +1,9 @@
 import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/prefs.dart';
+import 'package:confession_flutter/theme_prefs.dart';
 import 'package:confession_flutter/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AndroidSettingsPage extends StatelessWidget {
   const AndroidSettingsPage({
@@ -15,6 +17,71 @@ class AndroidSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, top: 16),
+          child: Text(
+            'Appearance',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        ListTile(
+          title: Text(
+            'Theme',
+          ),
+          subtitle: Text(
+            Utils.getEnumTitle(
+              context
+                  .select((ThemeState value) => value.userThemeMode.toString()),
+            ),
+          ),
+          onTap: () {
+            showDialog(
+              context: context,
+              useRootNavigator: false,
+              builder: (context) => SimpleDialog(
+                title: Center(
+                  child: Text(
+                    'Gender',
+                  ),
+                ),
+                children: <Widget>[
+                  RadioListTile<ThemeMode>(
+                    title: Text('System'),
+                    value: ThemeMode.system,
+                    groupValue: context.watch<ThemeState>().userThemeMode,
+                    onChanged: (gender) {
+                      context.read<ThemeStyle>().userThemeMode =
+                          ThemeMode.system;
+                      Navigator.pop(context);
+                    },
+                  ),
+                  RadioListTile<ThemeMode>(
+                    title: Text('Dark'),
+                    value: ThemeMode.dark,
+                    groupValue: context.watch<ThemeState>().userThemeMode,
+                    onChanged: (gender) {
+                      context.read<ThemeStyle>().userThemeMode = ThemeMode.dark;
+                      Navigator.pop(context);
+                    },
+                  ),
+                  RadioListTile<ThemeMode>(
+                    title: Text('Light'),
+                    value: ThemeMode.light,
+                    groupValue: context.watch<ThemeState>().userThemeMode,
+                    onChanged: (gender) {
+                      context.read<ThemeStyle>().userThemeMode =
+                          ThemeMode.light;
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
         Padding(
           padding: const EdgeInsets.only(left: 16.0, top: 16),
           child: Text(
