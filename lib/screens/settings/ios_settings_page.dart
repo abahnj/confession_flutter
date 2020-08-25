@@ -1,10 +1,10 @@
 import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/screens/settings/profile_page.dart';
+import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
@@ -53,12 +53,9 @@ class iOSSettingsPage extends StatelessWidget {
         ),
         CSLink(
           title: 'Date of Last Confession',
-          detail: context.select((User user) {
-            var myLocale = Localizations.localeOf(context);
-
-            return DateFormat.yMMMEd(myLocale.toLanguageTag())
-                .format(DateTime.parse(user.lastConfession));
-          }),
+          detail: context.select(
+            (User user) => getDateString(context, user.lastConfession),
+          ),
           cellType: CellType.detailRightStyle,
           onPressed: () => showCupertinoModalPopup(
             context: context,

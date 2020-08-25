@@ -33,8 +33,9 @@ class AndroidSettingsPage extends StatelessWidget {
           ),
           subtitle: Text(
             Utils.getEnumTitle(
-              context
-                  .select((ThemeState value) => value.userThemeMode.toString()),
+              context.select(
+                (ThemeState value) => value.userThemeMode.toString(),
+              ),
             ),
           ),
           onTap: () {
@@ -98,7 +99,9 @@ class AndroidSettingsPage extends StatelessWidget {
           ),
           subtitle: Text(
             Utils.getEnumTitle(
-              prefs.user.gender.toString(),
+              context.select(
+                (User value) => value.gender.toString(),
+              ),
             ),
           ),
           onTap: () {
@@ -141,7 +144,9 @@ class AndroidSettingsPage extends StatelessWidget {
           ),
           subtitle: Text(
             Utils.getEnumTitle(
-              prefs.user.age.toString(),
+              context.select(
+                (User value) => value.age.toString(),
+              ),
             ),
           ),
           onTap: () {
@@ -193,7 +198,9 @@ class AndroidSettingsPage extends StatelessWidget {
           ),
           subtitle: Text(
             Utils.getEnumTitle(
-              prefs.user.vocation.toString(),
+              context.select(
+                (User value) => value.vocation.toString(),
+              ),
             ),
           ),
           onTap: () {
@@ -252,14 +259,20 @@ class AndroidSettingsPage extends StatelessWidget {
           title: Text(
             'Date of Last Confession',
           ),
-          subtitle: Text('1 January 1970'),
-          onTap: () {
-            showDatePicker(
+          subtitle: Text(
+            context.select(
+              (User user) => getDateString(context, user.lastConfession),
+            ),
+          ),
+          onTap: () async {
+            var date = await showDatePicker(
                 context: context,
                 useRootNavigator: false,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(2010),
                 lastDate: DateTime.now());
+
+            if (date != null) prefs.lastConfession = date.toString();
           },
         ),
         Divider(

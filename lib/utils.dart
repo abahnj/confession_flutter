@@ -1,5 +1,6 @@
 import 'package:confession_flutter/theme_prefs.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class Utils {
@@ -58,4 +59,11 @@ String getTimeAgo(String time) {
   } else {
     return 'a day';
   }
+}
+
+String getDateString(BuildContext context, String date) {
+  var myLocale = Localizations.localeOf(context);
+
+  return DateFormat.yMMMEd(myLocale.toLanguageTag())
+      .format(DateTime.parse(date));
 }

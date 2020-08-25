@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:confession_flutter/components/confession_page_button.dart';
 import 'package:confession_flutter/components/list_card.dart';
-import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/viewmodels/examination_page_model.dart';
@@ -22,101 +20,94 @@ class ExaminationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: rootAppBar(context),
-      body: SafeArea(
-        child: ViewModelBuilder<ExaminationPageViewModel>.reactive(
-          createNewModelOnInsert: true,
-          viewModelBuilder: () => ExaminationPageViewModel(
-            dao: Provider.of<AppDatabase>(context).examinationsDao,
-            user: Provider.of<User>(context),
-          ),
-          onModelReady: (model) {
-            model.getExaminationsForUserAndId(commandmentId);
-            model.setNeighbouringIds(commandmentId);
-          },
-          disposeViewModel: false,
-          builder: (context, model, _) {
-            return Scaffold(
-              body: SafeArea(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 8),
-                      child: Text(
-                        model.getCommandmentTitle(commandmentId),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: model.examinations.length,
-                        itemBuilder: (context, index) {
-                          var examination = model.examinations[index];
-                          final RenderBox overlay =
-                              Overlay.of(context).context.findRenderObject();
-
-                          return ListCard(
-                            onTap: () => model.updateCountForExamination(
-                                index, CountValue.increment),
-                            onLongPress: (details) async {
-                              var selection = Platform.isIOS
-                                  ? await iOSDialog(context)
-                                  : await showAndroidMenu(
-                                      context, overlay, details);
-                              performMenuAction(selection, model, index);
-                            },
-                            title: examination.description,
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  examination.count.toString(),
-                                  style: Theme.of(context).textTheme.headline6,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ConfessionPageButton(
-                            onTap: () => Navigator.pushReplacementNamed(
-                                context, ExaminationPage.Id,
-                                arguments: model.previousCommandmentId),
-                            text: 'Previous',
-                          ),
-                          ConfessionPageButton(
-                            onTap: () => Navigator.pushReplacementNamed(
-                                context, ExaminationPage.Id,
-                                arguments: model.nextCommandmentId),
-                            text: 'Next',
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
+    return ViewModelBuilder<ExaminationPageViewModel>.reactive(
+      createNewModelOnInsert: true,
+      viewModelBuilder: () => ExaminationPageViewModel(
+        dao: Provider.of<AppDatabase>(context).examinationsDao,
+        user: Provider.of<User>(context),
       ),
+      onModelReady: (model) {
+        model.getExaminationsForUserAndId(commandmentId);
+        model.setNeighbouringIds(commandmentId);
+      },
+      disposeViewModel: false,
+      builder: (context, model, _) {
+        return Scaffold(
+          body: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                  child: Text(
+                    model.getCommandmentTitle(commandmentId),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: model.examinations.length,
+                    itemBuilder: (context, index) {
+                      var examination = model.examinations[index];
+                      final RenderBox overlay =
+                          Overlay.of(context).context.findRenderObject();
+
+                      return ListCard(
+                        onTap: () => model.updateCountForExamination(
+                            index, CountValue.increment),
+                        onLongPress: (details) async {
+                          var selection = Platform.isIOS
+                              ? await iOSDialog(context)
+                              : await showAndroidMenu(
+                                  context, overlay, details);
+                          performMenuAction(selection, model, index);
+                        },
+                        title: examination.description,
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              examination.count.toString(),
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
+}
+
+Route _createRoute(int previousCommandmentId) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => ExaminationPage(
+      commandmentId: previousCommandmentId,
+    ),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = Offset(-1.0, 0);
+      var end = Offset.zero;
+      var curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }
 
 void performMenuAction(

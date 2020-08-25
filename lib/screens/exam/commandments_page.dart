@@ -4,6 +4,7 @@ import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/screens/exam/examination.dart';
+import 'package:confession_flutter/screens/exam/examination_page_view.dart';
 import 'package:confession_flutter/viewmodels/commandments_page_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +44,12 @@ class CommandmentsPage extends StatelessWidget {
         return ExaminationPage(
           commandmentId: commandmentId,
         );
-      case '/text':
-        return null;
+      case ExaminationPageView.Id:
+        List arguments = settings.arguments;
+        return ExaminationPageView(
+          currentPage: arguments[0],
+          pageList: arguments[1],
+        );
     }
   };
   @override
@@ -67,11 +72,13 @@ class CommandmentsPage extends StatelessWidget {
               itemCount: commandments.length,
               itemBuilder: (context, index) => ListCard(
                 onTap: () {
-                  Navigator.pushNamed(
+                  /*Navigator.pushNamed(
                     context,
                     ExaminationPage.Id,
                     arguments: commandments[index].id,
-                  );
+                  );*/
+                  Navigator.pushNamed(context, ExaminationPageView.Id,
+                      arguments: [index, commandments]);
                 },
                 title: commandments[index].commandment,
                 subtitle: commandments[index].commandmentText,
