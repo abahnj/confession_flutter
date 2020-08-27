@@ -17,9 +17,9 @@ class ExaminationPageView extends StatefulWidget {
 }
 
 class _ExaminationPageViewState extends State<ExaminationPageView> {
-  static const _kDuration = const Duration(milliseconds: 300);
+  final _kDuration = const Duration(milliseconds: 300);
 
-  static const _kCurve = Curves.ease;
+  final _kCurve = Curves.ease;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,7 @@ class _ExaminationPageViewState extends State<ExaminationPageView> {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: DotsIndicator(
+                  color: Theme.of(context).colorScheme.onSurface,
                   controller: _controller,
                   itemCount: widget.pageList.length,
                   onPageSelected: (int page) {

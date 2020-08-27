@@ -1,6 +1,5 @@
 import 'package:confession_flutter/provider_setup.dart';
 import 'package:confession_flutter/screens/app_intro_page.dart';
-import 'package:confession_flutter/screens/app_lock_page.dart';
 import 'package:confession_flutter/screens/home_page.dart';
 import 'package:confession_flutter/screens/settings/profile_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
@@ -10,18 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'constants.dart';
-import 'screens/app_lock.dart';
 
 void main() => runApp(
       MultiProvider(
         providers: providers,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.light,
-          home: AppLock(
-            builder: (args) => MyApp(),
-            lockScreen: PassCodeScreen(),
-          ),
+          themeMode: ThemeMode.system,
+          home: MyApp(),
         ),
       ),
     );
@@ -46,3 +41,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/*
+AppLock(
+builder: (args) => MyApp(),
+lockScreen: PassCodeScreen(),
+),*/

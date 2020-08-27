@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage>
     _faders = List<AnimationController>.generate(
         _allDestinations.length,
         (_) => AnimationController(
-            vsync: this, duration: Duration(milliseconds: 200)),
+            vsync: this, duration: Duration(milliseconds: 300)),
         growable: false);
     _faders[_currentIndex].value = 1.0;
     _destinationKeys = List<Key>.generate(

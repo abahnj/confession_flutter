@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:confession_flutter/constants.dart';
+import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 typedef DeleteCode = void Function();
 typedef PassCodeVerify = Future<bool> Function(List<int> passcode);
@@ -149,132 +152,129 @@ class _LockScreenState extends State<LockScreen> {
       _fingerPrint();
     });
     return Theme(
-      data: ThemeData(brightness: MediaQuery.of(context).platformBrightness),
+      data: ThemeData(brightness: Utils.returnBrightness(context)),
       child: Scaffold(
         body: Stack(
           children: <Widget>[
             Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(widget.bgImage),
-                                fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(
-                                  Colors.grey.shade800,
-                                  BlendMode.hardLight,
-                                ),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: Platform.isIOS ? 60 : 40,
-                                ),
-                                Text(
-                                  widget.title,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Open Sans'),
-                                ),
-                                SizedBox(
-                                  height: Platform.isIOS ? 50 : 30,
-                                ),
-                                CodePanel(
-                                  codeLength: widget.passLength,
-                                  currentLength: _currentCodeLength,
-                                  borderColor: widget.borderColor,
-                                  foregroundColor: widget.foregroundColor,
-                                  deleteCode: _deleteCode,
-                                  fingerVerify: widget.fingerVerify,
-                                  status: _currentState,
-                                ),
-                                SizedBox(
-                                  height: Platform.isIOS ? 30 : 15,
-                                ),
-                                Text(
-                                  'INPUT PASSCODE',
-                                  style: TextStyle(
-                                      color: Colors.white70.withOpacity(0.3),
-                                      fontSize: 18,
-                                      fontFamily: 'Open Sans'),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (widget.showFingerPass)
-                            Positioned(
-                              top: MediaQuery.of(context).size.height /
-                                  (Platform.isIOS ? 4 : 5),
-                              left: 20,
-                              bottom: 10,
-                              child: GestureDetector(
-                                onTap: () {
-                                  widget.fingerFunction();
-                                },
-                                child: Image.asset(
-                                  widget.fingerPrintImage,
-                                  height: 40,
-                                  width: 40,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: Platform.isIOS ? 5 : 6,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 0, top: 0),
-                      child:
-                          NotificationListener<OverscrollIndicatorNotification>(
-                        onNotification: (overscroll) {
-                          overscroll.disallowGlow();
-                          return null;
-                        },
-                        child: GridView.count(
-                          crossAxisCount: 3,
-                          childAspectRatio: 1.6,
-                          mainAxisSpacing: 35,
-                          padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(imagesRoot + 'splash.png'),
+                ),
+                color: Colors.white,
+              ),
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        child: Stack(
                           children: <Widget>[
-                            buildContainerCircle(1),
-                            buildContainerCircle(2),
-                            buildContainerCircle(3),
-                            buildContainerCircle(4),
-                            buildContainerCircle(5),
-                            buildContainerCircle(6),
-                            buildContainerCircle(7),
-                            buildContainerCircle(8),
-                            buildContainerCircle(9),
-                            buildRemoveIcon(Icons.close),
-                            buildContainerCircle(0),
-                            buildContainerIcon(Icons.arrow_back),
+                            Container(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: Platform.isIOS ? 60 : 40,
+                                  ),
+                                  Text(
+                                    widget.title,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Open Sans'),
+                                  ),
+                                  SizedBox(
+                                    height: Platform.isIOS ? 50 : 30,
+                                  ),
+                                  CodePanel(
+                                    codeLength: widget.passLength,
+                                    currentLength: _currentCodeLength,
+                                    borderColor: widget.borderColor,
+                                    foregroundColor: widget.foregroundColor,
+                                    deleteCode: _deleteCode,
+                                    fingerVerify: widget.fingerVerify,
+                                    status: _currentState,
+                                  ),
+                                  SizedBox(
+                                    height: Platform.isIOS ? 30 : 15,
+                                  ),
+                                  Text(
+                                    'INPUT PASSCODE',
+                                    style: TextStyle(
+                                        color: Colors.white70.withOpacity(0.3),
+                                        fontSize: 18,
+                                        fontFamily: 'Open Sans'),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                  )
-                ],
+                    Expanded(
+                      flex: Platform.isIOS ? 5 : 6,
+                      child: Container(
+                        padding: EdgeInsets.only(left: 0, top: 0),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  buildContainerCircle(1),
+                                  buildContainerCircle(2),
+                                  buildContainerCircle(3),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  buildContainerCircle(4),
+                                  buildContainerCircle(5),
+                                  buildContainerCircle(6),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  buildContainerCircle(7),
+                                  buildContainerCircle(8),
+                                  buildContainerCircle(9),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  buildRemoveIcon(Icons.close),
+                                  buildContainerCircle(0),
+                                  buildContainerIcon(Icons.arrow_back),
+                                ],
+                              ),
+                            ),
+                            PlatformButton(
+                              child: Text(
+                                  'Unlock with ${Platform.isIOS ? 'Face ID' : 'Biometrics'}'),
+                              onPressed: () {},
+                              materialFlat: (_, __) => MaterialFlatButtonData(),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ],
@@ -284,16 +284,17 @@ class _LockScreenState extends State<LockScreen> {
   }
 
   Widget buildContainerCircle(int number) {
-    return MaterialButton(
-      height: 50,
-      shape: CircleBorder(),
-      onPressed: () => _onCodeClick(number),
-      child: Center(
-        child: Text(
-          number.toString(),
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.normal,
+    return Expanded(
+      child: MaterialButton(
+        shape: CircleBorder(),
+        onPressed: () => _onCodeClick(number),
+        child: Center(
+          child: Text(
+            number.toString(),
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.normal,
+            ),
           ),
         ),
       ),
@@ -301,28 +302,53 @@ class _LockScreenState extends State<LockScreen> {
   }
 
   Widget buildRemoveIcon(IconData icon) {
-    return MaterialButton(
-      height: 50,
-      shape: CircleBorder(),
-      onPressed: () => 0 < _currentCodeLength ? _deleteAllCode() : null,
-      child: Center(
-        child: Icon(
-          icon,
-          size: 30,
+    /*Positioned(
+      top: MediaQuery.of(context).size.height /
+          (Platform.isIOS ? 4 : 5),
+      left: 20,
+      bottom: 10,
+      child: GestureDetector(
+        onTap: () {
+          widget.fingerFunction();
+        },
+        child: Image.asset(
+          widget.fingerPrintImage,
+          height: 40,
+          width: 40,
+          color: Colors.white,
         ),
       ),
+    )*/
+    return Expanded(
+      child: Platform.isAndroid && widget.showFingerPass
+          ? MaterialButton(
+              height: 50,
+              shape: CircleBorder(),
+              onPressed: () => widget.fingerFunction(),
+              child: Center(
+                child: Image.asset(
+                  widget.fingerPrintImage,
+                  height: 30,
+                  width: 30,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          : Container(),
     );
   }
 
   Widget buildContainerIcon(IconData icon) {
-    return MaterialButton(
-      height: 50,
-      shape: CircleBorder(),
-      onPressed: () => (0 < _currentCodeLength) ? _deleteCode() : null,
-      child: Center(
-        child: Icon(
-          icon,
-          size: 30,
+    return Expanded(
+      child: MaterialButton(
+        height: 50,
+        shape: CircleBorder(),
+        onPressed: () => (0 < _currentCodeLength) ? _deleteCode() : null,
+        child: Center(
+          child: Icon(
+            icon,
+            size: 30,
+          ),
         ),
       ),
     );

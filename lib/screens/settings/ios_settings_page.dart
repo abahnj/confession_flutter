@@ -91,7 +91,9 @@ class iOSSettingsPage extends StatelessWidget {
         ),
         CSButton(
           child: Text('Send Feedback'),
-          pressed: () {},
+          pressed: () {
+            sendFeedbackEmail();
+          },
           buttonType: CSButtonType.DEFAULT,
           style: CSWidgetStyle(
             icon: Icon(
@@ -108,7 +110,7 @@ class iOSSettingsPage extends StatelessWidget {
             buttonType: CSButtonType.DESTRUCTIVE,
             child: Text('Reset App'),
             pressed: () {
-              showCupertinoDialog(
+              return showCupertinoDialog(
                   context: context,
                   builder: (context) => CupertinoAlertDialog(
                         title: Text('Reset App'),
@@ -126,7 +128,6 @@ class iOSSettingsPage extends StatelessWidget {
                             child: Text('Yes'),
                             isDestructiveAction: true,
                             onPressed: () {
-                              UnimplementedError('Implement me');
                               Navigator.of(context).pop();
                             },
                           )

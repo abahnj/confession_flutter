@@ -16,8 +16,7 @@ List<SingleChildWidget> providers = [
 List<SingleChildWidget> independentServices = [
   Provider<AppDatabase>(
     create: (_) => AppDatabase(),
-    lazy: false,
-    dispose: (_, db) => db.close(),
+    dispose: (context, db) => db.close(),
   ),
   ChangeNotifierProvider<PrefsNotifier>(
     create: (_) => PrefsNotifier(),

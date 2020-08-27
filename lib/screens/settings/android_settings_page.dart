@@ -296,6 +296,28 @@ class AndroidSettingsPage extends StatelessWidget {
           subtitle: Text(
             'WARNING! This will delete all personal application data including added examinations',
           ),
+          onTap: () {
+            /*return showDialog<void>(
+            useRootNavigator: false,
+            context: context,
+            barrierDismissible:
+                true, // false = user must tap button, true = tap outside dialog
+            builder: (BuildContext dialogContext) {
+              return AlertDialog(
+                title: Text('title'),
+                content: Text('dialogBody'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('buttonText'),
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop(); // Dismiss alert dialog
+                    },
+                  ),
+                ],
+              );
+            },
+          );*/
+          },
         ),
         Padding(
           padding: const EdgeInsets.only(left: 16.0, top: 16),
@@ -315,6 +337,9 @@ class AndroidSettingsPage extends StatelessWidget {
           subtitle: Text(
             'Report technical issues or suggest new features',
           ),
+          onTap: () {
+            sendFeedbackEmail();
+          },
         ),
       ],
     );

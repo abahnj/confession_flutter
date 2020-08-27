@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:confession_flutter/data/daos/commandments_dao.dart';
 import 'package:confession_flutter/data/daos/examinations_dao.dart';
 import 'package:confession_flutter/data/daos/prayers_dao.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moor/ffi.dart';
 import 'package:moor/moor.dart';
@@ -13,14 +14,14 @@ import 'daos/guides_dao.dart';
 
 part 'app_database.g.dart';
 
-LazyDatabase _openConnection() {
+LazyDatabase _openConnection({bool reset = false}) {
   // after
   return LazyDatabase(() async {
     var databasesPath = await getApplicationDocumentsDirectory();
     var path = join(databasesPath.path, 'confession.db');
 
     final file = File(path);
-    if (!await file.exists()) {
+    if (reset || !await file.exists()) {
       // copy the file from an asset, or network, or any other source
       // Should happen only the first time you launch your application
       print('Creating new copy from asset');
