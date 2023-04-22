@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:confession_flutter/data/daos/commandments_dao.dart';
 import 'package:confession_flutter/data/daos/examinations_dao.dart';
 import 'package:confession_flutter/data/daos/prayers_dao.dart';
-import 'package:flutter/material.dart';
+import 'package:drift/drift.dart';
 import 'package:flutter/services.dart';
-import 'package:moor/ffi.dart';
-import 'package:moor/moor.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -42,11 +40,25 @@ LazyDatabase _openConnection({bool reset = false}) {
     } else {
       print('Opening existing database');
     }
-    return VmDatabase(file);
+    throw Exception('');
   });
 }
 
-@UseMoor(
+QueryExecutor databaseWithDefaultAsset(File file, String asset) {
+  // A LazyDatabase lets us do async initialization work.
+  return LazyDatabase(() async {
+    if (!await file.exists()) {
+      // Database does not exist yet, use default from asset
+      final content = await rootBundle.load(asset);
+
+      await file.parent.create(recursive: true);
+      await file.writeAsBytes(content.buffer.asUint8List(0));
+    }
+    throw Exception('');
+  });
+}
+
+@DriftDatabase(
     tables: [Commandments, Examinations, Prayers, Guides, Inspirations],
     daos: [CommandmentsDao, ExaminationsDao, PrayersDao, GuidesDao])
 class AppDatabase extends _$AppDatabase {

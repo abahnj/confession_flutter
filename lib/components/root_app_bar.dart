@@ -4,7 +4,7 @@ import 'package:confession_flutter/screens/settings_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../constants.dart';
 
@@ -14,8 +14,8 @@ AppBar rootAppBar(BuildContext context, {String title = kAppName}) {
       title,
       style: Theme.of(context)
           .textTheme
-          .headline6
-          .copyWith(fontFamily: 'RobotoMono'),
+          .titleLarge
+          ?.copyWith(fontFamily: 'RobotoMono'),
     ),
     actions: <Widget>[
       if (Platform.isAndroid)
@@ -32,7 +32,7 @@ AppBar rootAppBar(BuildContext context, {String title = kAppName}) {
         onPressed: () {
           //this helps get nested navigator that is up one level
           //helpful if you have more than two navigators
-          navigatorKey.currentState.pushNamed(SettingsPage.Id);
+          navigatorKey.currentState?.pushNamed(SettingsPage.Id);
         },
         icon: Icon(
           Platform.isAndroid ? Icons.settings : CupertinoIcons.settings,
@@ -62,7 +62,7 @@ AppBar defaultAppBar({String title = kAppName}) {
         onPressed: () {
           //this helps get nested navigator that is up one level
           //helpful if you have more than two navigators
-          navigatorKey.currentState.pushNamed(SettingsPage.Id);
+          navigatorKey.currentState?.pushNamed(SettingsPage.Id);
         },
         icon: Icon(
           Platform.isAndroid ? Icons.settings : CupertinoIcons.settings,

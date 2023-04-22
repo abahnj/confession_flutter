@@ -6,7 +6,7 @@ import 'package:confession_flutter/screens/prayers/prayers_page.dart';
 import 'base_model.dart';
 
 class PrayersPageViewModel extends BaseModel {
-  PrayersPageViewModel({PrayersDao dao}) : _dao = dao;
+  PrayersPageViewModel({required PrayersDao dao}) : _dao = dao;
 
   final PrayersDao _dao;
 

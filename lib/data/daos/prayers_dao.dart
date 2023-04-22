@@ -1,5 +1,5 @@
 import 'package:confession_flutter/data/app_database.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 part 'prayers_dao.g.dart';
 
@@ -27,7 +27,7 @@ class Inspirations extends Table {
   String get tableName => 'INSPIRATION';
 }
 
-@UseDao(tables: [Prayers, Inspirations])
+@DriftAccessor(tables: [Prayers, Inspirations])
 class PrayersDao extends DatabaseAccessor<AppDatabase> with _$PrayersDaoMixin {
   PrayersDao(AppDatabase db) : super(db);
 
@@ -41,8 +41,7 @@ class PrayersDao extends DatabaseAccessor<AppDatabase> with _$PrayersDaoMixin {
 
   void resetExaminationsCount() async {
     final table = db.examinations;
-    var query = await (update(table)
-          ..where((tbl) => tbl.count.isBiggerThanValue(0)))
+    await (update(table)..where((tbl) => tbl.count.isBiggerThanValue(0)))
         .write(ExaminationsCompanion(count: Value(0)));
   }
 }

@@ -81,7 +81,7 @@ class ConfessionPage extends StatelessWidget {
               'THIS APP IS INTENDED TO BE USED DURING THE SACRAMENT OF '
               'RECONCILIATION WITH A CATHOLIC PRIEST ONLY. '
               'THIS IS NOT A SUBSTITUTE FOR A VALID CONFESSION',
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontSize: 12,
                     color: Colors.red,
                   ),

@@ -2,61 +2,150 @@
 
 part of 'app_database.dart';
 
-// **************************************************************************
-// MoorGenerator
-// **************************************************************************
+// ignore_for_file: type=lint
+class $CommandmentsTable extends Commandments
+    with TableInfo<$CommandmentsTable, Commandment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommandmentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      '_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _numberMeta = const VerificationMeta('number');
+  @override
+  late final GeneratedColumn<int> number = GeneratedColumn<int>(
+      'NUMBER', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _commandmentTextMeta =
+      const VerificationMeta('commandmentText');
+  @override
+  late final GeneratedColumn<String> commandmentText = GeneratedColumn<String>(
+      'TEXT', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+      'CATEGORY', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _commandmentMeta =
+      const VerificationMeta('commandment');
+  @override
+  late final GeneratedColumn<String> commandment = GeneratedColumn<String>(
+      'COMMANDMENT', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _customIdMeta =
+      const VerificationMeta('customId');
+  @override
+  late final GeneratedColumn<int> customId = GeneratedColumn<int>(
+      'CUSTOM_ID', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, number, commandmentText, category, commandment, customId];
+  @override
+  String get aliasedName => _alias ?? 'COMMANDMENTS';
+  @override
+  String get actualTableName => 'COMMANDMENTS';
+  @override
+  VerificationContext validateIntegrity(Insertable<Commandment> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('_id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
+    }
+    if (data.containsKey('NUMBER')) {
+      context.handle(_numberMeta,
+          number.isAcceptableOrUnknown(data['NUMBER']!, _numberMeta));
+    } else if (isInserting) {
+      context.missing(_numberMeta);
+    }
+    if (data.containsKey('TEXT')) {
+      context.handle(
+          _commandmentTextMeta,
+          commandmentText.isAcceptableOrUnknown(
+              data['TEXT']!, _commandmentTextMeta));
+    } else if (isInserting) {
+      context.missing(_commandmentTextMeta);
+    }
+    if (data.containsKey('CATEGORY')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['CATEGORY']!, _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('COMMANDMENT')) {
+      context.handle(
+          _commandmentMeta,
+          commandment.isAcceptableOrUnknown(
+              data['COMMANDMENT']!, _commandmentMeta));
+    } else if (isInserting) {
+      context.missing(_commandmentMeta);
+    }
+    if (data.containsKey('CUSTOM_ID')) {
+      context.handle(_customIdMeta,
+          customId.isAcceptableOrUnknown(data['CUSTOM_ID']!, _customIdMeta));
+    }
+    return context;
+  }
 
-// ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Commandment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Commandment(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      number: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}NUMBER'])!,
+      commandmentText: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}TEXT'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}CATEGORY'])!,
+      commandment: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}COMMANDMENT'])!,
+      customId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}CUSTOM_ID']),
+    );
+  }
+
+  @override
+  $CommandmentsTable createAlias(String alias) {
+    return $CommandmentsTable(attachedDatabase, alias);
+  }
+}
+
 class Commandment extends DataClass implements Insertable<Commandment> {
   final int id;
   final int number;
   final String commandmentText;
   final String category;
   final String commandment;
-  final int customId;
-  Commandment(
-      {@required this.id,
-      @required this.number,
-      @required this.commandmentText,
-      @required this.category,
-      @required this.commandment,
+  final int? customId;
+  const Commandment(
+      {required this.id,
+      required this.number,
+      required this.commandmentText,
+      required this.category,
+      required this.commandment,
       this.customId});
-  factory Commandment.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
-    final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    return Commandment(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
-      number: intType.mapFromDatabaseResponse(data['${effectivePrefix}NUMBER']),
-      commandmentText:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}TEXT']),
-      category: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}CATEGORY']),
-      commandment: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}COMMANDMENT']),
-      customId:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['_id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || number != null) {
-      map['NUMBER'] = Variable<int>(number);
-    }
-    if (!nullToAbsent || commandmentText != null) {
-      map['TEXT'] = Variable<String>(commandmentText);
-    }
-    if (!nullToAbsent || category != null) {
-      map['CATEGORY'] = Variable<String>(category);
-    }
-    if (!nullToAbsent || commandment != null) {
-      map['COMMANDMENT'] = Variable<String>(commandment);
-    }
+    map['_id'] = Variable<int>(id);
+    map['NUMBER'] = Variable<int>(number);
+    map['TEXT'] = Variable<String>(commandmentText);
+    map['CATEGORY'] = Variable<String>(category);
+    map['COMMANDMENT'] = Variable<String>(commandment);
     if (!nullToAbsent || customId != null) {
       map['CUSTOM_ID'] = Variable<int>(customId);
     }
@@ -65,18 +154,11 @@ class Commandment extends DataClass implements Insertable<Commandment> {
 
   CommandmentsCompanion toCompanion(bool nullToAbsent) {
     return CommandmentsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      number:
-          number == null && nullToAbsent ? const Value.absent() : Value(number),
-      commandmentText: commandmentText == null && nullToAbsent
-          ? const Value.absent()
-          : Value(commandmentText),
-      category: category == null && nullToAbsent
-          ? const Value.absent()
-          : Value(category),
-      commandment: commandment == null && nullToAbsent
-          ? const Value.absent()
-          : Value(commandment),
+      id: Value(id),
+      number: Value(number),
+      commandmentText: Value(commandmentText),
+      category: Value(category),
+      commandment: Value(commandment),
       customId: customId == null && nullToAbsent
           ? const Value.absent()
           : Value(customId),
@@ -84,44 +166,44 @@ class Commandment extends DataClass implements Insertable<Commandment> {
   }
 
   factory Commandment.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return Commandment(
       id: serializer.fromJson<int>(json['id']),
       number: serializer.fromJson<int>(json['number']),
       commandmentText: serializer.fromJson<String>(json['commandmentText']),
       category: serializer.fromJson<String>(json['category']),
       commandment: serializer.fromJson<String>(json['commandment']),
-      customId: serializer.fromJson<int>(json['customId']),
+      customId: serializer.fromJson<int?>(json['customId']),
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'number': serializer.toJson<int>(number),
       'commandmentText': serializer.toJson<String>(commandmentText),
       'category': serializer.toJson<String>(category),
       'commandment': serializer.toJson<String>(commandment),
-      'customId': serializer.toJson<int>(customId),
+      'customId': serializer.toJson<int?>(customId),
     };
   }
 
   Commandment copyWith(
-          {int id,
-          int number,
-          String commandmentText,
-          String category,
-          String commandment,
-          int customId}) =>
+          {int? id,
+          int? number,
+          String? commandmentText,
+          String? category,
+          String? commandment,
+          Value<int?> customId = const Value.absent()}) =>
       Commandment(
         id: id ?? this.id,
         number: number ?? this.number,
         commandmentText: commandmentText ?? this.commandmentText,
         category: category ?? this.category,
         commandment: commandment ?? this.commandment,
-        customId: customId ?? this.customId,
+        customId: customId.present ? customId.value : this.customId,
       );
   @override
   String toString() {
@@ -137,16 +219,10 @@ class Commandment extends DataClass implements Insertable<Commandment> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          number.hashCode,
-          $mrjc(
-              commandmentText.hashCode,
-              $mrjc(category.hashCode,
-                  $mrjc(commandment.hashCode, customId.hashCode))))));
+  int get hashCode =>
+      Object.hash(id, number, commandmentText, category, commandment, customId);
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Commandment &&
           other.id == this.id &&
@@ -163,7 +239,7 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
   final Value<String> commandmentText;
   final Value<String> category;
   final Value<String> commandment;
-  final Value<int> customId;
+  final Value<int?> customId;
   const CommandmentsCompanion({
     this.id = const Value.absent(),
     this.number = const Value.absent(),
@@ -174,22 +250,22 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
   });
   CommandmentsCompanion.insert({
     this.id = const Value.absent(),
-    @required int number,
-    @required String commandmentText,
-    @required String category,
-    @required String commandment,
+    required int number,
+    required String commandmentText,
+    required String category,
+    required String commandment,
     this.customId = const Value.absent(),
   })  : number = Value(number),
         commandmentText = Value(commandmentText),
         category = Value(category),
         commandment = Value(commandment);
   static Insertable<Commandment> custom({
-    Expression<int> id,
-    Expression<int> number,
-    Expression<String> commandmentText,
-    Expression<String> category,
-    Expression<String> commandment,
-    Expression<int> customId,
+    Expression<int>? id,
+    Expression<int>? number,
+    Expression<String>? commandmentText,
+    Expression<String>? category,
+    Expression<String>? commandment,
+    Expression<int>? customId,
   }) {
     return RawValuesInsertable({
       if (id != null) '_id': id,
@@ -202,12 +278,12 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
   }
 
   CommandmentsCompanion copyWith(
-      {Value<int> id,
-      Value<int> number,
-      Value<String> commandmentText,
-      Value<String> category,
-      Value<String> commandment,
-      Value<int> customId}) {
+      {Value<int>? id,
+      Value<int>? number,
+      Value<String>? commandmentText,
+      Value<String>? category,
+      Value<String>? commandment,
+      Value<int?>? customId}) {
     return CommandmentsCompanion(
       id: id ?? this.id,
       number: number ?? this.number,
@@ -256,132 +332,268 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
   }
 }
 
-class $CommandmentsTable extends Commandments
-    with TableInfo<$CommandmentsTable, Commandment> {
-  final GeneratedDatabase _db;
-  final String _alias;
-  $CommandmentsTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+class $ExaminationsTable extends Examinations
+    with TableInfo<$ExaminationsTable, Examination> {
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('_id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
-  final VerificationMeta _numberMeta = const VerificationMeta('number');
-  GeneratedIntColumn _number;
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExaminationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  GeneratedIntColumn get number => _number ??= _constructNumber();
-  GeneratedIntColumn _constructNumber() {
-    return GeneratedIntColumn(
-      'NUMBER',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _commandmentTextMeta =
-      const VerificationMeta('commandmentText');
-  GeneratedTextColumn _commandmentText;
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      '_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _commandmentIdMeta =
+      const VerificationMeta('commandmentId');
   @override
-  GeneratedTextColumn get commandmentText =>
-      _commandmentText ??= _constructCommandmentText();
-  GeneratedTextColumn _constructCommandmentText() {
-    return GeneratedTextColumn(
-      'TEXT',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _categoryMeta = const VerificationMeta('category');
-  GeneratedTextColumn _category;
+  late final GeneratedColumn<int> commandmentId = GeneratedColumn<int>(
+      'COMMANDMENT_ID', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _adultMeta = const VerificationMeta('adult');
   @override
-  GeneratedTextColumn get category => _category ??= _constructCategory();
-  GeneratedTextColumn _constructCategory() {
-    return GeneratedTextColumn(
-      'CATEGORY',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _commandmentMeta =
-      const VerificationMeta('commandment');
-  GeneratedTextColumn _commandment;
+  late final GeneratedColumn<bool> adult =
+      GeneratedColumn<bool>('ADULT', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("ADULT" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _singleMeta = const VerificationMeta('single');
   @override
-  GeneratedTextColumn get commandment =>
-      _commandment ??= _constructCommandment();
-  GeneratedTextColumn _constructCommandment() {
-    return GeneratedTextColumn(
-      'COMMANDMENT',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _customIdMeta = const VerificationMeta('customId');
-  GeneratedIntColumn _customId;
+  late final GeneratedColumn<bool> single =
+      GeneratedColumn<bool>('SINGLE', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("SINGLE" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _marriedMeta =
+      const VerificationMeta('married');
   @override
-  GeneratedIntColumn get customId => _customId ??= _constructCustomId();
-  GeneratedIntColumn _constructCustomId() {
-    return GeneratedIntColumn(
-      'CUSTOM_ID',
-      $tableName,
-      true,
-    );
-  }
-
+  late final GeneratedColumn<bool> married =
+      GeneratedColumn<bool>('MARRIED', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("MARRIED" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _religiousMeta =
+      const VerificationMeta('religious');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, number, commandmentText, category, commandment, customId];
+  late final GeneratedColumn<bool> religious =
+      GeneratedColumn<bool>('RELIGIOUS', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("RELIGIOUS" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _priestMeta = const VerificationMeta('priest');
   @override
-  $CommandmentsTable get asDslTable => this;
+  late final GeneratedColumn<bool> priest =
+      GeneratedColumn<bool>('PRIEST', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("PRIEST" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _teenMeta = const VerificationMeta('teen');
   @override
-  String get $tableName => _alias ?? 'COMMANDMENTS';
+  late final GeneratedColumn<bool> teen =
+      GeneratedColumn<bool>('TEEN', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("TEEN" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _femaleMeta = const VerificationMeta('female');
   @override
-  final String actualTableName = 'COMMANDMENTS';
+  late final GeneratedColumn<bool> female =
+      GeneratedColumn<bool>('FEMALE', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("FEMALE" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _maleMeta = const VerificationMeta('male');
   @override
-  VerificationContext validateIntegrity(Insertable<Commandment> instance,
+  late final GeneratedColumn<bool> male =
+      GeneratedColumn<bool>('MALE', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("MALE" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _childMeta = const VerificationMeta('child');
+  @override
+  late final GeneratedColumn<bool> child =
+      GeneratedColumn<bool>('CHILD', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("CHILD" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _customIdMeta =
+      const VerificationMeta('customId');
+  @override
+  late final GeneratedColumn<int> customId = GeneratedColumn<int>(
+      'CUSTOM_ID', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'DESCRIPTION', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _activeTextMeta =
+      const VerificationMeta('activeText');
+  @override
+  late final GeneratedColumn<String> activeText = GeneratedColumn<String>(
+      'DESCRIPTION_ACTIVE', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _countMeta = const VerificationMeta('count');
+  @override
+  late final GeneratedColumn<int> count = GeneratedColumn<int>(
+      'COUNT', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: Constant(0));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        commandmentId,
+        adult,
+        single,
+        married,
+        religious,
+        priest,
+        teen,
+        female,
+        male,
+        child,
+        customId,
+        description,
+        activeText,
+        count
+      ];
+  @override
+  String get aliasedName => _alias ?? 'SIN';
+  @override
+  String get actualTableName => 'SIN';
+  @override
+  VerificationContext validateIntegrity(Insertable<Examination> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
     }
-    if (data.containsKey('NUMBER')) {
-      context.handle(_numberMeta,
-          number.isAcceptableOrUnknown(data['NUMBER'], _numberMeta));
-    } else if (isInserting) {
-      context.missing(_numberMeta);
-    }
-    if (data.containsKey('TEXT')) {
+    if (data.containsKey('COMMANDMENT_ID')) {
       context.handle(
-          _commandmentTextMeta,
-          commandmentText.isAcceptableOrUnknown(
-              data['TEXT'], _commandmentTextMeta));
+          _commandmentIdMeta,
+          commandmentId.isAcceptableOrUnknown(
+              data['COMMANDMENT_ID']!, _commandmentIdMeta));
     } else if (isInserting) {
-      context.missing(_commandmentTextMeta);
+      context.missing(_commandmentIdMeta);
     }
-    if (data.containsKey('CATEGORY')) {
-      context.handle(_categoryMeta,
-          category.isAcceptableOrUnknown(data['CATEGORY'], _categoryMeta));
-    } else if (isInserting) {
-      context.missing(_categoryMeta);
-    }
-    if (data.containsKey('COMMANDMENT')) {
+    if (data.containsKey('ADULT')) {
       context.handle(
-          _commandmentMeta,
-          commandment.isAcceptableOrUnknown(
-              data['COMMANDMENT'], _commandmentMeta));
+          _adultMeta, adult.isAcceptableOrUnknown(data['ADULT']!, _adultMeta));
     } else if (isInserting) {
-      context.missing(_commandmentMeta);
+      context.missing(_adultMeta);
+    }
+    if (data.containsKey('SINGLE')) {
+      context.handle(_singleMeta,
+          single.isAcceptableOrUnknown(data['SINGLE']!, _singleMeta));
+    } else if (isInserting) {
+      context.missing(_singleMeta);
+    }
+    if (data.containsKey('MARRIED')) {
+      context.handle(_marriedMeta,
+          married.isAcceptableOrUnknown(data['MARRIED']!, _marriedMeta));
+    } else if (isInserting) {
+      context.missing(_marriedMeta);
+    }
+    if (data.containsKey('RELIGIOUS')) {
+      context.handle(_religiousMeta,
+          religious.isAcceptableOrUnknown(data['RELIGIOUS']!, _religiousMeta));
+    } else if (isInserting) {
+      context.missing(_religiousMeta);
+    }
+    if (data.containsKey('PRIEST')) {
+      context.handle(_priestMeta,
+          priest.isAcceptableOrUnknown(data['PRIEST']!, _priestMeta));
+    } else if (isInserting) {
+      context.missing(_priestMeta);
+    }
+    if (data.containsKey('TEEN')) {
+      context.handle(
+          _teenMeta, teen.isAcceptableOrUnknown(data['TEEN']!, _teenMeta));
+    } else if (isInserting) {
+      context.missing(_teenMeta);
+    }
+    if (data.containsKey('FEMALE')) {
+      context.handle(_femaleMeta,
+          female.isAcceptableOrUnknown(data['FEMALE']!, _femaleMeta));
+    } else if (isInserting) {
+      context.missing(_femaleMeta);
+    }
+    if (data.containsKey('MALE')) {
+      context.handle(
+          _maleMeta, male.isAcceptableOrUnknown(data['MALE']!, _maleMeta));
+    } else if (isInserting) {
+      context.missing(_maleMeta);
+    }
+    if (data.containsKey('CHILD')) {
+      context.handle(
+          _childMeta, child.isAcceptableOrUnknown(data['CHILD']!, _childMeta));
+    } else if (isInserting) {
+      context.missing(_childMeta);
     }
     if (data.containsKey('CUSTOM_ID')) {
       context.handle(_customIdMeta,
-          customId.isAcceptableOrUnknown(data['CUSTOM_ID'], _customIdMeta));
+          customId.isAcceptableOrUnknown(data['CUSTOM_ID']!, _customIdMeta));
+    }
+    if (data.containsKey('DESCRIPTION')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['DESCRIPTION']!, _descriptionMeta));
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('DESCRIPTION_ACTIVE')) {
+      context.handle(
+          _activeTextMeta,
+          activeText.isAcceptableOrUnknown(
+              data['DESCRIPTION_ACTIVE']!, _activeTextMeta));
+    } else if (isInserting) {
+      context.missing(_activeTextMeta);
+    }
+    if (data.containsKey('COUNT')) {
+      context.handle(
+          _countMeta, count.isAcceptableOrUnknown(data['COUNT']!, _countMeta));
     }
     return context;
   }
@@ -389,14 +601,45 @@ class $CommandmentsTable extends Commandments
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Commandment map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Commandment.fromData(data, _db, prefix: effectivePrefix);
+  Examination map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Examination(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      commandmentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}COMMANDMENT_ID'])!,
+      adult: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}ADULT'])!,
+      single: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}SINGLE'])!,
+      married: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}MARRIED'])!,
+      religious: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}RELIGIOUS'])!,
+      priest: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}PRIEST'])!,
+      teen: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}TEEN'])!,
+      female: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}FEMALE'])!,
+      male: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}MALE'])!,
+      child: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}CHILD'])!,
+      customId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}CUSTOM_ID']),
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}DESCRIPTION'])!,
+      activeText: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}DESCRIPTION_ACTIVE'])!,
+      count: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}COUNT'])!,
+    );
   }
 
   @override
-  $CommandmentsTable createAlias(String alias) {
-    return $CommandmentsTable(_db, alias);
+  $ExaminationsTable createAlias(String alias) {
+    return $ExaminationsTable(attachedDatabase, alias);
   }
 }
 
@@ -412,151 +655,74 @@ class Examination extends DataClass implements Insertable<Examination> {
   final bool female;
   final bool male;
   final bool child;
-  final int customId;
+  final int? customId;
   final String description;
   final String activeText;
   final int count;
-  Examination(
-      {@required this.id,
-      @required this.commandmentId,
-      @required this.adult,
-      @required this.single,
-      @required this.married,
-      @required this.religious,
-      @required this.priest,
-      @required this.teen,
-      @required this.female,
-      @required this.male,
-      @required this.child,
+  const Examination(
+      {required this.id,
+      required this.commandmentId,
+      required this.adult,
+      required this.single,
+      required this.married,
+      required this.religious,
+      required this.priest,
+      required this.teen,
+      required this.female,
+      required this.male,
+      required this.child,
       this.customId,
-      @required this.description,
-      @required this.activeText,
-      @required this.count});
-  factory Examination.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
-    final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final boolType = db.typeSystem.forDartType<bool>();
-    final stringType = db.typeSystem.forDartType<String>();
-    return Examination(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
-      commandmentId: intType
-          .mapFromDatabaseResponse(data['${effectivePrefix}COMMANDMENT_ID']),
-      adult: boolType.mapFromDatabaseResponse(data['${effectivePrefix}ADULT']),
-      single:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}SINGLE']),
-      married:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}MARRIED']),
-      religious:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}RELIGIOUS']),
-      priest:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}PRIEST']),
-      teen: boolType.mapFromDatabaseResponse(data['${effectivePrefix}TEEN']),
-      female:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}FEMALE']),
-      male: boolType.mapFromDatabaseResponse(data['${effectivePrefix}MALE']),
-      child: boolType.mapFromDatabaseResponse(data['${effectivePrefix}CHILD']),
-      customId:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}CUSTOM_ID']),
-      description: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}DESCRIPTION']),
-      activeText: stringType.mapFromDatabaseResponse(
-          data['${effectivePrefix}DESCRIPTION_ACTIVE']),
-      count: intType.mapFromDatabaseResponse(data['${effectivePrefix}COUNT']),
-    );
-  }
+      required this.description,
+      required this.activeText,
+      required this.count});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['_id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || commandmentId != null) {
-      map['COMMANDMENT_ID'] = Variable<int>(commandmentId);
-    }
-    if (!nullToAbsent || adult != null) {
-      map['ADULT'] = Variable<bool>(adult);
-    }
-    if (!nullToAbsent || single != null) {
-      map['SINGLE'] = Variable<bool>(single);
-    }
-    if (!nullToAbsent || married != null) {
-      map['MARRIED'] = Variable<bool>(married);
-    }
-    if (!nullToAbsent || religious != null) {
-      map['RELIGIOUS'] = Variable<bool>(religious);
-    }
-    if (!nullToAbsent || priest != null) {
-      map['PRIEST'] = Variable<bool>(priest);
-    }
-    if (!nullToAbsent || teen != null) {
-      map['TEEN'] = Variable<bool>(teen);
-    }
-    if (!nullToAbsent || female != null) {
-      map['FEMALE'] = Variable<bool>(female);
-    }
-    if (!nullToAbsent || male != null) {
-      map['MALE'] = Variable<bool>(male);
-    }
-    if (!nullToAbsent || child != null) {
-      map['CHILD'] = Variable<bool>(child);
-    }
+    map['_id'] = Variable<int>(id);
+    map['COMMANDMENT_ID'] = Variable<int>(commandmentId);
+    map['ADULT'] = Variable<bool>(adult);
+    map['SINGLE'] = Variable<bool>(single);
+    map['MARRIED'] = Variable<bool>(married);
+    map['RELIGIOUS'] = Variable<bool>(religious);
+    map['PRIEST'] = Variable<bool>(priest);
+    map['TEEN'] = Variable<bool>(teen);
+    map['FEMALE'] = Variable<bool>(female);
+    map['MALE'] = Variable<bool>(male);
+    map['CHILD'] = Variable<bool>(child);
     if (!nullToAbsent || customId != null) {
       map['CUSTOM_ID'] = Variable<int>(customId);
     }
-    if (!nullToAbsent || description != null) {
-      map['DESCRIPTION'] = Variable<String>(description);
-    }
-    if (!nullToAbsent || activeText != null) {
-      map['DESCRIPTION_ACTIVE'] = Variable<String>(activeText);
-    }
-    if (!nullToAbsent || count != null) {
-      map['COUNT'] = Variable<int>(count);
-    }
+    map['DESCRIPTION'] = Variable<String>(description);
+    map['DESCRIPTION_ACTIVE'] = Variable<String>(activeText);
+    map['COUNT'] = Variable<int>(count);
     return map;
   }
 
   ExaminationsCompanion toCompanion(bool nullToAbsent) {
     return ExaminationsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      commandmentId: commandmentId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(commandmentId),
-      adult:
-          adult == null && nullToAbsent ? const Value.absent() : Value(adult),
-      single:
-          single == null && nullToAbsent ? const Value.absent() : Value(single),
-      married: married == null && nullToAbsent
-          ? const Value.absent()
-          : Value(married),
-      religious: religious == null && nullToAbsent
-          ? const Value.absent()
-          : Value(religious),
-      priest:
-          priest == null && nullToAbsent ? const Value.absent() : Value(priest),
-      teen: teen == null && nullToAbsent ? const Value.absent() : Value(teen),
-      female:
-          female == null && nullToAbsent ? const Value.absent() : Value(female),
-      male: male == null && nullToAbsent ? const Value.absent() : Value(male),
-      child:
-          child == null && nullToAbsent ? const Value.absent() : Value(child),
+      id: Value(id),
+      commandmentId: Value(commandmentId),
+      adult: Value(adult),
+      single: Value(single),
+      married: Value(married),
+      religious: Value(religious),
+      priest: Value(priest),
+      teen: Value(teen),
+      female: Value(female),
+      male: Value(male),
+      child: Value(child),
       customId: customId == null && nullToAbsent
           ? const Value.absent()
           : Value(customId),
-      description: description == null && nullToAbsent
-          ? const Value.absent()
-          : Value(description),
-      activeText: activeText == null && nullToAbsent
-          ? const Value.absent()
-          : Value(activeText),
-      count:
-          count == null && nullToAbsent ? const Value.absent() : Value(count),
+      description: Value(description),
+      activeText: Value(activeText),
+      count: Value(count),
     );
   }
 
   factory Examination.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return Examination(
       id: serializer.fromJson<int>(json['id']),
       commandmentId: serializer.fromJson<int>(json['commandmentId']),
@@ -569,15 +735,15 @@ class Examination extends DataClass implements Insertable<Examination> {
       female: serializer.fromJson<bool>(json['female']),
       male: serializer.fromJson<bool>(json['male']),
       child: serializer.fromJson<bool>(json['child']),
-      customId: serializer.fromJson<int>(json['customId']),
+      customId: serializer.fromJson<int?>(json['customId']),
       description: serializer.fromJson<String>(json['description']),
       activeText: serializer.fromJson<String>(json['activeText']),
       count: serializer.fromJson<int>(json['count']),
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'commandmentId': serializer.toJson<int>(commandmentId),
@@ -590,7 +756,7 @@ class Examination extends DataClass implements Insertable<Examination> {
       'female': serializer.toJson<bool>(female),
       'male': serializer.toJson<bool>(male),
       'child': serializer.toJson<bool>(child),
-      'customId': serializer.toJson<int>(customId),
+      'customId': serializer.toJson<int?>(customId),
       'description': serializer.toJson<String>(description),
       'activeText': serializer.toJson<String>(activeText),
       'count': serializer.toJson<int>(count),
@@ -598,21 +764,21 @@ class Examination extends DataClass implements Insertable<Examination> {
   }
 
   Examination copyWith(
-          {int id,
-          int commandmentId,
-          bool adult,
-          bool single,
-          bool married,
-          bool religious,
-          bool priest,
-          bool teen,
-          bool female,
-          bool male,
-          bool child,
-          int customId,
-          String description,
-          String activeText,
-          int count}) =>
+          {int? id,
+          int? commandmentId,
+          bool? adult,
+          bool? single,
+          bool? married,
+          bool? religious,
+          bool? priest,
+          bool? teen,
+          bool? female,
+          bool? male,
+          bool? child,
+          Value<int?> customId = const Value.absent(),
+          String? description,
+          String? activeText,
+          int? count}) =>
       Examination(
         id: id ?? this.id,
         commandmentId: commandmentId ?? this.commandmentId,
@@ -625,7 +791,7 @@ class Examination extends DataClass implements Insertable<Examination> {
         female: female ?? this.female,
         male: male ?? this.male,
         child: child ?? this.child,
-        customId: customId ?? this.customId,
+        customId: customId.present ? customId.value : this.customId,
         description: description ?? this.description,
         activeText: activeText ?? this.activeText,
         count: count ?? this.count,
@@ -653,38 +819,24 @@ class Examination extends DataClass implements Insertable<Examination> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          commandmentId.hashCode,
-          $mrjc(
-              adult.hashCode,
-              $mrjc(
-                  single.hashCode,
-                  $mrjc(
-                      married.hashCode,
-                      $mrjc(
-                          religious.hashCode,
-                          $mrjc(
-                              priest.hashCode,
-                              $mrjc(
-                                  teen.hashCode,
-                                  $mrjc(
-                                      female.hashCode,
-                                      $mrjc(
-                                          male.hashCode,
-                                          $mrjc(
-                                              child.hashCode,
-                                              $mrjc(
-                                                  customId.hashCode,
-                                                  $mrjc(
-                                                      description.hashCode,
-                                                      $mrjc(
-                                                          activeText.hashCode,
-                                                          count
-                                                              .hashCode)))))))))))))));
+  int get hashCode => Object.hash(
+      id,
+      commandmentId,
+      adult,
+      single,
+      married,
+      religious,
+      priest,
+      teen,
+      female,
+      male,
+      child,
+      customId,
+      description,
+      activeText,
+      count);
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Examination &&
           other.id == this.id &&
@@ -716,7 +868,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
   final Value<bool> female;
   final Value<bool> male;
   final Value<bool> child;
-  final Value<int> customId;
+  final Value<int?> customId;
   final Value<String> description;
   final Value<String> activeText;
   final Value<int> count;
@@ -739,19 +891,19 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
   });
   ExaminationsCompanion.insert({
     this.id = const Value.absent(),
-    @required int commandmentId,
-    @required bool adult,
-    @required bool single,
-    @required bool married,
-    @required bool religious,
-    @required bool priest,
-    @required bool teen,
-    @required bool female,
-    @required bool male,
-    @required bool child,
+    required int commandmentId,
+    required bool adult,
+    required bool single,
+    required bool married,
+    required bool religious,
+    required bool priest,
+    required bool teen,
+    required bool female,
+    required bool male,
+    required bool child,
     this.customId = const Value.absent(),
-    @required String description,
-    @required String activeText,
+    required String description,
+    required String activeText,
     this.count = const Value.absent(),
   })  : commandmentId = Value(commandmentId),
         adult = Value(adult),
@@ -766,21 +918,21 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
         description = Value(description),
         activeText = Value(activeText);
   static Insertable<Examination> custom({
-    Expression<int> id,
-    Expression<int> commandmentId,
-    Expression<bool> adult,
-    Expression<bool> single,
-    Expression<bool> married,
-    Expression<bool> religious,
-    Expression<bool> priest,
-    Expression<bool> teen,
-    Expression<bool> female,
-    Expression<bool> male,
-    Expression<bool> child,
-    Expression<int> customId,
-    Expression<String> description,
-    Expression<String> activeText,
-    Expression<int> count,
+    Expression<int>? id,
+    Expression<int>? commandmentId,
+    Expression<bool>? adult,
+    Expression<bool>? single,
+    Expression<bool>? married,
+    Expression<bool>? religious,
+    Expression<bool>? priest,
+    Expression<bool>? teen,
+    Expression<bool>? female,
+    Expression<bool>? male,
+    Expression<bool>? child,
+    Expression<int>? customId,
+    Expression<String>? description,
+    Expression<String>? activeText,
+    Expression<int>? count,
   }) {
     return RawValuesInsertable({
       if (id != null) '_id': id,
@@ -802,21 +954,21 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
   }
 
   ExaminationsCompanion copyWith(
-      {Value<int> id,
-      Value<int> commandmentId,
-      Value<bool> adult,
-      Value<bool> single,
-      Value<bool> married,
-      Value<bool> religious,
-      Value<bool> priest,
-      Value<bool> teen,
-      Value<bool> female,
-      Value<bool> male,
-      Value<bool> child,
-      Value<int> customId,
-      Value<String> description,
-      Value<String> activeText,
-      Value<int> count}) {
+      {Value<int>? id,
+      Value<int>? commandmentId,
+      Value<bool>? adult,
+      Value<bool>? single,
+      Value<bool>? married,
+      Value<bool>? religious,
+      Value<bool>? priest,
+      Value<bool>? teen,
+      Value<bool>? female,
+      Value<bool>? male,
+      Value<bool>? child,
+      Value<int?>? customId,
+      Value<String>? description,
+      Value<String>? activeText,
+      Value<int>? count}) {
     return ExaminationsCompanion(
       id: id ?? this.id,
       commandmentId: commandmentId ?? this.commandmentId,
@@ -910,306 +1062,73 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
   }
 }
 
-class $ExaminationsTable extends Examinations
-    with TableInfo<$ExaminationsTable, Examination> {
-  final GeneratedDatabase _db;
-  final String _alias;
-  $ExaminationsTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('_id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
-  final VerificationMeta _commandmentIdMeta =
-      const VerificationMeta('commandmentId');
-  GeneratedIntColumn _commandmentId;
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PrayersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  GeneratedIntColumn get commandmentId =>
-      _commandmentId ??= _constructCommandmentId();
-  GeneratedIntColumn _constructCommandmentId() {
-    return GeneratedIntColumn(
-      'COMMANDMENT_ID',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _adultMeta = const VerificationMeta('adult');
-  GeneratedBoolColumn _adult;
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      '_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _prayerNameMeta =
+      const VerificationMeta('prayerName');
   @override
-  GeneratedBoolColumn get adult => _adult ??= _constructAdult();
-  GeneratedBoolColumn _constructAdult() {
-    return GeneratedBoolColumn(
-      'ADULT',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _singleMeta = const VerificationMeta('single');
-  GeneratedBoolColumn _single;
+  late final GeneratedColumn<String> prayerName = GeneratedColumn<String>(
+      'PRAYERNAME', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _prayerTextMeta =
+      const VerificationMeta('prayerText');
   @override
-  GeneratedBoolColumn get single => _single ??= _constructSingle();
-  GeneratedBoolColumn _constructSingle() {
-    return GeneratedBoolColumn(
-      'SINGLE',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _marriedMeta = const VerificationMeta('married');
-  GeneratedBoolColumn _married;
+  late final GeneratedColumn<String> prayerText = GeneratedColumn<String>(
+      'PRAYERTEXT', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _groupNameMeta =
+      const VerificationMeta('groupName');
   @override
-  GeneratedBoolColumn get married => _married ??= _constructMarried();
-  GeneratedBoolColumn _constructMarried() {
-    return GeneratedBoolColumn(
-      'MARRIED',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _religiousMeta = const VerificationMeta('religious');
-  GeneratedBoolColumn _religious;
+  late final GeneratedColumn<String> groupName = GeneratedColumn<String>(
+      'GROUPNAME', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  GeneratedBoolColumn get religious => _religious ??= _constructReligious();
-  GeneratedBoolColumn _constructReligious() {
-    return GeneratedBoolColumn(
-      'RELIGIOUS',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _priestMeta = const VerificationMeta('priest');
-  GeneratedBoolColumn _priest;
+  List<GeneratedColumn> get $columns => [id, prayerName, prayerText, groupName];
   @override
-  GeneratedBoolColumn get priest => _priest ??= _constructPriest();
-  GeneratedBoolColumn _constructPriest() {
-    return GeneratedBoolColumn(
-      'PRIEST',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _teenMeta = const VerificationMeta('teen');
-  GeneratedBoolColumn _teen;
+  String get aliasedName => _alias ?? 'PRAYERS';
   @override
-  GeneratedBoolColumn get teen => _teen ??= _constructTeen();
-  GeneratedBoolColumn _constructTeen() {
-    return GeneratedBoolColumn(
-      'TEEN',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _femaleMeta = const VerificationMeta('female');
-  GeneratedBoolColumn _female;
+  String get actualTableName => 'PRAYERS';
   @override
-  GeneratedBoolColumn get female => _female ??= _constructFemale();
-  GeneratedBoolColumn _constructFemale() {
-    return GeneratedBoolColumn(
-      'FEMALE',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _maleMeta = const VerificationMeta('male');
-  GeneratedBoolColumn _male;
-  @override
-  GeneratedBoolColumn get male => _male ??= _constructMale();
-  GeneratedBoolColumn _constructMale() {
-    return GeneratedBoolColumn(
-      'MALE',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _childMeta = const VerificationMeta('child');
-  GeneratedBoolColumn _child;
-  @override
-  GeneratedBoolColumn get child => _child ??= _constructChild();
-  GeneratedBoolColumn _constructChild() {
-    return GeneratedBoolColumn(
-      'CHILD',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _customIdMeta = const VerificationMeta('customId');
-  GeneratedIntColumn _customId;
-  @override
-  GeneratedIntColumn get customId => _customId ??= _constructCustomId();
-  GeneratedIntColumn _constructCustomId() {
-    return GeneratedIntColumn(
-      'CUSTOM_ID',
-      $tableName,
-      true,
-    );
-  }
-
-  final VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
-  GeneratedTextColumn _description;
-  @override
-  GeneratedTextColumn get description =>
-      _description ??= _constructDescription();
-  GeneratedTextColumn _constructDescription() {
-    return GeneratedTextColumn(
-      'DESCRIPTION',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _activeTextMeta = const VerificationMeta('activeText');
-  GeneratedTextColumn _activeText;
-  @override
-  GeneratedTextColumn get activeText => _activeText ??= _constructActiveText();
-  GeneratedTextColumn _constructActiveText() {
-    return GeneratedTextColumn(
-      'DESCRIPTION_ACTIVE',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _countMeta = const VerificationMeta('count');
-  GeneratedIntColumn _count;
-  @override
-  GeneratedIntColumn get count => _count ??= _constructCount();
-  GeneratedIntColumn _constructCount() {
-    return GeneratedIntColumn('COUNT', $tableName, false,
-        defaultValue: Constant(0));
-  }
-
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        commandmentId,
-        adult,
-        single,
-        married,
-        religious,
-        priest,
-        teen,
-        female,
-        male,
-        child,
-        customId,
-        description,
-        activeText,
-        count
-      ];
-  @override
-  $ExaminationsTable get asDslTable => this;
-  @override
-  String get $tableName => _alias ?? 'SIN';
-  @override
-  final String actualTableName = 'SIN';
-  @override
-  VerificationContext validateIntegrity(Insertable<Examination> instance,
+  VerificationContext validateIntegrity(Insertable<Prayer> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
     }
-    if (data.containsKey('COMMANDMENT_ID')) {
+    if (data.containsKey('PRAYERNAME')) {
       context.handle(
-          _commandmentIdMeta,
-          commandmentId.isAcceptableOrUnknown(
-              data['COMMANDMENT_ID'], _commandmentIdMeta));
+          _prayerNameMeta,
+          prayerName.isAcceptableOrUnknown(
+              data['PRAYERNAME']!, _prayerNameMeta));
     } else if (isInserting) {
-      context.missing(_commandmentIdMeta);
+      context.missing(_prayerNameMeta);
     }
-    if (data.containsKey('ADULT')) {
+    if (data.containsKey('PRAYERTEXT')) {
       context.handle(
-          _adultMeta, adult.isAcceptableOrUnknown(data['ADULT'], _adultMeta));
+          _prayerTextMeta,
+          prayerText.isAcceptableOrUnknown(
+              data['PRAYERTEXT']!, _prayerTextMeta));
     } else if (isInserting) {
-      context.missing(_adultMeta);
+      context.missing(_prayerTextMeta);
     }
-    if (data.containsKey('SINGLE')) {
-      context.handle(_singleMeta,
-          single.isAcceptableOrUnknown(data['SINGLE'], _singleMeta));
+    if (data.containsKey('GROUPNAME')) {
+      context.handle(_groupNameMeta,
+          groupName.isAcceptableOrUnknown(data['GROUPNAME']!, _groupNameMeta));
     } else if (isInserting) {
-      context.missing(_singleMeta);
-    }
-    if (data.containsKey('MARRIED')) {
-      context.handle(_marriedMeta,
-          married.isAcceptableOrUnknown(data['MARRIED'], _marriedMeta));
-    } else if (isInserting) {
-      context.missing(_marriedMeta);
-    }
-    if (data.containsKey('RELIGIOUS')) {
-      context.handle(_religiousMeta,
-          religious.isAcceptableOrUnknown(data['RELIGIOUS'], _religiousMeta));
-    } else if (isInserting) {
-      context.missing(_religiousMeta);
-    }
-    if (data.containsKey('PRIEST')) {
-      context.handle(_priestMeta,
-          priest.isAcceptableOrUnknown(data['PRIEST'], _priestMeta));
-    } else if (isInserting) {
-      context.missing(_priestMeta);
-    }
-    if (data.containsKey('TEEN')) {
-      context.handle(
-          _teenMeta, teen.isAcceptableOrUnknown(data['TEEN'], _teenMeta));
-    } else if (isInserting) {
-      context.missing(_teenMeta);
-    }
-    if (data.containsKey('FEMALE')) {
-      context.handle(_femaleMeta,
-          female.isAcceptableOrUnknown(data['FEMALE'], _femaleMeta));
-    } else if (isInserting) {
-      context.missing(_femaleMeta);
-    }
-    if (data.containsKey('MALE')) {
-      context.handle(
-          _maleMeta, male.isAcceptableOrUnknown(data['MALE'], _maleMeta));
-    } else if (isInserting) {
-      context.missing(_maleMeta);
-    }
-    if (data.containsKey('CHILD')) {
-      context.handle(
-          _childMeta, child.isAcceptableOrUnknown(data['CHILD'], _childMeta));
-    } else if (isInserting) {
-      context.missing(_childMeta);
-    }
-    if (data.containsKey('CUSTOM_ID')) {
-      context.handle(_customIdMeta,
-          customId.isAcceptableOrUnknown(data['CUSTOM_ID'], _customIdMeta));
-    }
-    if (data.containsKey('DESCRIPTION')) {
-      context.handle(
-          _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['DESCRIPTION'], _descriptionMeta));
-    } else if (isInserting) {
-      context.missing(_descriptionMeta);
-    }
-    if (data.containsKey('DESCRIPTION_ACTIVE')) {
-      context.handle(
-          _activeTextMeta,
-          activeText.isAcceptableOrUnknown(
-              data['DESCRIPTION_ACTIVE'], _activeTextMeta));
-    } else if (isInserting) {
-      context.missing(_activeTextMeta);
-    }
-    if (data.containsKey('COUNT')) {
-      context.handle(
-          _countMeta, count.isAcceptableOrUnknown(data['COUNT'], _countMeta));
+      context.missing(_groupNameMeta);
     }
     return context;
   }
@@ -1217,14 +1136,23 @@ class $ExaminationsTable extends Examinations
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Examination map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Examination.fromData(data, _db, prefix: effectivePrefix);
+  Prayer map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Prayer(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      prayerName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}PRAYERNAME'])!,
+      prayerText: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}PRAYERTEXT'])!,
+      groupName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}GROUPNAME'])!,
+    );
   }
 
   @override
-  $ExaminationsTable createAlias(String alias) {
-    return $ExaminationsTable(_db, alias);
+  $PrayersTable createAlias(String alias) {
+    return $PrayersTable(attachedDatabase, alias);
   }
 }
 
@@ -1233,62 +1161,33 @@ class Prayer extends DataClass implements Insertable<Prayer> {
   final String prayerName;
   final String prayerText;
   final String groupName;
-  Prayer(
-      {@required this.id,
-      @required this.prayerName,
-      @required this.prayerText,
-      @required this.groupName});
-  factory Prayer.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
-    final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    return Prayer(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
-      prayerName: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}PRAYERNAME']),
-      prayerText: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}PRAYERTEXT']),
-      groupName: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}GROUPNAME']),
-    );
-  }
+  const Prayer(
+      {required this.id,
+      required this.prayerName,
+      required this.prayerText,
+      required this.groupName});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['_id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || prayerName != null) {
-      map['PRAYERNAME'] = Variable<String>(prayerName);
-    }
-    if (!nullToAbsent || prayerText != null) {
-      map['PRAYERTEXT'] = Variable<String>(prayerText);
-    }
-    if (!nullToAbsent || groupName != null) {
-      map['GROUPNAME'] = Variable<String>(groupName);
-    }
+    map['_id'] = Variable<int>(id);
+    map['PRAYERNAME'] = Variable<String>(prayerName);
+    map['PRAYERTEXT'] = Variable<String>(prayerText);
+    map['GROUPNAME'] = Variable<String>(groupName);
     return map;
   }
 
   PrayersCompanion toCompanion(bool nullToAbsent) {
     return PrayersCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      prayerName: prayerName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(prayerName),
-      prayerText: prayerText == null && nullToAbsent
-          ? const Value.absent()
-          : Value(prayerText),
-      groupName: groupName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(groupName),
+      id: Value(id),
+      prayerName: Value(prayerName),
+      prayerText: Value(prayerText),
+      groupName: Value(groupName),
     );
   }
 
   factory Prayer.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return Prayer(
       id: serializer.fromJson<int>(json['id']),
       prayerName: serializer.fromJson<String>(json['prayerName']),
@@ -1297,8 +1196,8 @@ class Prayer extends DataClass implements Insertable<Prayer> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'prayerName': serializer.toJson<String>(prayerName),
@@ -1308,7 +1207,10 @@ class Prayer extends DataClass implements Insertable<Prayer> {
   }
 
   Prayer copyWith(
-          {int id, String prayerName, String prayerText, String groupName}) =>
+          {int? id,
+          String? prayerName,
+          String? prayerText,
+          String? groupName}) =>
       Prayer(
         id: id ?? this.id,
         prayerName: prayerName ?? this.prayerName,
@@ -1327,12 +1229,9 @@ class Prayer extends DataClass implements Insertable<Prayer> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(prayerName.hashCode,
-          $mrjc(prayerText.hashCode, groupName.hashCode))));
+  int get hashCode => Object.hash(id, prayerName, prayerText, groupName);
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Prayer &&
           other.id == this.id &&
@@ -1354,17 +1253,17 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
   });
   PrayersCompanion.insert({
     this.id = const Value.absent(),
-    @required String prayerName,
-    @required String prayerText,
-    @required String groupName,
+    required String prayerName,
+    required String prayerText,
+    required String groupName,
   })  : prayerName = Value(prayerName),
         prayerText = Value(prayerText),
         groupName = Value(groupName);
   static Insertable<Prayer> custom({
-    Expression<int> id,
-    Expression<String> prayerName,
-    Expression<String> prayerText,
-    Expression<String> groupName,
+    Expression<int>? id,
+    Expression<String>? prayerName,
+    Expression<String>? prayerText,
+    Expression<String>? groupName,
   }) {
     return RawValuesInsertable({
       if (id != null) '_id': id,
@@ -1375,10 +1274,10 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
   }
 
   PrayersCompanion copyWith(
-      {Value<int> id,
-      Value<String> prayerName,
-      Value<String> prayerText,
-      Value<String> groupName}) {
+      {Value<int>? id,
+      Value<String>? prayerName,
+      Value<String>? prayerText,
+      Value<String>? groupName}) {
     return PrayersCompanion(
       id: id ?? this.id,
       prayerName: prayerName ?? this.prayerName,
@@ -1417,92 +1316,69 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
   }
 }
 
-class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
-  final GeneratedDatabase _db;
-  final String _alias;
-  $PrayersTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('_id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
-  final VerificationMeta _prayerNameMeta = const VerificationMeta('prayerName');
-  GeneratedTextColumn _prayerName;
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GuidesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  GeneratedTextColumn get prayerName => _prayerName ??= _constructPrayerName();
-  GeneratedTextColumn _constructPrayerName() {
-    return GeneratedTextColumn(
-      'PRAYERNAME',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _prayerTextMeta = const VerificationMeta('prayerText');
-  GeneratedTextColumn _prayerText;
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      '_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _guideTitleMeta =
+      const VerificationMeta('guideTitle');
   @override
-  GeneratedTextColumn get prayerText => _prayerText ??= _constructPrayerText();
-  GeneratedTextColumn _constructPrayerText() {
-    return GeneratedTextColumn(
-      'PRAYERTEXT',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _groupNameMeta = const VerificationMeta('groupName');
-  GeneratedTextColumn _groupName;
+  late final GeneratedColumn<String> guideTitle = GeneratedColumn<String>(
+      'g_title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _guideTextMeta =
+      const VerificationMeta('guideText');
   @override
-  GeneratedTextColumn get groupName => _groupName ??= _constructGroupName();
-  GeneratedTextColumn _constructGroupName() {
-    return GeneratedTextColumn(
-      'GROUPNAME',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String> guideText = GeneratedColumn<String>(
+      'text', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _headerIdMeta =
+      const VerificationMeta('headerId');
   @override
-  List<GeneratedColumn> get $columns => [id, prayerName, prayerText, groupName];
+  late final GeneratedColumn<int> headerId = GeneratedColumn<int>(
+      'h_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
   @override
-  $PrayersTable get asDslTable => this;
+  List<GeneratedColumn> get $columns => [id, guideTitle, guideText, headerId];
   @override
-  String get $tableName => _alias ?? 'PRAYERS';
+  String get aliasedName => _alias ?? 'guide_main';
   @override
-  final String actualTableName = 'PRAYERS';
+  String get actualTableName => 'guide_main';
   @override
-  VerificationContext validateIntegrity(Insertable<Prayer> instance,
+  VerificationContext validateIntegrity(Insertable<Guide> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
     }
-    if (data.containsKey('PRAYERNAME')) {
-      context.handle(
-          _prayerNameMeta,
-          prayerName.isAcceptableOrUnknown(
-              data['PRAYERNAME'], _prayerNameMeta));
+    if (data.containsKey('g_title')) {
+      context.handle(_guideTitleMeta,
+          guideTitle.isAcceptableOrUnknown(data['g_title']!, _guideTitleMeta));
     } else if (isInserting) {
-      context.missing(_prayerNameMeta);
+      context.missing(_guideTitleMeta);
     }
-    if (data.containsKey('PRAYERTEXT')) {
-      context.handle(
-          _prayerTextMeta,
-          prayerText.isAcceptableOrUnknown(
-              data['PRAYERTEXT'], _prayerTextMeta));
+    if (data.containsKey('text')) {
+      context.handle(_guideTextMeta,
+          guideText.isAcceptableOrUnknown(data['text']!, _guideTextMeta));
     } else if (isInserting) {
-      context.missing(_prayerTextMeta);
+      context.missing(_guideTextMeta);
     }
-    if (data.containsKey('GROUPNAME')) {
-      context.handle(_groupNameMeta,
-          groupName.isAcceptableOrUnknown(data['GROUPNAME'], _groupNameMeta));
+    if (data.containsKey('h_id')) {
+      context.handle(_headerIdMeta,
+          headerId.isAcceptableOrUnknown(data['h_id']!, _headerIdMeta));
     } else if (isInserting) {
-      context.missing(_groupNameMeta);
+      context.missing(_headerIdMeta);
     }
     return context;
   }
@@ -1510,14 +1386,23 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Prayer map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Prayer.fromData(data, _db, prefix: effectivePrefix);
+  Guide map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Guide(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      guideTitle: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}g_title'])!,
+      guideText: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}text'])!,
+      headerId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}h_id'])!,
+    );
   }
 
   @override
-  $PrayersTable createAlias(String alias) {
-    return $PrayersTable(_db, alias);
+  $GuidesTable createAlias(String alias) {
+    return $GuidesTable(attachedDatabase, alias);
   }
 }
 
@@ -1526,61 +1411,33 @@ class Guide extends DataClass implements Insertable<Guide> {
   final String guideTitle;
   final String guideText;
   final int headerId;
-  Guide(
-      {@required this.id,
-      @required this.guideTitle,
-      @required this.guideText,
-      @required this.headerId});
-  factory Guide.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
-    final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    return Guide(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
-      guideTitle:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}g_title']),
-      guideText:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}text']),
-      headerId: intType.mapFromDatabaseResponse(data['${effectivePrefix}h_id']),
-    );
-  }
+  const Guide(
+      {required this.id,
+      required this.guideTitle,
+      required this.guideText,
+      required this.headerId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['_id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || guideTitle != null) {
-      map['g_title'] = Variable<String>(guideTitle);
-    }
-    if (!nullToAbsent || guideText != null) {
-      map['text'] = Variable<String>(guideText);
-    }
-    if (!nullToAbsent || headerId != null) {
-      map['h_id'] = Variable<int>(headerId);
-    }
+    map['_id'] = Variable<int>(id);
+    map['g_title'] = Variable<String>(guideTitle);
+    map['text'] = Variable<String>(guideText);
+    map['h_id'] = Variable<int>(headerId);
     return map;
   }
 
   GuidesCompanion toCompanion(bool nullToAbsent) {
     return GuidesCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      guideTitle: guideTitle == null && nullToAbsent
-          ? const Value.absent()
-          : Value(guideTitle),
-      guideText: guideText == null && nullToAbsent
-          ? const Value.absent()
-          : Value(guideText),
-      headerId: headerId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(headerId),
+      id: Value(id),
+      guideTitle: Value(guideTitle),
+      guideText: Value(guideText),
+      headerId: Value(headerId),
     );
   }
 
   factory Guide.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return Guide(
       id: serializer.fromJson<int>(json['id']),
       guideTitle: serializer.fromJson<String>(json['guideTitle']),
@@ -1589,8 +1446,8 @@ class Guide extends DataClass implements Insertable<Guide> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'guideTitle': serializer.toJson<String>(guideTitle),
@@ -1599,7 +1456,8 @@ class Guide extends DataClass implements Insertable<Guide> {
     };
   }
 
-  Guide copyWith({int id, String guideTitle, String guideText, int headerId}) =>
+  Guide copyWith(
+          {int? id, String? guideTitle, String? guideText, int? headerId}) =>
       Guide(
         id: id ?? this.id,
         guideTitle: guideTitle ?? this.guideTitle,
@@ -1618,12 +1476,9 @@ class Guide extends DataClass implements Insertable<Guide> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          guideTitle.hashCode, $mrjc(guideText.hashCode, headerId.hashCode))));
+  int get hashCode => Object.hash(id, guideTitle, guideText, headerId);
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Guide &&
           other.id == this.id &&
@@ -1645,17 +1500,17 @@ class GuidesCompanion extends UpdateCompanion<Guide> {
   });
   GuidesCompanion.insert({
     this.id = const Value.absent(),
-    @required String guideTitle,
-    @required String guideText,
-    @required int headerId,
+    required String guideTitle,
+    required String guideText,
+    required int headerId,
   })  : guideTitle = Value(guideTitle),
         guideText = Value(guideText),
         headerId = Value(headerId);
   static Insertable<Guide> custom({
-    Expression<int> id,
-    Expression<String> guideTitle,
-    Expression<String> guideText,
-    Expression<int> headerId,
+    Expression<int>? id,
+    Expression<String>? guideTitle,
+    Expression<String>? guideText,
+    Expression<int>? headerId,
   }) {
     return RawValuesInsertable({
       if (id != null) '_id': id,
@@ -1666,10 +1521,10 @@ class GuidesCompanion extends UpdateCompanion<Guide> {
   }
 
   GuidesCompanion copyWith(
-      {Value<int> id,
-      Value<String> guideTitle,
-      Value<String> guideText,
-      Value<int> headerId}) {
+      {Value<int>? id,
+      Value<String>? guideTitle,
+      Value<String>? guideText,
+      Value<int>? headerId}) {
     return GuidesCompanion(
       id: id ?? this.id,
       guideTitle: guideTitle ?? this.guideTitle,
@@ -1708,88 +1563,56 @@ class GuidesCompanion extends UpdateCompanion<Guide> {
   }
 }
 
-class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
-  final GeneratedDatabase _db;
-  final String _alias;
-  $GuidesTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+class $InspirationsTable extends Inspirations
+    with TableInfo<$InspirationsTable, Inspiration> {
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('_id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
-  final VerificationMeta _guideTitleMeta = const VerificationMeta('guideTitle');
-  GeneratedTextColumn _guideTitle;
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $InspirationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  GeneratedTextColumn get guideTitle => _guideTitle ??= _constructGuideTitle();
-  GeneratedTextColumn _constructGuideTitle() {
-    return GeneratedTextColumn(
-      'g_title',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _guideTextMeta = const VerificationMeta('guideText');
-  GeneratedTextColumn _guideText;
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      '_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _authorMeta = const VerificationMeta('author');
   @override
-  GeneratedTextColumn get guideText => _guideText ??= _constructGuideText();
-  GeneratedTextColumn _constructGuideText() {
-    return GeneratedTextColumn(
-      'text',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _headerIdMeta = const VerificationMeta('headerId');
-  GeneratedIntColumn _headerId;
+  late final GeneratedColumn<String> author = GeneratedColumn<String>(
+      'AUTHOR', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _quoteMeta = const VerificationMeta('quote');
   @override
-  GeneratedIntColumn get headerId => _headerId ??= _constructHeaderId();
-  GeneratedIntColumn _constructHeaderId() {
-    return GeneratedIntColumn(
-      'h_id',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String> quote = GeneratedColumn<String>(
+      'QUOTE', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, guideTitle, guideText, headerId];
+  List<GeneratedColumn> get $columns => [id, author, quote];
   @override
-  $GuidesTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'INSPIRATION';
   @override
-  String get $tableName => _alias ?? 'guide_main';
+  String get actualTableName => 'INSPIRATION';
   @override
-  final String actualTableName = 'guide_main';
-  @override
-  VerificationContext validateIntegrity(Insertable<Guide> instance,
+  VerificationContext validateIntegrity(Insertable<Inspiration> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
     }
-    if (data.containsKey('g_title')) {
-      context.handle(_guideTitleMeta,
-          guideTitle.isAcceptableOrUnknown(data['g_title'], _guideTitleMeta));
+    if (data.containsKey('AUTHOR')) {
+      context.handle(_authorMeta,
+          author.isAcceptableOrUnknown(data['AUTHOR']!, _authorMeta));
     } else if (isInserting) {
-      context.missing(_guideTitleMeta);
+      context.missing(_authorMeta);
     }
-    if (data.containsKey('text')) {
-      context.handle(_guideTextMeta,
-          guideText.isAcceptableOrUnknown(data['text'], _guideTextMeta));
+    if (data.containsKey('QUOTE')) {
+      context.handle(
+          _quoteMeta, quote.isAcceptableOrUnknown(data['QUOTE']!, _quoteMeta));
     } else if (isInserting) {
-      context.missing(_guideTextMeta);
-    }
-    if (data.containsKey('h_id')) {
-      context.handle(_headerIdMeta,
-          headerId.isAcceptableOrUnknown(data['h_id'], _headerIdMeta));
-    } else if (isInserting) {
-      context.missing(_headerIdMeta);
+      context.missing(_quoteMeta);
     }
     return context;
   }
@@ -1797,14 +1620,21 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Guide map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Guide.fromData(data, _db, prefix: effectivePrefix);
+  Inspiration map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Inspiration(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      author: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}AUTHOR'])!,
+      quote: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}QUOTE'])!,
+    );
   }
 
   @override
-  $GuidesTable createAlias(String alias) {
-    return $GuidesTable(_db, alias);
+  $InspirationsTable createAlias(String alias) {
+    return $InspirationsTable(attachedDatabase, alias);
   }
 }
 
@@ -1812,48 +1642,28 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
   final int id;
   final String author;
   final String quote;
-  Inspiration({@required this.id, @required this.author, @required this.quote});
-  factory Inspiration.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
-    final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    return Inspiration(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}_id']),
-      author:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}AUTHOR']),
-      quote:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}QUOTE']),
-    );
-  }
+  const Inspiration(
+      {required this.id, required this.author, required this.quote});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['_id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || author != null) {
-      map['AUTHOR'] = Variable<String>(author);
-    }
-    if (!nullToAbsent || quote != null) {
-      map['QUOTE'] = Variable<String>(quote);
-    }
+    map['_id'] = Variable<int>(id);
+    map['AUTHOR'] = Variable<String>(author);
+    map['QUOTE'] = Variable<String>(quote);
     return map;
   }
 
   InspirationsCompanion toCompanion(bool nullToAbsent) {
     return InspirationsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      author:
-          author == null && nullToAbsent ? const Value.absent() : Value(author),
-      quote:
-          quote == null && nullToAbsent ? const Value.absent() : Value(quote),
+      id: Value(id),
+      author: Value(author),
+      quote: Value(quote),
     );
   }
 
   factory Inspiration.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return Inspiration(
       id: serializer.fromJson<int>(json['id']),
       author: serializer.fromJson<String>(json['author']),
@@ -1861,8 +1671,8 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'author': serializer.toJson<String>(author),
@@ -1870,7 +1680,7 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
     };
   }
 
-  Inspiration copyWith({int id, String author, String quote}) => Inspiration(
+  Inspiration copyWith({int? id, String? author, String? quote}) => Inspiration(
         id: id ?? this.id,
         author: author ?? this.author,
         quote: quote ?? this.quote,
@@ -1886,10 +1696,9 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(id.hashCode, $mrjc(author.hashCode, quote.hashCode)));
+  int get hashCode => Object.hash(id, author, quote);
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Inspiration &&
           other.id == this.id &&
@@ -1908,14 +1717,14 @@ class InspirationsCompanion extends UpdateCompanion<Inspiration> {
   });
   InspirationsCompanion.insert({
     this.id = const Value.absent(),
-    @required String author,
-    @required String quote,
+    required String author,
+    required String quote,
   })  : author = Value(author),
         quote = Value(quote);
   static Insertable<Inspiration> custom({
-    Expression<int> id,
-    Expression<String> author,
-    Expression<String> quote,
+    Expression<int>? id,
+    Expression<String>? author,
+    Expression<String>? quote,
   }) {
     return RawValuesInsertable({
       if (id != null) '_id': id,
@@ -1925,7 +1734,7 @@ class InspirationsCompanion extends UpdateCompanion<Inspiration> {
   }
 
   InspirationsCompanion copyWith(
-      {Value<int> id, Value<String> author, Value<String> quote}) {
+      {Value<int>? id, Value<String>? author, Value<String>? quote}) {
     return InspirationsCompanion(
       id: id ?? this.id,
       author: author ?? this.author,
@@ -1959,116 +1768,22 @@ class InspirationsCompanion extends UpdateCompanion<Inspiration> {
   }
 }
 
-class $InspirationsTable extends Inspirations
-    with TableInfo<$InspirationsTable, Inspiration> {
-  final GeneratedDatabase _db;
-  final String _alias;
-  $InspirationsTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('_id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
-  final VerificationMeta _authorMeta = const VerificationMeta('author');
-  GeneratedTextColumn _author;
-  @override
-  GeneratedTextColumn get author => _author ??= _constructAuthor();
-  GeneratedTextColumn _constructAuthor() {
-    return GeneratedTextColumn(
-      'AUTHOR',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _quoteMeta = const VerificationMeta('quote');
-  GeneratedTextColumn _quote;
-  @override
-  GeneratedTextColumn get quote => _quote ??= _constructQuote();
-  GeneratedTextColumn _constructQuote() {
-    return GeneratedTextColumn(
-      'QUOTE',
-      $tableName,
-      false,
-    );
-  }
-
-  @override
-  List<GeneratedColumn> get $columns => [id, author, quote];
-  @override
-  $InspirationsTable get asDslTable => this;
-  @override
-  String get $tableName => _alias ?? 'INSPIRATION';
-  @override
-  final String actualTableName = 'INSPIRATION';
-  @override
-  VerificationContext validateIntegrity(Insertable<Inspiration> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('_id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id'], _idMeta));
-    }
-    if (data.containsKey('AUTHOR')) {
-      context.handle(_authorMeta,
-          author.isAcceptableOrUnknown(data['AUTHOR'], _authorMeta));
-    } else if (isInserting) {
-      context.missing(_authorMeta);
-    }
-    if (data.containsKey('QUOTE')) {
-      context.handle(
-          _quoteMeta, quote.isAcceptableOrUnknown(data['QUOTE'], _quoteMeta));
-    } else if (isInserting) {
-      context.missing(_quoteMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  Inspiration map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Inspiration.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  $InspirationsTable createAlias(String alias) {
-    return $InspirationsTable(_db, alias);
-  }
-}
-
 abstract class _$AppDatabase extends GeneratedDatabase {
-  _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $CommandmentsTable _commandments;
-  $CommandmentsTable get commandments =>
-      _commandments ??= $CommandmentsTable(this);
-  $ExaminationsTable _examinations;
-  $ExaminationsTable get examinations =>
-      _examinations ??= $ExaminationsTable(this);
-  $PrayersTable _prayers;
-  $PrayersTable get prayers => _prayers ??= $PrayersTable(this);
-  $GuidesTable _guides;
-  $GuidesTable get guides => _guides ??= $GuidesTable(this);
-  $InspirationsTable _inspirations;
-  $InspirationsTable get inspirations =>
-      _inspirations ??= $InspirationsTable(this);
-  CommandmentsDao _commandmentsDao;
-  CommandmentsDao get commandmentsDao =>
-      _commandmentsDao ??= CommandmentsDao(this as AppDatabase);
-  ExaminationsDao _examinationsDao;
-  ExaminationsDao get examinationsDao =>
-      _examinationsDao ??= ExaminationsDao(this as AppDatabase);
-  PrayersDao _prayersDao;
-  PrayersDao get prayersDao => _prayersDao ??= PrayersDao(this as AppDatabase);
-  GuidesDao _guidesDao;
-  GuidesDao get guidesDao => _guidesDao ??= GuidesDao(this as AppDatabase);
+  _$AppDatabase(QueryExecutor e) : super(e);
+  late final $CommandmentsTable commandments = $CommandmentsTable(this);
+  late final $ExaminationsTable examinations = $ExaminationsTable(this);
+  late final $PrayersTable prayers = $PrayersTable(this);
+  late final $GuidesTable guides = $GuidesTable(this);
+  late final $InspirationsTable inspirations = $InspirationsTable(this);
+  late final CommandmentsDao commandmentsDao =
+      CommandmentsDao(this as AppDatabase);
+  late final ExaminationsDao examinationsDao =
+      ExaminationsDao(this as AppDatabase);
+  late final PrayersDao prayersDao = PrayersDao(this as AppDatabase);
+  late final GuidesDao guidesDao = GuidesDao(this as AppDatabase);
   @override
-  Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
+  Iterable<TableInfo<Table, Object?>> get allTables =>
+      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [commandments, examinations, prayers, guides, inspirations];

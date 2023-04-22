@@ -5,7 +5,8 @@ import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:flutter/material.dart';
 
 class ExaminationPageView extends StatefulWidget {
-  ExaminationPageView({Key key, this.currentPage, this.pageList})
+  ExaminationPageView(
+      {Key? key, required this.currentPage, required this.pageList})
       : super(key: key);
 
   static const String Id = '/examinationPageView';

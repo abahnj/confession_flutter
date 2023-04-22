@@ -2,10 +2,7 @@
 
 part of 'commandments_dao.dart';
 
-// **************************************************************************
-// DaoGenerator
-// **************************************************************************
-
+// ignore_for_file: type=lint
 mixin _$CommandmentsDaoMixin on DatabaseAccessor<AppDatabase> {
   $CommandmentsTable get commandments => attachedDatabase.commandments;
 }

@@ -3,10 +3,8 @@ import 'package:confession_flutter/screens/destination_view.dart';
 import 'package:confession_flutter/screens/exam/commandments_page.dart';
 import 'package:confession_flutter/screens/guide/guide_page.dart';
 import 'package:confession_flutter/screens/prayers/prayers_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:flutter_svg/avd.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 final List<Destination> _allDestinations = <Destination>[
   Destination(0, CommandmentsPage.title, CommandmentsPage.iconAsset,
@@ -37,9 +35,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin<HomePage> {
-  List<Key> _destinationKeys;
-  List<GlobalKey<NavigatorState>> _navigatorKeys;
-  List<AnimationController> _faders;
+  List<Key> _destinationKeys = [];
+  List<GlobalKey<NavigatorState>> _navigatorKeys = [];
+  List<AnimationController> _faders = [];
   int _currentIndex = 0;
 
   @override
@@ -71,8 +69,10 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async =>
-          !await _navigatorKeys[_currentIndex].currentState.maybePop(),
+      onWillPop: () async {
+        return !(await _navigatorKeys[_currentIndex].currentState?.maybePop() ??
+            false);
+      },
       child: Scaffold(
         body: Stack(
             fit: StackFit.expand,
@@ -107,11 +107,9 @@ class _HomePageState extends State<HomePage>
             setState(() {
               if (index == _currentIndex) {
                 var currentNavigator = _navigatorKeys[_currentIndex];
-                if (currentNavigator.currentState.canPop()) {
-                  currentNavigator.currentState
-                      .popUntil((route) => route.isFirst);
-                }
-
+                currentNavigator.currentState
+                    ?.popUntil((route) => route.isFirst);
+                Explanation:
                 return;
               } else {
                 _currentIndex = index;
@@ -128,11 +126,11 @@ class _HomePageState extends State<HomePage>
 List<BottomNavigationBarItem> _buildItems(context) {
   return _allDestinations.map((Destination destination) {
     return BottomNavigationBarItem(
-      title: PlatformText(destination.title),
+      label: destination.title,
       icon: SizedBox(
         height: 24,
         width: 24,
-        child: AvdPicture.asset(
+        child: SvgPicture.asset(
           destination.iconAsset,
           color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
         ),
@@ -140,7 +138,7 @@ List<BottomNavigationBarItem> _buildItems(context) {
       activeIcon: SizedBox(
         height: 24,
         width: 24,
-        child: AvdPicture.asset(
+        child: SvgPicture.asset(
           destination.iconAsset,
           color: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
         ),

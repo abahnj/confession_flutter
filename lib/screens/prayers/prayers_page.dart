@@ -5,7 +5,6 @@ import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/screens/prayers/prayer_detail_page.dart';
 import 'package:confession_flutter/viewmodels/prayers_page_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -23,7 +22,7 @@ class PrayersPage extends StatelessWidget {
         return PrayersPage();
       case PrayersDetailPage.Id:
         return PrayersDetailPage(
-          prayerId: settings.arguments,
+          prayerId: settings.arguments as int,
         );
       case '/text':
         return null;
@@ -36,12 +35,12 @@ class PrayersPage extends StatelessWidget {
       viewModelBuilder: () => PrayersPageViewModel(
         dao: Provider.of<AppDatabase>(context, listen: false).prayersDao,
       ),
-      onModelReady: (model) {
+      onViewModelReady: (model) {
         model.getAllPrayers();
       },
       staticChild: rootAppBar(context),
       builder: (context, model, child) => Scaffold(
-        appBar: child,
+        appBar: child as PreferredSizeWidget,
         body: ListView.builder(
           // Let the ListView know how many items it needs to build.
           itemCount: model.prayers.length,
@@ -78,7 +77,7 @@ class PrayersPage extends StatelessWidget {
 
 // The base class for the different types of items the list can contain.
 abstract class ListItem {
-  int itemId;
+  late final int itemId;
 }
 
 // A ListItem that contains data to display a heading.
@@ -96,5 +95,9 @@ class PrayerItem extends ListItem {
   @override
   final int itemId;
 
-  PrayerItem({this.prayerName, this.prayerText, this.groupName, this.itemId});
+  PrayerItem(
+      {required this.prayerName,
+      required this.prayerText,
+      required this.groupName,
+      required this.itemId});
 }

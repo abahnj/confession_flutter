@@ -1,18 +1,18 @@
 import 'package:confession_flutter/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/avd.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ListCard extends StatelessWidget {
-  final VoidCallback onTap;
-  final Function(LongPressStartDetails) onLongPress;
+  final VoidCallback? onTap;
+  final Function(LongPressStartDetails)? onLongPress;
   final String title;
-  final String subtitle;
-  final Widget trailing;
+  final String? subtitle;
+  final Widget? trailing;
 
   const ListCard({
-    Key key,
+    Key? key,
     this.onTap,
-    this.title,
+    required this.title,
     this.subtitle,
     this.trailing,
     this.onLongPress,
@@ -48,7 +48,7 @@ class ListCard extends StatelessWidget {
                     child: SizedBox(
                       height: 24,
                       width: 24,
-                      child: AvdPicture.asset(
+                      child: SvgPicture.asset(
                         'assets/vectors/ic_cross.xml',
                         color: iconColorActive,
                       ),
@@ -60,12 +60,12 @@ class ListCard extends StatelessWidget {
                 title,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: (subtitle != null && subtitle.isNotEmpty)
+              subtitle: (subtitle != null)
                   ? Row(
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            subtitle,
+                            subtitle!,
                             overflow: TextOverflow.ellipsis,
                           ),
                         )

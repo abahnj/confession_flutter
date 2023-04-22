@@ -2,10 +2,7 @@
 
 part of 'guides_dao.dart';
 
-// **************************************************************************
-// DaoGenerator
-// **************************************************************************
-
+// ignore_for_file: type=lint
 mixin _$GuidesDaoMixin on DatabaseAccessor<AppDatabase> {
   $GuidesTable get guides => attachedDatabase.guides;
 }

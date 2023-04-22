@@ -13,7 +13,7 @@ class ConfessionPageTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExaminationPageViewModel>.reactive(
-      createNewModelOnInsert: true,
+      createNewViewModelOnInsert: true,
       viewModelBuilder: () => ExaminationPageViewModel(
         dao: Provider.of<AppDatabase>(context).examinationsDao,
         user: Provider.of<User>(context),
@@ -48,8 +48,8 @@ class ConfessionPageTwo extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline5
-                                  .copyWith(fontWeight: FontWeight.bold),
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:confession_flutter/theme_prefs.dart';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,13 +14,10 @@ class Utils {
     switch (themeMode) {
       case ThemeMode.system:
         return MediaQuery.of(context).platformBrightness;
-        break;
       case ThemeMode.light:
         return Brightness.light;
-        break;
       case ThemeMode.dark:
         return Brightness.dark;
-        break;
       default:
         return Brightness.light;
     }
@@ -114,7 +111,7 @@ Future<String> getDeviceInfo() async {
 void sendFeedbackEmail() async {
   var emailUri = getUrl('mailto', 'appsupport@norvera.com',
       {'subject': 'Feedback for Confession', 'body': await getDeviceInfo()});
-  if (await canLaunch(emailUri)) {
+  if (await canLaunchUrl(Uri.dataFromString(emailUri))) {
     await launch(emailUri);
   } else {
     throw 'Could not launch $emailUri';

@@ -2,7 +2,9 @@ import 'package:confession_flutter/utils.dart';
 import 'package:flutter/cupertino.dart';
 
 enum Vocation { single, married, priest, religious }
+
 enum Age { adult, teen, child }
+
 enum Gender { male, female }
 
 class User with ChangeNotifier {
@@ -23,7 +25,7 @@ class User with ChangeNotifier {
         _gender = Gender.male,
         _lastConfession = DateTime.now().toString();
 
-  User copyWith({Vocation vocation, Age age, Gender gender}) {
+  User copyWith({Vocation? vocation, Age? age, Gender? gender}) {
     return User(
         vocation: vocation ?? _vocation,
         age: age ?? _age,

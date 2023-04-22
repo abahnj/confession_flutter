@@ -6,7 +6,7 @@ class ViewNavigatorObserver extends NavigatorObserver {
   final VoidCallback onNavigation;
 
   @override
-  void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (route.settings.name != '/') {
       onNavigation();
     }
@@ -14,7 +14,7 @@ class ViewNavigatorObserver extends NavigatorObserver {
   }
 
   @override
-  void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (route.settings.name != '/') {
       onNavigation();
     }
@@ -36,10 +36,10 @@ class Destination {
 
 class DestinationView extends StatefulWidget {
   const DestinationView({
-    Key key,
-    this.destination,
-    this.onNavigation,
-    this.navigatorKey,
+    Key? key,
+    required this.destination,
+    required this.onNavigation,
+    required this.navigatorKey,
   }) : super(key: key);
 
   final Destination destination;

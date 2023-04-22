@@ -6,15 +6,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../constants.dart';
 import '../../theme_prefs.dart';
 
 class iOSSettingsPage extends StatelessWidget {
   const iOSSettingsPage({
-    Key key,
-    @required this.prefs,
+    Key? key,
+    required this.prefs,
   }) : super(key: key);
 
   final PrefsNotifier prefs;
@@ -77,11 +77,11 @@ class iOSSettingsPage extends StatelessWidget {
         ),
         CSHeader(''),
         CSButton(
-          child: Text('Share'),
-          pressed: () {
+          CSButtonType.DEFAULT,
+          ('Share'),
+          () {
             Share.share(SHARE_TEXT, subject: 'Feedback');
           },
-          buttonType: CSButtonType.DEFAULT,
           style: CSWidgetStyle(
             icon: Icon(
               CupertinoIcons.share,
@@ -90,11 +90,11 @@ class iOSSettingsPage extends StatelessWidget {
           ),
         ),
         CSButton(
-          child: Text('Send Feedback'),
-          pressed: () {
+          CSButtonType.DEFAULT,
+          ('Send Feedback'),
+          () {
             sendFeedbackEmail();
           },
-          buttonType: CSButtonType.DEFAULT,
           style: CSWidgetStyle(
             icon: Icon(
               CupertinoIcons.reply,
@@ -106,35 +106,32 @@ class iOSSettingsPage extends StatelessWidget {
           'Report technical issues or suggest new features.',
         ),
         CSHeader(''),
-        CSButton(
-            buttonType: CSButtonType.DESTRUCTIVE,
-            child: Text('Reset App'),
-            pressed: () {
-              return showCupertinoDialog(
-                  context: context,
-                  builder: (context) => CupertinoAlertDialog(
-                        title: Text('Reset App'),
-                        content: Text('Are you sure?'),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            child: Text('No'),
-                            isDefaultAction: true,
-                            onPressed: () {
-                              UnimplementedError('Implement me');
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          CupertinoDialogAction(
-                            child: Text('Yes'),
-                            isDestructiveAction: true,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
+        CSButton(CSButtonType.DESTRUCTIVE, ('Reset App'), () {
+          showCupertinoDialog(
+              context: context,
+              builder: (context) => CupertinoAlertDialog(
+                    title: Text('Reset App'),
+                    content: Text('Are you sure?'),
+                    actions: <Widget>[
+                      CupertinoDialogAction(
+                        child: Text('No'),
+                        isDefaultAction: true,
+                        onPressed: () {
+                          UnimplementedError('Implement me');
+                          Navigator.of(context).pop();
+                        },
                       ),
-                  useRootNavigator: false);
-            }),
+                      CupertinoDialogAction(
+                        child: Text('Yes'),
+                        isDestructiveAction: true,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  ),
+              useRootNavigator: false);
+        }),
         CSDescription(
           'WARNING! This will delete all personal application data including added examinations',
         ),

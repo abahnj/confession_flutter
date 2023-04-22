@@ -9,7 +9,7 @@ class ThemeState {
 
 class ThemeStyle with ChangeNotifier {
   static const String THEME_PREF = 'AppTheme';
-  ThemeMode _userThemeMode;
+  ThemeMode _userThemeMode = ThemeMode.light;
 
   ThemeStyle() {
     _loadSharedPrefs();

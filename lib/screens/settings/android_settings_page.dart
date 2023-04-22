@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 class AndroidSettingsPage extends StatelessWidget {
   const AndroidSettingsPage({
-    Key key,
-    @required this.prefs,
+    Key? key,
+    required this.prefs,
   }) : super(key: key);
 
   final PrefsNotifier prefs;
@@ -120,7 +120,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Gender.male,
                     groupValue: prefs.user.gender,
                     onChanged: (gender) {
-                      prefs.setUserGender(gender);
+                      prefs.setUserGender(gender!);
                       Navigator.pop(context);
                     },
                   ),
@@ -129,7 +129,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Gender.female,
                     groupValue: prefs.user.gender,
                     onChanged: (gender) {
-                      prefs.setUserGender(gender);
+                      prefs.setUserGender(gender!);
                       Navigator.pop(context);
                     },
                   ),
@@ -165,7 +165,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Age.adult,
                     groupValue: prefs.user.age,
                     onChanged: (age) {
-                      prefs.userAge = age;
+                      prefs.userAge = age!;
                       Navigator.pop(context);
                     },
                   ),
@@ -174,7 +174,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Age.teen,
                     groupValue: prefs.user.age,
                     onChanged: (age) {
-                      prefs.userAge = age;
+                      prefs.userAge = age!;
                       Navigator.pop(context);
                     },
                   ),
@@ -183,7 +183,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Age.child,
                     groupValue: prefs.user.age,
                     onChanged: (age) {
-                      prefs.userAge = age;
+                      prefs.userAge = age!;
                       Navigator.pop(context);
                     },
                   )
@@ -219,7 +219,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Vocation.single,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
-                      prefs.setUserVocation(vocation);
+                      prefs.setUserVocation(vocation!);
                       Navigator.pop(context);
                     },
                   ),
@@ -228,7 +228,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Vocation.married,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
-                      prefs.setUserVocation(vocation);
+                      prefs.setUserVocation(vocation!);
                       Navigator.pop(context);
                     },
                   ),
@@ -237,7 +237,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Vocation.priest,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
-                      prefs.setUserVocation(vocation);
+                      prefs.setUserVocation(vocation!);
                       Navigator.pop(context);
                     },
                   ),
@@ -246,7 +246,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     value: Vocation.religious,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
-                      prefs.setUserVocation(vocation);
+                      prefs.setUserVocation(vocation!);
                       Navigator.pop(context);
                     },
                   )

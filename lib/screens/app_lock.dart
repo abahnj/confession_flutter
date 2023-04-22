@@ -1,11 +1,3 @@
-import 'dart:async';
-
-import 'package:confession_flutter/constants.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-import '../utils.dart';
-
 /// A widget which handles app lifecycle events for showing and hiding a lock screen.
 /// This should wrap around a `MyApp` widget (or equivalent).
 ///
@@ -21,145 +13,145 @@ import '../utils.dart';
 /// and subsequent app pauses. This can be changed later on using `AppLock.of(context).enable();`,
 /// `AppLock.of(context).disable();` or the convenience method `AppLock.of(context).setEnabled(enabled);`
 /// using a bool argument.
-class AppLock extends StatefulWidget {
-  final Widget Function(Object) builder;
-  final Widget lockScreen;
-  final bool enabled;
-
-  const AppLock({
-    Key key,
-    @required this.builder,
-    @required this.lockScreen,
-    this.enabled = true,
-  }) : super(key: key);
-
-  static _AppLockState of(BuildContext context) =>
-      context.findAncestorStateOfType<_AppLockState>();
-
-  @override
-  _AppLockState createState() => _AppLockState();
-}
-
-class _AppLockState extends State<AppLock> with WidgetsBindingObserver {
-  static final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
-
-  bool _didUnlockForAppLaunch;
-  bool _isPaused;
-  bool _enabled;
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addObserver(this);
-
-    _didUnlockForAppLaunch = !widget.enabled;
-    this._isPaused = false;
-    this._enabled = this.widget.enabled;
-
-    super.initState();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (!this._enabled) {
-      return;
-    }
-
-    if (state == AppLifecycleState.paused &&
-        (!this._isPaused && this._didUnlockForAppLaunch)) {
-      this.showLockScreen();
-    }
-
-    super.didChangeAppLifecycleState(state);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: this.widget.enabled ? this._lockScreen : this.widget.builder(null),
-      navigatorKey: _navigatorKey,
-      darkTheme: themeDataDark,
-      themeMode: userThemeMode(context),
-      theme: themeData(context),
-      routes: {
-        '/lock-screen': (context) => this._lockScreen,
-        '/unlocked': (context) =>
-            this.widget.builder(ModalRoute.of(context).settings.arguments)
-      },
-    );
-  }
-
-  Widget get _lockScreen {
-    return WillPopScope(
-      child: this.widget.lockScreen,
-      onWillPop: () => Future.value(false),
-    );
-  }
-
-  /// Causes `AppLock` to either pop the [lockScreen] if the app is already running
-  /// or instantiates widget returned from the [builder] method if the app is cold
-  /// launched.
-  ///
-  /// [args] is an optional argument which will get passed to the [builder] method
-  /// when built. Use this when you want to inject objects created from the
-  /// [lockScreen] in to the rest of your app so you can better guarantee that some
-  /// objects, services or databases are already instantiated before using them.
-  void didUnlock([Object args]) {
-    if (this._didUnlockForAppLaunch) {
-      this._didUnlockOnAppPaused();
-    } else {
-      this._didUnlockOnAppLaunch(args);
-    }
-  }
-
-  /// Makes sure that [AppLock] shows the [lockScreen] on subsequent app pauses if
-  /// [enabled] is true of makes sure it isn't shown on subsequent app pauses if
-  /// [enabled] is false.
-  ///
-  /// This is a convenience method for calling the [enable] or [disable] method based
-  /// on [enabled].
-  void setEnabled(bool enabled) {
-    if (enabled) {
-      this.enable();
-    } else {
-      this.disable();
-    }
-  }
-
-  /// Makes sure that [AppLock] shows the [lockScreen] on subsequent app pauses.
-  void enable() {
-    setState(() {
-      this._enabled = true;
-    });
-  }
-
-  /// Makes sure that [AppLock] doesn't show the [lockScreen] on subsequent app pauses.
-  void disable() {
-    setState(() {
-      this._enabled = false;
-    });
-  }
-
-  /// Manually show the [lockScreen].
-  Future<void> showLockScreen() {
-    this._isPaused = true;
-    return _navigatorKey.currentState.pushNamed('/lock-screen');
-  }
-
-  void _didUnlockOnAppLaunch(Object args) {
-    this._didUnlockForAppLaunch = true;
-    _navigatorKey.currentState
-        .pushReplacementNamed('/unlocked', arguments: args);
-  }
-
-  void _didUnlockOnAppPaused() {
-    this._isPaused = false;
-    _navigatorKey.currentState.pop();
-  }
-}
+// class AppLock extends StatefulWidget {
+//   final Widget Function(Object) builder;
+//   final Widget lockScreen;
+//   final bool enabled;
+//
+//   const AppLock({
+//     Key? key,
+//     required this.builder,
+//     required this.lockScreen,
+//     this.enabled = true,
+//   }) : super(key: key);
+//
+//   static _AppLockState of(BuildContext context) =>
+//       context.findAncestorStateOfType<_AppLockState>();
+//
+//   @override
+//   _AppLockState createState() => _AppLockState();
+// }
+//
+// class _AppLockState extends State<AppLock> with WidgetsBindingObserver {
+//   static final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
+//
+//   bool _didUnlockForAppLaunch;
+//   bool _isPaused;
+//   bool _enabled;
+//
+//   @override
+//   void initState() {
+//     WidgetsBinding.instance.addObserver(this);
+//
+//     _didUnlockForAppLaunch = !widget.enabled;
+//     _isPaused = false;
+//     _enabled = widget.enabled;
+//
+//     super.initState();
+//   }
+//
+//   @override
+//   void didChangeAppLifecycleState(AppLifecycleState state) {
+//     if (!_enabled) {
+//       return;
+//     }
+//
+//     if (state == AppLifecycleState.paused &&
+//         (!_isPaused && _didUnlockForAppLaunch)) {
+//       showLockScreen();
+//     }
+//
+//     super.didChangeAppLifecycleState(state);
+//   }
+//
+//   @override
+//   void dispose() {
+//     WidgetsBinding.instance.removeObserver(this);
+//
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: widget.enabled ? _lockScreen : widget.builder(null),
+//       navigatorKey: _navigatorKey,
+//       darkTheme: themeDataDark,
+//       themeMode: userThemeMode(context),
+//       theme: themeData(context),
+//       routes: {
+//         '/lock-screen': (context) => _lockScreen,
+//         '/unlocked': (context) =>
+//             widget.builder(ModalRoute.of(context).settings.arguments)
+//       },
+//     );
+//   }
+//
+//   Widget get _lockScreen {
+//     return WillPopScope(
+//       child: widget.lockScreen,
+//       onWillPop: () => Future.value(false),
+//     );
+//   }
+//
+//   /// Causes `AppLock` to either pop the [lockScreen] if the app is already running
+//   /// or instantiates widget returned from the [builder] method if the app is cold
+//   /// launched.
+//   ///
+//   /// [args] is an optional argument which will get passed to the [builder] method
+//   /// when built. Use this when you want to inject objects created from the
+//   /// [lockScreen] in to the rest of your app so you can better guarantee that some
+//   /// objects, services or databases are already instantiated before using them.
+//   void didUnlock([Object? args]) {
+//     if (_didUnlockForAppLaunch) {
+//       _didUnlockOnAppPaused();
+//     } else {
+//       _didUnlockOnAppLaunch(args);
+//     }
+//   }
+//
+//   /// Makes sure that [AppLock] shows the [lockScreen] on subsequent app pauses if
+//   /// [enabled] is true of makes sure it isn't shown on subsequent app pauses if
+//   /// [enabled] is false.
+//   ///
+//   /// This is a convenience method for calling the [enable] or [disable] method based
+//   /// on [enabled].
+//   void setEnabled(bool enabled) {
+//     if (enabled) {
+//       enable();
+//     } else {
+//       disable();
+//     }
+//   }
+//
+//   /// Makes sure that [AppLock] shows the [lockScreen] on subsequent app pauses.
+//   void enable() {
+//     setState(() {
+//       _enabled = true;
+//     });
+//   }
+//
+//   /// Makes sure that [AppLock] doesn't show the [lockScreen] on subsequent app pauses.
+//   void disable() {
+//     setState(() {
+//       _enabled = false;
+//     });
+//   }
+//
+//   /// Manually show the [lockScreen].
+//   Future<void> showLockScreen() async {
+//     _isPaused = true;
+//     await _navigatorKey.currentState?.pushNamed('/lock-screen');
+//   }
+//
+//   void _didUnlockOnAppLaunch(Object? args) {
+//     _didUnlockForAppLaunch = true;
+//     _navigatorKey.currentState
+//         ?.pushReplacementNamed('/unlocked', arguments: args);
+//   }
+//
+//   void _didUnlockOnAppPaused() {
+//     _isPaused = false;
+//     _navigatorKey.currentState?.pop();
+//   }
+// }

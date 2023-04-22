@@ -6,7 +6,7 @@ import 'package:confession_flutter/data/user.dart';
 import 'package:confession_flutter/viewmodels/base_model.dart';
 
 class GuideListViewModel extends BaseModel {
-  GuideListViewModel({GuidesDao dao, User user}) : _dao = dao;
+  GuideListViewModel({required GuidesDao dao, User? user}) : _dao = dao;
 
   final GuidesDao _dao;
 

@@ -11,7 +11,8 @@ class GuideListPage extends StatelessWidget {
   final int guideId;
   final String title;
 
-  const GuideListPage({Key key, this.guideId, this.title}) : super(key: key);
+  const GuideListPage({Key? key, required this.guideId, required this.title})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +20,7 @@ class GuideListPage extends StatelessWidget {
       body: ViewModelBuilder<GuideListViewModel>.reactive(
         viewModelBuilder: () => GuideListViewModel(
           dao: Provider.of<AppDatabase>(context).guidesDao,
+          user: null,
         ),
         onModelReady: (model) => model.getGuidesForId(guideId),
         builder: (context, model, _) => Scaffold(
@@ -31,7 +33,7 @@ class GuideListPage extends StatelessWidget {
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline5.copyWith(
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),

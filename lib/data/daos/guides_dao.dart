@@ -1,4 +1,4 @@
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 import '../app_database.dart';
 
@@ -17,7 +17,7 @@ class Guides extends Table {
   String get tableName => 'guide_main';
 }
 
-@UseDao(tables: [Guides])
+@DriftAccessor(tables: [Guides])
 class GuidesDao extends DatabaseAccessor<AppDatabase> with _$GuidesDaoMixin {
   GuidesDao(AppDatabase db) : super(db);
 

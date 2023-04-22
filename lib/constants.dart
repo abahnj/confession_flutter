@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
 
 ///Constants file
 const kAppName = 'Confession';

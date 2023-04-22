@@ -7,14 +7,14 @@ import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:confession_flutter/viewmodels/base_model.dart';
 
 class ExaminationPageViewModel extends BaseModel {
-  ExaminationPageViewModel({ExaminationsDao dao, User user})
+  ExaminationPageViewModel({required ExaminationsDao dao, required User user})
       : _dao = dao,
         _user = user;
 
   final ExaminationsDao _dao;
   final User _user;
-  int nextCommandmentId;
-  int previousCommandmentId;
+  int nextCommandmentId = 0;
+  int previousCommandmentId = 0;
 
   List<Examination> _examinations = [];
   List<Examination> _activeExaminations = [];
@@ -76,7 +76,7 @@ class ExaminationPageViewModel extends BaseModel {
       15: 'Responsibilities to Society',
     };
 
-    return titles[commandmentId];
+    return titles[commandmentId] ?? 'null';
   }
 
   void updateCountForExamination(int index, countValue) {

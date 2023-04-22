@@ -9,7 +9,7 @@ class PrayersDetailPage extends StatelessWidget {
   static const String Id = '/prayersDetailPage';
   final int prayerId;
 
-  const PrayersDetailPage({Key key, this.prayerId}) : super(key: key);
+  const PrayersDetailPage({Key? key, required this.prayerId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +31,8 @@ class PrayersDetailPage extends StatelessWidget {
                     model.prayer?.prayerName ?? '',
                     style: Theme.of(context)
                         .textTheme
-                        .headline5
-                        .copyWith(fontWeight: FontWeight.bold),
+                        .headlineSmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Card(

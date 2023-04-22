@@ -2,9 +2,7 @@ import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/screens/guide/guide_detail_page.dart';
 import 'package:confession_flutter/screens/guide/guide_list_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class GuidePage extends StatelessWidget {
   static const String Id = '/guidePage';
@@ -19,13 +17,13 @@ class GuidePage extends StatelessWidget {
       case '/':
         return GuidePage();
       case guideListPage:
-        GuideItem guideItem = settings.arguments;
+        var guideItem = settings.arguments as GuideItem;
         return GuideListPage(
           guideId: guideItem.guideId,
           title: guideItem.guideTitle,
         );
       case guideDetailPage:
-        var guideText = settings.arguments;
+        var guideText = settings.arguments as String;
         return GuideDetailPage(
           guideText: guideText,
         );

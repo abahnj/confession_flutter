@@ -2,7 +2,6 @@ import 'package:confession_flutter/components/confession_page_button.dart';
 import 'package:confession_flutter/components/root_app_bar.dart';
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/screens/prayers/prayers_detail_page_viewmodel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +29,8 @@ class ConfessionPageThree extends StatelessWidget {
                   'Act of Contrition',
                   style: Theme.of(context)
                       .textTheme
-                      .headline5
-                      .copyWith(fontWeight: FontWeight.bold),
+                      .headlineSmall
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Expanded(
                   child: Padding(
@@ -43,8 +42,8 @@ class ConfessionPageThree extends StatelessWidget {
                             model.prayer?.prayerText ?? '',
                             style: Theme.of(context)
                                 .textTheme
-                                .headline5
-                                .copyWith(fontWeight: FontWeight.bold),
+                                .headlineSmall
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 20,
@@ -63,18 +62,24 @@ class ConfessionPageThree extends StatelessWidget {
                         ),
                         TextSpan(
                           text: '"Give thanks to the Lord for he is Good" ',
-                          style: Theme.of(context).textTheme.headline6.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic),
                         ),
                         TextSpan(
                           text: 'answer ',
                         ),
                         TextSpan(
                           text: '"For his mercy endures forever"',
-                          style: Theme.of(context).textTheme.headline6.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic),
                         ),
                       ]),
                   textAlign: TextAlign.start,

@@ -1,6 +1,6 @@
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/user.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 part 'examinations_dao.g.dart';
 
@@ -39,9 +39,7 @@ class Examinations extends Table {
   String get tableName => 'SIN';
 }
 
-@UseDao(
-  tables: [Examinations],
-)
+@DriftAccessor(tables: [Examinations])
 class ExaminationsDao extends DatabaseAccessor<AppDatabase>
     with _$ExaminationsDaoMixin {
   ExaminationsDao(AppDatabase db) : super(db);

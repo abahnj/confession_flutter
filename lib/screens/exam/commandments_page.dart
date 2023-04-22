@@ -8,7 +8,6 @@ import 'package:confession_flutter/screens/exam/examination_page_view.dart';
 import 'package:confession_flutter/viewmodels/commandments_page_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -40,12 +39,12 @@ class CommandmentsPage extends StatelessWidget {
       case '/':
         return CommandmentsPage();
       case ExaminationPage.Id:
-        int commandmentId = settings.arguments;
+        var commandmentId = settings.arguments as int;
         return ExaminationPage(
           commandmentId: commandmentId,
         );
       case ExaminationPageView.Id:
-        List arguments = settings.arguments;
+        var arguments = settings.arguments as List;
         return ExaminationPageView(
           currentPage: arguments[0],
           pageList: arguments[1],
@@ -64,7 +63,7 @@ class CommandmentsPage extends StatelessWidget {
       builder: (context, model, child) {
         var commandments = model.filterCommandments(context.watch<User>());
         return Scaffold(
-          appBar: child,
+          appBar: child as PreferredSizeWidget,
           body: SafeArea(
             child: ListView.builder(
               scrollDirection: Axis.vertical,

@@ -6,7 +6,7 @@ import 'package:confession_flutter/data/user.dart';
 import 'package:stacked/stacked.dart';
 
 class CommandmentsPageViewModel extends BaseViewModel {
-  CommandmentsPageViewModel({CommandmentsDao dao}) : _dao = dao;
+  CommandmentsPageViewModel({required CommandmentsDao dao}) : _dao = dao;
 
   final CommandmentsDao _dao;
 

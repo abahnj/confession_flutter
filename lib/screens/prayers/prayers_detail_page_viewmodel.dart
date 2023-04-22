@@ -5,13 +5,13 @@ import 'package:confession_flutter/data/daos/prayers_dao.dart';
 import 'package:confession_flutter/viewmodels/base_model.dart';
 
 class PrayersDetailPageViewModel extends BaseModel {
-  PrayersDetailPageViewModel({PrayersDao dao}) : _dao = dao;
+  PrayersDetailPageViewModel({required PrayersDao dao}) : _dao = dao;
 
   final PrayersDao _dao;
 
-  Prayer _prayer;
+  late Prayer _prayer;
 
-  Inspiration _inspiration;
+  late Inspiration _inspiration;
 
   Prayer get prayer => _prayer;
 

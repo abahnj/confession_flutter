@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:confession_flutter/constants.dart';
 import 'package:confession_flutter/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
@@ -29,29 +28,23 @@ class LockScreen extends StatefulWidget {
   final PassCodeVerify passCodeVerify;
 
   LockScreen({
-    @required this.onSuccess,
-    @required this.title,
-    @required this.borderColor,
+    required this.onSuccess,
+    required this.title,
+    required this.borderColor,
     this.foregroundColor = Colors.transparent,
-    this.passLength,
-    @required this.passCodeVerify,
-    this.fingerFunction,
+    required this.passLength,
+    required this.passCodeVerify,
+    required this.fingerFunction,
     this.fingerVerify = false,
     this.showFingerPass = false,
-    @required this.bgImage,
+    required this.bgImage,
     this.numColor = Colors.black,
-    this.fingerPrintImage,
+    required this.fingerPrintImage,
     this.showWrongPassDialog = false,
-    this.wrongPassTitle,
-    this.wrongPassContent,
-    this.wrongPassCancelButtonText,
-  })  : assert(title != null),
-        assert(passLength <= 8),
-        assert(bgImage != null),
-        assert(borderColor != null),
-        assert(foregroundColor != null),
-        assert(passCodeVerify != null),
-        assert(onSuccess != null);
+    required this.wrongPassTitle,
+    required this.wrongPassContent,
+    required this.wrongPassCancelButtonText,
+  }) : assert(passLength <= 8);
 
   @override
   _LockScreenState createState() => _LockScreenState();
@@ -102,7 +95,7 @@ class _LockScreenState extends State<LockScreen> {
                           style: TextStyle(fontFamily: 'Open Sans'),
                         ),
                         actions: <Widget>[
-                          FlatButton(
+                          TextButton(
                             onPressed: () => Navigator.pop(context),
                             child: Text(
                               widget.wrongPassCancelButtonText,
@@ -263,11 +256,10 @@ class _LockScreenState extends State<LockScreen> {
                                 ],
                               ),
                             ),
-                            PlatformButton(
+                            PlatformTextButton(
                               child: Text(
                                   'Unlock with ${Platform.isIOS ? 'Face ID' : 'Biometrics'}'),
                               onPressed: () {},
-                              materialFlat: (_, __) => MaterialFlatButtonData(),
                             )
                           ],
                         ),
@@ -371,9 +363,9 @@ class CodePanel extends StatelessWidget {
       this.currentLength,
       this.borderColor,
       this.foregroundColor,
-      @required this.deleteCode,
-      this.fingerVerify,
-      this.status})
+      required this.deleteCode,
+      required this.fingerVerify,
+      required this.status})
       : assert(codeLength > 0),
         assert(currentLength >= 0),
         assert(currentLength <= codeLength),

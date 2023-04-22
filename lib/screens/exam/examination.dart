@@ -10,23 +10,25 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 enum MenuOptions { edit, delete, decrement, resetCount }
+
 enum CountValue { increment, decrement }
 
 class ExaminationPage extends StatelessWidget {
   static const String Id = '/examinationPage';
   final int commandmentId;
 
-  const ExaminationPage({Key key, this.commandmentId}) : super(key: key);
+  const ExaminationPage({Key? key, required this.commandmentId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExaminationPageViewModel>.reactive(
-      createNewModelOnInsert: true,
+      createNewViewModelOnInsert: true,
       viewModelBuilder: () => ExaminationPageViewModel(
         dao: Provider.of<AppDatabase>(context).examinationsDao,
         user: Provider.of<User>(context),
       ),
-      onModelReady: (model) {
+      onViewModelReady: (model) {
         model.getExaminationsForUserAndId(commandmentId);
         model.setNeighbouringIds(commandmentId);
       },
@@ -43,8 +45,8 @@ class ExaminationPage extends StatelessWidget {
                     model.getCommandmentTitle(commandmentId),
                     style: Theme.of(context)
                         .textTheme
-                        .headline6
-                        .copyWith(fontWeight: FontWeight.bold),
+                        .titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
@@ -54,8 +56,9 @@ class ExaminationPage extends StatelessWidget {
                     itemCount: model.examinations.length,
                     itemBuilder: (context, index) {
                       var examination = model.examinations[index];
-                      final RenderBox overlay =
-                          Overlay.of(context).context.findRenderObject();
+                      final overlay = Overlay.of(context)
+                          .context
+                          .findRenderObject() as RenderBox;
 
                       return ListCard(
                         onTap: () => model.updateCountForExamination(
@@ -65,7 +68,7 @@ class ExaminationPage extends StatelessWidget {
                               ? await iOSDialog(context)
                               : await showAndroidMenu(
                                   context, overlay, details);
-                          performMenuAction(selection, model, index);
+                          performMenuAction(selection!, model, index);
                         },
                         title: examination.description,
                         trailing: Column(
@@ -166,9 +169,9 @@ Future<MenuOptions> iOSDialog(BuildContext context) async =>
       ),
     );
 
-Future<MenuOptions> showAndroidMenu(BuildContext context, RenderBox overlay,
+Future<MenuOptions?> showAndroidMenu(BuildContext context, RenderBox overlay,
         LongPressStartDetails details) async =>
-    await showMenu(
+    showMenu(
       context: context,
       position: RelativeRect.fromRect(
           details.globalPosition & Size(40, 40), // smaller rect, the touch area

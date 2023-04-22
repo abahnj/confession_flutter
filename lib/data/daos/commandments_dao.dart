@@ -1,6 +1,6 @@
 import 'package:confession_flutter/data/app_database.dart';
 import 'package:confession_flutter/data/user.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 part 'commandments_dao.g.dart';
 
@@ -21,7 +21,7 @@ class Commandments extends Table {
   String get tableName => 'COMMANDMENTS';
 }
 
-@UseDao(tables: [Commandments])
+@DriftAccessor(tables: [Commandments])
 class CommandmentsDao extends DatabaseAccessor<AppDatabase>
     with _$CommandmentsDaoMixin {
   CommandmentsDao(AppDatabase db) : super(db);

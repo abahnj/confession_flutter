@@ -6,20 +6,20 @@ class ConfessionPageButton extends StatelessWidget {
   final String text;
 
   const ConfessionPageButton({
-    Key key,
-    @required this.onTap,
-    @required this.text,
+    Key? key,
+    required this.onTap,
+    required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return PlatformButton(
+    return PlatformTextButton(
       child: PlatformText(
         text,
-        style: Theme.of(context).textTheme.button.copyWith(color: Colors.red),
+        style:
+            Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.red),
       ),
       onPressed: onTap,
-      materialFlat: (context, _) => MaterialFlatButtonData(),
     );
   }
 }
