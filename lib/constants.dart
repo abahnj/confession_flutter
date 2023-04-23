@@ -40,7 +40,6 @@ final themeData = (BuildContext context) => ThemeData(
       brightness: Brightness.light,
       primarySwatch: Colors.red,
       primaryIconTheme: IconThemeData(color: Colors.red),
-      accentIconTheme: IconThemeData(color: Colors.red),
       primaryColor: Colors.white,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedItemColor: Colors.red,
@@ -50,10 +49,8 @@ final themeData = (BuildContext context) => ThemeData(
 
 final themeDataDark = ThemeData.dark().copyWith(
   iconTheme: IconThemeData(color: Colors.red),
-  backgroundColor: Colors.black,
   scaffoldBackgroundColor: Colors.black,
-  colorScheme: ColorScheme.dark(),
-  toggleableActiveColor: Colors.red,
+  colorScheme: ColorScheme.dark(background: Colors.black),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: Colors.red,
     unselectedItemColor: iconColorDarkInactive,

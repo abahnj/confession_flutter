@@ -109,7 +109,6 @@ class _HomePageState extends State<HomePage>
                 var currentNavigator = _navigatorKeys[_currentIndex];
                 currentNavigator.currentState
                     ?.popUntil((route) => route.isFirst);
-                Explanation:
                 return;
               } else {
                 _currentIndex = index;

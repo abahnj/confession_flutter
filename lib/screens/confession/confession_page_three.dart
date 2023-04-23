@@ -14,7 +14,7 @@ class ConfessionPageThree extends StatelessWidget {
       viewModelBuilder: () => PrayersDetailPageViewModel(
         dao: context.read<AppDatabase>().prayersDao,
       ),
-      onModelReady: (model) {
+      onViewModelReady: (model) {
         model.getPrayerForId(2);
         model.getRandomInspiration();
       },
@@ -39,7 +39,7 @@ class ConfessionPageThree extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            model.prayer?.prayerText ?? '',
+                            model.prayer.prayerText,
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall
@@ -55,7 +55,7 @@ class ConfessionPageThree extends StatelessWidget {
                 ),
                 RichText(
                   text: TextSpan(
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                       children: [
                         TextSpan(
                           text: 'If the priest says ',

@@ -17,7 +17,7 @@ class PrayersDetailPage extends StatelessWidget {
       viewModelBuilder: () => PrayersDetailPageViewModel(
         dao: Provider.of<AppDatabase>(context).prayersDao,
       ),
-      onModelReady: (model) => model.getPrayerForId(prayerId),
+      onViewModelReady: (model) => model.getPrayerForId(prayerId),
       builder: (context, model, _) => Scaffold(
         appBar: rootAppBar(context),
         body: SingleChildScrollView(
@@ -28,7 +28,7 @@ class PrayersDetailPage extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                   child: Text(
-                    model.prayer?.prayerName ?? '',
+                    model.prayer.prayerName,
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
@@ -40,7 +40,7 @@ class PrayersDetailPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      model.prayer?.prayerText ?? '',
+                      model.prayer.prayerText,
                       style: TextStyle(fontSize: 24.0),
                     ),
                   ),

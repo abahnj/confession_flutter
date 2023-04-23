@@ -55,11 +55,12 @@ class PrayersPage extends StatelessWidget {
                 title: Center(
                   child: Text(
                     item.heading,
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
               );
-            } else if (item is PrayerItem) {
+            } else {
+              item as PrayerItem;
               return ListCard(
                 title: item.prayerName,
                 onTap: () => {

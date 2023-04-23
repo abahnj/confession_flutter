@@ -1,4 +1,4 @@
-package com.norvera.confession_flutter
+package com.norvera.confession
 
 
 import io.flutter.embedding.android.FlutterActivity

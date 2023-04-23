@@ -1,9 +1,7 @@
 import 'package:confession_flutter/prefs.dart';
 import 'package:confession_flutter/screens/settings/android_settings_page.dart';
 import 'package:confession_flutter/screens/settings/ios_settings_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {

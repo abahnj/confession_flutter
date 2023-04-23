@@ -108,22 +108,25 @@ Future<String> getDeviceInfo() async {
       ''';
 }
 
+String? encodeQueryParameters(Map<String, String> params) {
+  return params.entries
+      .map((MapEntry<String, String> e) =>
+          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+      .join('&');
+}
+
 void sendFeedbackEmail() async {
-  var emailUri = getUrl('mailto', 'appsupport@norvera.com',
-      {'subject': 'Feedback for Confession', 'body': await getDeviceInfo()});
-  if (await canLaunchUrl(Uri.dataFromString(emailUri))) {
-    await launch(emailUri);
+  final emailUri = Uri(
+    scheme: 'mailto',
+    path: 'appsupport@norvera.com',
+    query: encodeQueryParameters(<String, String>{
+      'subject': 'Feedback for Confession',
+      'body': await getDeviceInfo()
+    }),
+  );
+  if (await canLaunchUrl(emailUri)) {
+    await launchUrl(emailUri);
   } else {
     throw 'Could not launch $emailUri';
   }
-}
-
-String getUrl(String scheme, String path, Map<String, String> queryParameters) {
-  var url = '$scheme:$path?';
-
-  queryParameters.forEach((String k, String v) {
-    url += '$k=$v&';
-  });
-
-  return url;
 }

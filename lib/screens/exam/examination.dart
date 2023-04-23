@@ -76,7 +76,7 @@ class ExaminationPage extends StatelessWidget {
                           children: [
                             Text(
                               examination.count.toString(),
-                              style: Theme.of(context).textTheme.headline6,
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
                         ),

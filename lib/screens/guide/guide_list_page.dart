@@ -22,7 +22,7 @@ class GuideListPage extends StatelessWidget {
           dao: Provider.of<AppDatabase>(context).guidesDao,
           user: null,
         ),
-        onModelReady: (model) => model.getGuidesForId(guideId),
+        onViewModelReady: (model) => model.getGuidesForId(guideId),
         builder: (context, model, _) => Scaffold(
           body: SafeArea(
             child: Column(

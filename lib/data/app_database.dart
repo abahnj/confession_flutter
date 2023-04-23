@@ -4,6 +4,7 @@ import 'package:confession_flutter/data/daos/commandments_dao.dart';
 import 'package:confession_flutter/data/daos/examinations_dao.dart';
 import 'package:confession_flutter/data/daos/prayers_dao.dart';
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -19,28 +20,32 @@ LazyDatabase _openConnection({bool reset = false}) {
     var path = join(databasesPath.path, 'confession.db');
 
     final file = File(path);
-    if (reset || !await file.exists()) {
-      // copy the file from an asset, or network, or any other source
-      // Should happen only the first time you launch your application
-      print('Creating new copy from asset');
+    final filePath = join('assets', 'database', 'confession.db');
 
-      // Make sure the parent directory exists
-      try {
-        await Directory(dirname(path)).create(recursive: true);
-      } catch (_) {}
+    return databaseWithDefaultAsset(file, filePath);
 
-      // Copy from asset
-      var data =
-          await rootBundle.load(join('assets', 'database', 'confession.db'));
-      List<int> bytes =
-          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-
-      // Write and flush the bytes written
-      await file.writeAsBytes(bytes, flush: true);
-    } else {
-      print('Opening existing database');
-    }
-    throw Exception('');
+    // if (reset || !await file.exists()) {
+    //   // copy the file from an asset, or network, or any other source
+    //   // Should happen only the first time you launch your application
+    //   print('Creating new copy from asset');
+    //
+    //   // Make sure the parent directory exists
+    //   try {
+    //     await Directory(dirname(path)).create(recursive: true);
+    //   } catch (_) {}
+    //
+    //   // Copy from asset
+    //   var data =
+    //       await rootBundle.load(join('assets', 'database', 'confession.db'));
+    //   List<int> bytes =
+    //       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+    //
+    //   // Write and flush the bytes written
+    //   await file.writeAsBytes(bytes, flush: true);
+    // } else {
+    //   print('Opening existing database');
+    // }
+    // return NativeDatabase.createInBackground(file);
   });
 }
 
@@ -54,7 +59,7 @@ QueryExecutor databaseWithDefaultAsset(File file, String asset) {
       await file.parent.create(recursive: true);
       await file.writeAsBytes(content.buffer.asUint8List(0));
     }
-    throw Exception('');
+    return NativeDatabase.createInBackground(file);
   });
 }
 

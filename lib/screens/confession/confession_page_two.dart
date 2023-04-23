@@ -18,7 +18,7 @@ class ConfessionPageTwo extends StatelessWidget {
         dao: Provider.of<AppDatabase>(context).examinationsDao,
         user: Provider.of<User>(context),
       ),
-      onModelReady: (model) => model.getActiveExaminations(),
+      onViewModelReady: (model) => model.getActiveExaminations(),
       builder: (context, model, _) => Scaffold(
         body: Scaffold(
           appBar: rootAppBar(context),

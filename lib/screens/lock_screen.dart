@@ -355,7 +355,7 @@ class CodePanel extends StatelessWidget {
   final foregroundColor;
   final H = 30.0;
   final W = 30.0;
-  final DeleteCode deleteCode;
+  final DeleteCode? deleteCode;
   final int status;
 
   CodePanel(
@@ -363,7 +363,7 @@ class CodePanel extends StatelessWidget {
       this.currentLength,
       this.borderColor,
       this.foregroundColor,
-      required this.deleteCode,
+      this.deleteCode,
       required this.fingerVerify,
       required this.status})
       : assert(codeLength > 0),

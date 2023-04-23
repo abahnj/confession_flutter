@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.norvera.confession_flutter">
+          package="com.norvera.confession">
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
     <application
