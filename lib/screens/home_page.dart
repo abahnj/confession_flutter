@@ -131,7 +131,10 @@ List<BottomNavigationBarItem> _buildItems(context) {
         width: 24,
         child: SvgPicture.asset(
           destination.iconAsset,
-          color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+          colorFilter: ColorFilter.mode(
+              Theme.of(context).bottomNavigationBarTheme.unselectedItemColor ??
+                  Colors.grey,
+              BlendMode.srcIn),
         ),
       ),
       activeIcon: SizedBox(

@@ -13,13 +13,13 @@ class PrayersPage extends StatelessWidget {
 
   static const String title = 'Prayers';
 
-  static const String iconAsset = vectorRoot + 'ic_prayer.xml';
+  static const String iconAsset = '${vectorRoot}prayer.svg';
 
   // ignore: missing_return
   static Function router = (RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return PrayersPage();
+        return const PrayersPage();
       case PrayersDetailPage.Id:
         return PrayersDetailPage(
           prayerId: settings.arguments as int,
@@ -28,6 +28,8 @@ class PrayersPage extends StatelessWidget {
         return null;
     }
   };
+
+  const PrayersPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -31,13 +31,12 @@ class CommandmentsPage extends StatelessWidget {
 
   static const String title = 'Exam';
 
-  static const String iconAsset = vectorRoot + 'ic_exam.xml';
+  static const String iconAsset = '${vectorRoot}exam.svg';
 
-  // ignore: missing_return
   static Function router = (RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return CommandmentsPage();
+        return const CommandmentsPage();
       case ExaminationPage.Id:
         var commandmentId = settings.arguments as int;
         return ExaminationPage(
@@ -51,6 +50,8 @@ class CommandmentsPage extends StatelessWidget {
         );
     }
   };
+
+  const CommandmentsPage({super.key});
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CommandmentsPageViewModel>.reactive(

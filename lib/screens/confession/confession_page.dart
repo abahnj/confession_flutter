@@ -14,19 +14,21 @@ class ConfessionPage extends StatelessWidget {
 
   static const String title = 'Confession';
 
-  static const String iconAsset = vectorRoot + 'ic_confession.xml';
+  static const String iconAsset = '${vectorRoot}confession.svg';
 
   // ignore: missing_return
   static Function router = (RouteSettings settings) {
     switch (settings.name) {
       case confessionPage:
-        return ConfessionPage();
+        return const ConfessionPage();
       case confessionPageTwo:
         return ConfessionPageTwo();
       case confessionPageThree:
         return ConfessionPageThree();
     }
   };
+
+  const ConfessionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class ConfessionPage extends StatelessWidget {
           children: [
             Expanded(
               child: Card(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(

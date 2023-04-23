@@ -26,56 +26,53 @@ class ListCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: InkWell(
         onTap: onTap,
         child: GestureDetector(
           onLongPressStart: onLongPress,
-          child: Container(
-            child: ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              leading: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(right: 12.0),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        right: BorderSide(width: 1.0, color: Colors.white24),
-                      ),
-                    ),
-                    child: SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: SvgPicture.asset(
-                        'assets/vectors/ic_cross.xml',
-                        color: iconColorActive,
-                      ),
+          child: ListTile(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(right: 12.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      right: BorderSide(width: 1.0, color: Colors.white24),
                     ),
                   ),
-                ],
-              ),
-              title: Text(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: (subtitle != null)
-                  ? Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            subtitle!,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        )
-                      ],
-                    )
-                  : null,
-              trailing: trailing ??
-                  Icon(Icons.keyboard_arrow_right,
-                      color: Colors.white, size: 30.0),
+                  child: SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: SvgPicture.asset('assets/vectors/cross.svg',
+                        colorFilter:
+                            ColorFilter.mode(iconColorActive, BlendMode.srcIn)),
+                  ),
+                ),
+              ],
             ),
+            title: Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: (subtitle != null)
+                ? Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          subtitle!,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    ],
+                  )
+                : null,
+            trailing: trailing ??
+                const Icon(Icons.keyboard_arrow_right,
+                    color: Colors.white, size: 30.0),
           ),
         ),
       ),

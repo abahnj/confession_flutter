@@ -9,13 +9,13 @@ class GuidePage extends StatelessWidget {
 
   static const String title = 'Guide';
 
-  static const String iconAsset = vectorRoot + 'ic_guides.xml';
+  static const String iconAsset = '${vectorRoot}guides.svg';
 
   // ignore: missing_return
   static Function router = (RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return GuidePage();
+        return const GuidePage();
       case guideListPage:
         var guideItem = settings.arguments as GuideItem;
         return GuideListPage(
@@ -29,6 +29,8 @@ class GuidePage extends StatelessWidget {
         );
     }
   };
+
+  const GuidePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,17 +86,17 @@ class GuidePage extends StatelessWidget {
                 height: double.infinity,
               ),
               Container(
-                color: Color.fromRGBO(0, 0, 0, .5),
+                color: const Color.fromRGBO(0, 0, 0, .5),
               ),
               Container(
                 width: double.infinity,
-                color: Color.fromRGBO(0, 0, 0, .2),
+                color: const Color.fromRGBO(0, 0, 0, .2),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     guideItem.guideTitle,
                     textAlign: TextAlign.end,
-                    style: TextStyle(color: Colors.grey),
+                    style: const TextStyle(color: Colors.grey),
                   ),
                 ),
               )
