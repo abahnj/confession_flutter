@@ -39,7 +39,7 @@ class ConfessionPageThree extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            model.prayer.prayerText,
+                            model.prayer?.prayerText ?? '',
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall
@@ -90,8 +90,8 @@ class ConfessionPageThree extends StatelessWidget {
                     context: context,
                     useRootNavigator: false,
                     builder: (context) => PlatformAlertDialog(
-                      title: Text(model.randomInspiration.author),
-                      content: Text(model.randomInspiration.quote),
+                      title: Text(model.randomInspiration?.author ?? ''),
+                      content: Text(model.randomInspiration?.quote ?? ''),
                       actions: [
                         PlatformDialogAction(
                           child: PlatformText('FINISH'),

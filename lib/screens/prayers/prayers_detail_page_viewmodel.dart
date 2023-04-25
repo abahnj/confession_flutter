@@ -9,13 +9,13 @@ class PrayersDetailPageViewModel extends BaseModel {
 
   final PrayersDao _dao;
 
-  late Prayer _prayer;
+  Prayer? _prayer;
 
-  late Inspiration _inspiration;
+  Inspiration? _inspiration;
 
-  Prayer get prayer => _prayer;
+  Prayer? get prayer => _prayer;
 
-  Inspiration get randomInspiration => _inspiration;
+  Inspiration? get randomInspiration => _inspiration;
 
   void getPrayerForId(int id) {
     _dao.getPrayerForId(id).then((prayer) {

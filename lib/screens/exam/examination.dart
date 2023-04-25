@@ -23,7 +23,6 @@ class ExaminationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExaminationPageViewModel>.reactive(
-      createNewViewModelOnInsert: true,
       viewModelBuilder: () => ExaminationPageViewModel(
         dao: Provider.of<AppDatabase>(context).examinationsDao,
         user: Provider.of<User>(context),
@@ -32,7 +31,6 @@ class ExaminationPage extends StatelessWidget {
         model.getExaminationsForUserAndId(commandmentId);
         model.setNeighbouringIds(commandmentId);
       },
-      disposeViewModel: false,
       builder: (context, model, _) {
         return Scaffold(
           body: SafeArea(

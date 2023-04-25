@@ -28,7 +28,7 @@ class PrayersDetailPage extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                   child: Text(
-                    model.prayer.prayerName,
+                    model.prayer?.prayerName ?? '',
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
@@ -40,7 +40,7 @@ class PrayersDetailPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      model.prayer.prayerText,
+                      model.prayer?.prayerText ?? '',
                       style: TextStyle(fontSize: 24.0),
                     ),
                   ),

@@ -36,26 +36,26 @@ const iosStrings = IOSAuthMessages(
 
 ///Themes
 
-final themeData = (BuildContext context) => ThemeData(
-      brightness: Brightness.light,
-      primarySwatch: Colors.red,
-      primaryIconTheme: IconThemeData(color: Colors.red),
-      primaryColor: Colors.white,
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        selectedItemColor: Colors.red,
-        unselectedItemColor: iconColorLightInactive,
-      ),
-    );
+final themeData = ThemeData(
+  brightness: Brightness.light,
+  useMaterial3: true,
+  colorSchemeSeed: Colors.red,
+  primaryIconTheme: const IconThemeData(color: Colors.red),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    selectedItemColor: Colors.red,
+    unselectedItemColor: iconColorLightInactive,
+  ),
+);
 
 final themeDataDark = ThemeData.dark().copyWith(
-  iconTheme: IconThemeData(color: Colors.red),
+  iconTheme: const IconThemeData(color: Colors.red),
   scaffoldBackgroundColor: Colors.black,
-  colorScheme: ColorScheme.dark(background: Colors.black),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  colorScheme: const ColorScheme.dark(background: Colors.black),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedItemColor: Colors.red,
     unselectedItemColor: iconColorDarkInactive,
   ),
-  cupertinoOverrideTheme: CupertinoThemeData(
+  cupertinoOverrideTheme: const CupertinoThemeData(
     textTheme: CupertinoTextThemeData(
       dateTimePickerTextStyle: TextStyle(
         fontSize: 21,

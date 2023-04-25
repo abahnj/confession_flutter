@@ -27,11 +27,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: providers,
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.system,
-        home: MyApp(),
-      ),
+      child: const MyApp(),
     ),
   );
 }
@@ -47,7 +43,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       darkTheme: themeDataDark,
       themeMode: userThemeMode(context),
-      theme: themeData(context),
+      theme: themeData,
       navigatorKey: navigatorKey,
       routes: {
         HomePage.Id: (context) => HomePage(),
