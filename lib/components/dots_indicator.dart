@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 /// An indicator showing the currently selected page of a PageController
 class DotsIndicator extends AnimatedWidget {
-  DotsIndicator({
+  const DotsIndicator({super.key,
     required this.controller,
     required this.itemCount,
     required this.onPageSelected,
@@ -42,13 +42,13 @@ class DotsIndicator extends AnimatedWidget {
       ),
     );
     var zoom = 1.0 + (_kMaxZoom - 1.0) * selectedness;
-    return Container(
+    return SizedBox(
       width: _kDotSpacing,
       child: Center(
         child: Material(
           color: color,
           type: MaterialType.circle,
-          child: Container(
+          child: SizedBox(
             width: _kDotSize * zoom,
             height: _kDotSize * zoom,
             child: InkWell(

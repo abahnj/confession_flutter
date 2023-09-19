@@ -1,5 +1,4 @@
 import 'package:confession_flutter/provider_setup.dart';
-import 'package:confession_flutter/screens/app_intro_page.dart';
 import 'package:confession_flutter/screens/home_page.dart';
 import 'package:confession_flutter/screens/settings/profile_page.dart';
 import 'package:confession_flutter/screens/settings_page.dart';
@@ -46,10 +45,9 @@ class MyApp extends StatelessWidget {
       theme: themeData,
       navigatorKey: navigatorKey,
       routes: {
-        HomePage.Id: (context) => HomePage(),
-        AppIntroPage.Id: (context) => AppIntroPage(),
-        SettingsPage.Id: (context) => SettingsPage(),
-        ProfilePage.Id: (context) => ProfilePage()
+        HomePage.Id: (context) => const HomePage(),
+        SettingsPage.Id: (context) => const SettingsPage(),
+        ProfilePage.Id: (context) => const ProfilePage()
       },
     );
   }

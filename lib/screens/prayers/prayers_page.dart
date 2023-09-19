@@ -80,7 +80,6 @@ class PrayersPage extends StatelessWidget {
 
 // The base class for the different types of items the list can contain.
 abstract class ListItem {
-  late final int itemId;
 }
 
 // A ListItem that contains data to display a heading.
@@ -95,7 +94,6 @@ class PrayerItem extends ListItem {
   final String prayerName;
   final String prayerText;
   final String groupName;
-  @override
   final int itemId;
 
   PrayerItem(

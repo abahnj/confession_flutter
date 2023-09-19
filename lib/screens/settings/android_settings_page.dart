@@ -17,8 +17,8 @@ class AndroidSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16),
+        const Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 16),
           child: Text(
             'Appearance',
             style: TextStyle(
@@ -28,7 +28,7 @@ class AndroidSettingsPage extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text(
+          title: const Text(
             'Theme',
           ),
           subtitle: Text(
@@ -43,14 +43,14 @@ class AndroidSettingsPage extends StatelessWidget {
               context: context,
               useRootNavigator: false,
               builder: (context) => SimpleDialog(
-                title: Center(
+                title: const Center(
                   child: Text(
                     'Gender',
                   ),
                 ),
                 children: <Widget>[
                   RadioListTile<ThemeMode>(
-                    title: Text('System'),
+                    title: const Text('System'),
                     value: ThemeMode.system,
                     groupValue: context.watch<ThemeState>().userThemeMode,
                     onChanged: (gender) {
@@ -60,7 +60,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     },
                   ),
                   RadioListTile<ThemeMode>(
-                    title: Text('Dark'),
+                    title: const Text('Dark'),
                     value: ThemeMode.dark,
                     groupValue: context.watch<ThemeState>().userThemeMode,
                     onChanged: (gender) {
@@ -69,7 +69,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     },
                   ),
                   RadioListTile<ThemeMode>(
-                    title: Text('Light'),
+                    title: const Text('Light'),
                     value: ThemeMode.light,
                     groupValue: context.watch<ThemeState>().userThemeMode,
                     onChanged: (gender) {
@@ -83,8 +83,8 @@ class AndroidSettingsPage extends StatelessWidget {
             );
           },
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16),
+        const Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 16),
           child: Text(
             'Profile',
             style: TextStyle(
@@ -94,7 +94,7 @@ class AndroidSettingsPage extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text(
+          title: const Text(
             'Gender',
           ),
           subtitle: Text(
@@ -109,14 +109,14 @@ class AndroidSettingsPage extends StatelessWidget {
               context: context,
               useRootNavigator: false,
               builder: (context) => SimpleDialog(
-                title: Center(
+                title: const Center(
                   child: Text(
                     'Gender',
                   ),
                 ),
                 children: <Widget>[
                   RadioListTile<Gender>(
-                    title: Text('Male'),
+                    title: const Text('Male'),
                     value: Gender.male,
                     groupValue: prefs.user.gender,
                     onChanged: (gender) {
@@ -125,7 +125,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     },
                   ),
                   RadioListTile<Gender>(
-                    title: Text('Female'),
+                    title: const Text('Female'),
                     value: Gender.female,
                     groupValue: prefs.user.gender,
                     onChanged: (gender) {
@@ -139,7 +139,7 @@ class AndroidSettingsPage extends StatelessWidget {
           },
         ),
         ListTile(
-          title: Text(
+          title: const Text(
             'Age',
           ),
           subtitle: Text(
@@ -154,14 +154,14 @@ class AndroidSettingsPage extends StatelessWidget {
               context: context,
               useRootNavigator: false,
               builder: (context) => SimpleDialog(
-                title: Center(
+                title: const Center(
                   child: Text(
                     'Age',
                   ),
                 ),
                 children: <Widget>[
                   RadioListTile<Age>(
-                    title: Text('Adult'),
+                    title: const Text('Adult'),
                     value: Age.adult,
                     groupValue: prefs.user.age,
                     onChanged: (age) {
@@ -170,7 +170,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     },
                   ),
                   RadioListTile<Age>(
-                    title: Text('Teen'),
+                    title: const Text('Teen'),
                     value: Age.teen,
                     groupValue: prefs.user.age,
                     onChanged: (age) {
@@ -179,7 +179,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     },
                   ),
                   RadioListTile<Age>(
-                    title: Text('Child'),
+                    title: const Text('Child'),
                     value: Age.child,
                     groupValue: prefs.user.age,
                     onChanged: (age) {
@@ -193,7 +193,7 @@ class AndroidSettingsPage extends StatelessWidget {
           },
         ),
         ListTile(
-          title: Text(
+          title: const Text(
             'Vocation',
           ),
           subtitle: Text(
@@ -208,14 +208,14 @@ class AndroidSettingsPage extends StatelessWidget {
               context: context,
               useRootNavigator: false,
               builder: (context) => SimpleDialog(
-                title: Center(
+                title: const Center(
                   child: Text(
                     'Vocation',
                   ),
                 ),
                 children: <Widget>[
                   RadioListTile<Vocation>(
-                    title: Text('Single'),
+                    title: const Text('Single'),
                     value: Vocation.single,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
@@ -224,7 +224,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     },
                   ),
                   RadioListTile<Vocation>(
-                    title: Text('Married'),
+                    title: const Text('Married'),
                     value: Vocation.married,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
@@ -233,7 +233,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     },
                   ),
                   RadioListTile<Vocation>(
-                    title: Text('Priest'),
+                    title: const Text('Priest'),
                     value: Vocation.priest,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
@@ -242,7 +242,7 @@ class AndroidSettingsPage extends StatelessWidget {
                     },
                   ),
                   RadioListTile<Vocation>(
-                    title: Text('Religious'),
+                    title: const Text('Religious'),
                     value: Vocation.religious,
                     groupValue: prefs.user.vocation,
                     onChanged: (vocation) {
@@ -256,7 +256,7 @@ class AndroidSettingsPage extends StatelessWidget {
           },
         ),
         ListTile(
-          title: Text(
+          title: const Text(
             'Date of Last Confession',
           ),
           subtitle: Text(
@@ -275,11 +275,11 @@ class AndroidSettingsPage extends StatelessWidget {
             if (date != null) prefs.lastConfession = date.toString();
           },
         ),
-        Divider(
+        const Divider(
           thickness: 2,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16),
+        const Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 16),
           child: Text(
             'Reset App',
             style: TextStyle(
@@ -289,11 +289,11 @@ class AndroidSettingsPage extends StatelessWidget {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.restore),
-          title: Text(
+          leading: const Icon(Icons.restore),
+          title: const Text(
             'Reset App',
           ),
-          subtitle: Text(
+          subtitle: const Text(
             'WARNING! This will delete all personal application data including added examinations',
           ),
           onTap: () {
@@ -319,8 +319,8 @@ class AndroidSettingsPage extends StatelessWidget {
           );*/
           },
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16),
+        const Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 16),
           child: Text(
             'Help',
             style: TextStyle(
@@ -330,11 +330,11 @@ class AndroidSettingsPage extends StatelessWidget {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.feedback),
-          title: Text(
+          leading: const Icon(Icons.feedback),
+          title: const Text(
             'Send Feedback',
           ),
-          subtitle: Text(
+          subtitle: const Text(
             'Report technical issues or suggest new features',
           ),
           onTap: () {

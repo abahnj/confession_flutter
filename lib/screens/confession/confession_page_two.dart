@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class ConfessionPageTwo extends StatelessWidget {
+  const ConfessionPageTwo({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExaminationPageViewModel>.reactive(
@@ -22,59 +24,57 @@ class ConfessionPageTwo extends StatelessWidget {
       builder: (context, model, _) => Scaffold(
         body: Scaffold(
           appBar: rootAppBar(context),
-          body: Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: model.activeExaminations.isNotEmpty
-                      ? ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: model.activeExaminations.length,
-                          itemBuilder: (context, index) {
-                            var examination = model.activeExaminations[index];
-                            return ListCard(
-                              title: examination.activeText,
-                              trailing: Text(examination.count.toString()),
-                            );
-                          },
-                        )
-                      : Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              'No data to display\n Please make an Examination of Conscience',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
+          body: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: model.activeExaminations.isNotEmpty
+                    ? ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: model.activeExaminations.length,
+                        itemBuilder: (context, index) {
+                          var examination = model.activeExaminations[index];
+                          return ListCard(
+                            title: examination.activeText,
+                            trailing: Text(examination.count.toString()),
+                          );
+                        },
+                      )
+                    : Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'No data to display\n Please make an Examination of Conscience',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ConfessionPageButton(
-                        onTap: () => Navigator.pop(context),
-                        text: 'Previous',
                       ),
-                      ConfessionPageButton(
-                        onTap: () =>
-                            Navigator.pushNamed(context, confessionPageThree),
-                        text: 'Next',
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ConfessionPageButton(
+                      onTap: () => Navigator.pop(context),
+                      text: 'Previous',
+                    ),
+                    ConfessionPageButton(
+                      onTap: () =>
+                          Navigator.pushNamed(context, confessionPageThree),
+                      text: 'Next',
+                    )
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),

@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 class SettingsPage extends StatelessWidget {
   static const String Id = 'settingsPage';
 
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var prefs = Provider.of<PrefsNotifier>(context, listen: false);

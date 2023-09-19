@@ -33,7 +33,7 @@ class Examinations extends Table {
 
   TextColumn get activeText => text().named('DESCRIPTION_ACTIVE')();
 
-  IntColumn get count => integer().named('COUNT').withDefault(Constant(0))();
+  IntColumn get count => integer().named('COUNT').withDefault(const Constant(0))();
 
   @override
   String get tableName => 'SIN';

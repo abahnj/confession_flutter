@@ -75,22 +75,22 @@ Future<String> getDeviceInfo() async {
   var appVersion =
       '${packageInfo.appName}  ${packageInfo.buildNumber}  ${packageInfo.version}';
 
-  var deviceOS;
-  var osVersion;
-  var deviceBrand;
-  var deviceModel;
-  var deviceManufacturer;
+  String deviceOS;
+  String osVersion;
+  String deviceBrand;
+  String deviceModel;
+  String deviceManufacturer;
 
   if (Platform.isIOS) {
     var iosInfo = await deviceInfo.iosInfo;
     deviceOS = iosInfo.systemName;
     osVersion = iosInfo.systemVersion;
-    deviceBrand = iosInfo.utsname;
+    deviceBrand = iosInfo.utsname.toString();
     deviceModel = iosInfo.localizedModel;
     deviceManufacturer = 'Apple';
   } else {
     var androidInfo = await deviceInfo.androidInfo;
-    deviceOS = androidInfo.version.sdkInt;
+    deviceOS = androidInfo.version.sdkInt.toString();
     osVersion = androidInfo.version.release;
     deviceBrand = androidInfo.brand;
     deviceModel = androidInfo.model;

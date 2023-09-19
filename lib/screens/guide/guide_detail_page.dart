@@ -12,7 +12,7 @@ class GuideDetailPage extends StatelessWidget {
       appBar: rootAppBar(context),
       body: SingleChildScrollView(
         child: Card(
-          margin: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(

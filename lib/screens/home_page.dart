@@ -29,11 +29,13 @@ final List<Destination> _allDestinations = <Destination>[
 class HomePage extends StatefulWidget {
   static const String Id = '/';
 
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
+class HomePageState extends State<HomePage>
     with TickerProviderStateMixin<HomePage> {
   List<Key> _destinationKeys = [];
   List<GlobalKey<NavigatorState>> _navigatorKeys = [];
@@ -47,7 +49,7 @@ class _HomePageState extends State<HomePage>
     _faders = List<AnimationController>.generate(
         _allDestinations.length,
         (_) => AnimationController(
-            vsync: this, duration: Duration(milliseconds: 300)),
+            vsync: this, duration: const Duration(milliseconds: 300)),
         growable: false);
     _faders[_currentIndex].value = 1.0;
     _destinationKeys = List<Key>.generate(
@@ -142,7 +144,7 @@ List<BottomNavigationBarItem> _buildItems(context) {
         width: 24,
         child: SvgPicture.asset(
           destination.iconAsset,
-          color: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+          theme:SvgTheme(currentColor:  Theme.of(context).bottomNavigationBarTheme.selectedItemColor ?? const Color(0xFF000000)),
         ),
       ),
     );

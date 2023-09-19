@@ -14,12 +14,12 @@ class ConfessionPageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PlatformTextButton(
+      onPressed: onTap,
       child: PlatformText(
         text,
         style:
             Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.red),
       ),
-      onPressed: onTap,
     );
   }
 }

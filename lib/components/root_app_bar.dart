@@ -20,7 +20,7 @@ AppBar rootAppBar(BuildContext context, {String title = kAppName}) {
     actions: <Widget>[
       if (Platform.isAndroid)
         IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.share,
             color: Colors.red,
           ),
@@ -47,12 +47,12 @@ AppBar defaultAppBar({String title = kAppName}) {
   return AppBar(
     title: PlatformText(
       title,
-      style: TextStyle(fontFamily: 'RobotoMono', fontSize: 34),
+      style: const TextStyle(fontFamily: 'RobotoMono', fontSize: 34),
     ),
     actions: <Widget>[
       if (Platform.isAndroid)
         IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.share,
             color: Colors.red,
           ),

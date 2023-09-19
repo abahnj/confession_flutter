@@ -23,13 +23,13 @@ class iOSSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoSettings(
       items: <Widget>[
-        CSHeader('APPEARANCE'),
+        const CSHeader('APPEARANCE'),
         CSSelection<ThemeMode>(
           onSelected: (themeMode) {
             context.read<ThemeStyle>().userThemeMode = themeMode;
           },
           currentSelection: context.watch<ThemeState>().userThemeMode,
-          items: [
+          items: const [
             CSSelectionItem(
               value: ThemeMode.system,
               text: 'System',
@@ -44,7 +44,7 @@ class iOSSettingsPage extends StatelessWidget {
             ),
           ],
         ),
-        CSHeader('PROFILE'),
+        const CSHeader('PROFILE'),
         CSLink(
           title: 'Profile',
           detail: context.watch<User>().toString(),
@@ -60,7 +60,7 @@ class iOSSettingsPage extends StatelessWidget {
           onPressed: () => showCupertinoModalPopup(
             context: context,
             useRootNavigator: false,
-            builder: (context) => Container(
+            builder: (context) => SizedBox(
               height: 300,
               child: CupertinoDatePicker(
                 backgroundColor: CupertinoColors.secondarySystemBackground,
@@ -75,14 +75,14 @@ class iOSSettingsPage extends StatelessWidget {
             ),
           ),
         ),
-        CSHeader(''),
+        const CSHeader(''),
         CSButton(
           CSButtonType.DEFAULT,
           ('Share'),
           () {
             Share.share(SHARE_TEXT, subject: 'Feedback');
           },
-          style: CSWidgetStyle(
+          style: const CSWidgetStyle(
             icon: Icon(
               CupertinoIcons.share,
               color: CupertinoColors.systemBlue,
@@ -95,44 +95,44 @@ class iOSSettingsPage extends StatelessWidget {
           () {
             sendFeedbackEmail();
           },
-          style: CSWidgetStyle(
+          style: const CSWidgetStyle(
             icon: Icon(
               CupertinoIcons.reply,
               color: CupertinoColors.systemBlue,
             ),
           ),
         ),
-        CSDescription(
+        const CSDescription(
           'Report technical issues or suggest new features.',
         ),
-        CSHeader(''),
+        const CSHeader(''),
         CSButton(CSButtonType.DESTRUCTIVE, ('Reset App'), () {
           showCupertinoDialog(
               context: context,
               builder: (context) => CupertinoAlertDialog(
-                    title: Text('Reset App'),
-                    content: Text('Are you sure?'),
+                    title: const Text('Reset App'),
+                    content: const Text('Are you sure?'),
                     actions: <Widget>[
                       CupertinoDialogAction(
-                        child: Text('No'),
                         isDefaultAction: true,
                         onPressed: () {
                           UnimplementedError('Implement me');
                           Navigator.of(context).pop();
                         },
+                        child: const Text('No'),
                       ),
                       CupertinoDialogAction(
-                        child: Text('Yes'),
                         isDestructiveAction: true,
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
+                        child: const Text('Yes'),
                       )
                     ],
                   ),
               useRootNavigator: false);
         }),
-        CSDescription(
+        const CSDescription(
           'WARNING! This will delete all personal application data including added examinations',
         ),
       ],

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:local_auth_ios/local_auth_ios.dart';
 
 ///Constants file
 const kAppName = 'Confession';
@@ -28,11 +27,7 @@ const String confessionPageThree = 'confessionPageThree';
 const String confessionPageFour = 'confessionPageFour';
 const String confessionPage = '/';
 
-const iosStrings = IOSAuthMessages(
-    cancelButton: 'cancel',
-    goToSettingsButton: 'settings',
-    goToSettingsDescription: 'Please set up your Touch ID.',
-    lockOut: 'Please re-enable your Touch ID');
+
 
 ///Themes
 

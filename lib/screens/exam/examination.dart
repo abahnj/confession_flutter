@@ -91,25 +91,6 @@ class ExaminationPage extends StatelessWidget {
   }
 }
 
-Route _createRoute(int previousCommandmentId) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => ExaminationPage(
-      commandmentId: previousCommandmentId,
-    ),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = Offset(-1.0, 0);
-      var end = Offset.zero;
-      var curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
-}
 
 void performMenuAction(
     MenuOptions selection, ExaminationPageViewModel model, int index) {
@@ -162,7 +143,7 @@ Future<MenuOptions> iOSDialog(BuildContext context) async =>
         cancelButton: CupertinoActionSheetAction(
           isDestructiveAction: true,
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
       ),
     );
@@ -172,7 +153,7 @@ Future<MenuOptions?> showAndroidMenu(BuildContext context, RenderBox overlay,
     showMenu(
       context: context,
       position: RelativeRect.fromRect(
-          details.globalPosition & Size(40, 40), // smaller rect, the touch area
+          details.globalPosition & const Size(40, 40), // smaller rect, the touch area
           Offset.zero & overlay.size // Bigger rect, the entire screen
           ),
       items: <PopupMenuEntry<MenuOptions>>[

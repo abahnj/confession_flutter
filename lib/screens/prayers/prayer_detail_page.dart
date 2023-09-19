@@ -36,12 +36,12 @@ class PrayersDetailPage extends StatelessWidget {
                   ),
                 ),
                 Card(
-                  margin: EdgeInsets.all(16),
+                  margin: const EdgeInsets.all(16),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       model.prayer?.prayerText ?? '',
-                      style: TextStyle(fontSize: 24.0),
+                      style: const TextStyle(fontSize: 24.0),
                     ),
                   ),
                 ),

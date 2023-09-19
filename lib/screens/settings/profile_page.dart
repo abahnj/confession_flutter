@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 class ProfilePage extends StatelessWidget {
   static const String Id = '/profilePage';
 
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var prefs = Provider.of<PrefsNotifier>(context, listen: false);
@@ -14,16 +16,16 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: CupertinoSettings(
         shrinkWrap: true,
         items: <Widget>[
-          CSHeader('Gender'),
+          const CSHeader('Gender'),
           CSSelection<Gender>(
             currentSelection: user.gender,
             onSelected: prefs.setUserGender,
-            items: [
+            items: const [
               CSSelectionItem(
                 value: Gender.male,
                 text: 'Male',
@@ -34,11 +36,11 @@ class ProfilePage extends StatelessWidget {
               ),
             ],
           ),
-          CSHeader('Age'),
+          const CSHeader('Age'),
           CSSelection<Age>(
             currentSelection: user.age,
             onSelected: (age) => prefs.userAge = age,
-            items: [
+            items: const [
               CSSelectionItem(
                 value: Age.adult,
                 text: 'Adult',
@@ -53,11 +55,11 @@ class ProfilePage extends StatelessWidget {
               ),
             ],
           ),
-          CSHeader('Vocation'),
+          const CSHeader('Vocation'),
           CSSelection<Vocation>(
             currentSelection: user.vocation,
             onSelected: prefs.setUserVocation,
-            items: [
+            items: const [
               CSSelectionItem(
                 value: Vocation.single,
                 text: 'Single',

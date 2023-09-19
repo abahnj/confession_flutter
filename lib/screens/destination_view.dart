@@ -47,10 +47,10 @@ class DestinationView extends StatefulWidget {
   final Key navigatorKey;
 
   @override
-  _DestinationViewState createState() => _DestinationViewState();
+  DestinationViewState createState() => DestinationViewState();
 }
 
-class _DestinationViewState extends State<DestinationView> {
+class DestinationViewState extends State<DestinationView> {
   @override
   Widget build(BuildContext context) {
     return Navigator(

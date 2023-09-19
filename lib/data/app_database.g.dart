@@ -355,105 +355,78 @@ class $ExaminationsTable extends Examinations
       type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _adultMeta = const VerificationMeta('adult');
   @override
-  late final GeneratedColumn<bool> adult =
-      GeneratedColumn<bool>('ADULT', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("ADULT" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> adult = GeneratedColumn<bool>(
+      'ADULT', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("ADULT" IN (0, 1))'));
   static const VerificationMeta _singleMeta = const VerificationMeta('single');
   @override
-  late final GeneratedColumn<bool> single =
-      GeneratedColumn<bool>('SINGLE', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("SINGLE" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> single = GeneratedColumn<bool>(
+      'SINGLE', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("SINGLE" IN (0, 1))'));
   static const VerificationMeta _marriedMeta =
       const VerificationMeta('married');
   @override
-  late final GeneratedColumn<bool> married =
-      GeneratedColumn<bool>('MARRIED', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("MARRIED" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> married = GeneratedColumn<bool>(
+      'MARRIED', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("MARRIED" IN (0, 1))'));
   static const VerificationMeta _religiousMeta =
       const VerificationMeta('religious');
   @override
-  late final GeneratedColumn<bool> religious =
-      GeneratedColumn<bool>('RELIGIOUS', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("RELIGIOUS" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> religious = GeneratedColumn<bool>(
+      'RELIGIOUS', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("RELIGIOUS" IN (0, 1))'));
   static const VerificationMeta _priestMeta = const VerificationMeta('priest');
   @override
-  late final GeneratedColumn<bool> priest =
-      GeneratedColumn<bool>('PRIEST', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("PRIEST" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> priest = GeneratedColumn<bool>(
+      'PRIEST', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("PRIEST" IN (0, 1))'));
   static const VerificationMeta _teenMeta = const VerificationMeta('teen');
   @override
-  late final GeneratedColumn<bool> teen =
-      GeneratedColumn<bool>('TEEN', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("TEEN" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> teen = GeneratedColumn<bool>(
+      'TEEN', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("TEEN" IN (0, 1))'));
   static const VerificationMeta _femaleMeta = const VerificationMeta('female');
   @override
-  late final GeneratedColumn<bool> female =
-      GeneratedColumn<bool>('FEMALE', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("FEMALE" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> female = GeneratedColumn<bool>(
+      'FEMALE', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("FEMALE" IN (0, 1))'));
   static const VerificationMeta _maleMeta = const VerificationMeta('male');
   @override
-  late final GeneratedColumn<bool> male =
-      GeneratedColumn<bool>('MALE', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("MALE" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> male = GeneratedColumn<bool>(
+      'MALE', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("MALE" IN (0, 1))'));
   static const VerificationMeta _childMeta = const VerificationMeta('child');
   @override
-  late final GeneratedColumn<bool> child =
-      GeneratedColumn<bool>('CHILD', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("CHILD" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> child = GeneratedColumn<bool>(
+      'CHILD', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("CHILD" IN (0, 1))'));
   static const VerificationMeta _customIdMeta =
       const VerificationMeta('customId');
   @override
@@ -478,7 +451,7 @@ class $ExaminationsTable extends Examinations
       'COUNT', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultValue: Constant(0));
+      defaultValue: const Constant(0));
   @override
   List<GeneratedColumn> get $columns => [
         id,

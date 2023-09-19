@@ -5,7 +5,7 @@ import 'package:confession_flutter/screens/exam/examination.dart';
 import 'package:flutter/material.dart';
 
 class ExaminationPageView extends StatefulWidget {
-  ExaminationPageView(
+  const ExaminationPageView(
       {Key? key, required this.currentPage, required this.pageList})
       : super(key: key);
 
@@ -14,23 +14,23 @@ class ExaminationPageView extends StatefulWidget {
   final List<Commandment> pageList;
 
   @override
-  _ExaminationPageViewState createState() => _ExaminationPageViewState();
+  ExaminationPageViewState createState() => ExaminationPageViewState();
 }
 
-class _ExaminationPageViewState extends State<ExaminationPageView> {
+class ExaminationPageViewState extends State<ExaminationPageView> {
   final _kDuration = const Duration(milliseconds: 300);
 
   final _kCurve = Curves.ease;
 
   @override
   Widget build(BuildContext context) {
-    final _controller = PageController(initialPage: widget.currentPage);
+    final controller = PageController(initialPage: widget.currentPage);
     return Scaffold(
       appBar: rootAppBar(context),
       body: Stack(
         children: [
           PageView(
-            controller: _controller,
+            controller: controller,
             children: widget.pageList
                 .map(
                   (commandment) => ExaminationPage(
@@ -48,10 +48,10 @@ class _ExaminationPageViewState extends State<ExaminationPageView> {
               child: Center(
                 child: DotsIndicator(
                   color: Theme.of(context).colorScheme.onSurface,
-                  controller: _controller,
+                  controller: controller,
                   itemCount: widget.pageList.length,
                   onPageSelected: (int page) {
-                    _controller.animateToPage(
+                    controller.animateToPage(
                       page,
                       duration: _kDuration,
                       curve: _kCurve,

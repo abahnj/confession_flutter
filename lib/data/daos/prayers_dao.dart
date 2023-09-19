@@ -42,6 +42,6 @@ class PrayersDao extends DatabaseAccessor<AppDatabase> with _$PrayersDaoMixin {
   void resetExaminationsCount() async {
     final table = db.examinations;
     await (update(table)..where((tbl) => tbl.count.isBiggerThanValue(0)))
-        .write(ExaminationsCompanion(count: Value(0)));
+        .write(const ExaminationsCompanion(count: Value(0)));
   }
 }

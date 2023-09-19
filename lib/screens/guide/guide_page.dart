@@ -36,33 +36,31 @@ class GuidePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: rootAppBar(context, title: title),
-      body: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            buildChild(
-              context,
-              GuideItem(2, 'AS SAID BY POPES', 'as_said_by_pope.jpg'),
-            ),
-            buildChild(
-              context,
-              GuideItem(3, 'EXTRACTS FROM FREQUENT CONFESSION (FULTON SHEEN)',
-                  'fulton_sheen.jpg'),
-            ),
-            buildChild(
-              context,
-              GuideItem(1, 'FAQ', 'faq.jpg'),
-            ),
-            buildChild(
-              context,
-              GuideItem(4, 'CATECHISM OF THE CATHOLIC CHURCH', 'ccc.jpg'),
-            ),
-            buildChild(
-              context,
-              GuideItem(5, 'HOW TO MAKE A GOOD CONFESSION', 'confession.jpg'),
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          buildChild(
+            context,
+            GuideItem(2, 'AS SAID BY POPES', 'as_said_by_pope.jpg'),
+          ),
+          buildChild(
+            context,
+            GuideItem(3, 'EXTRACTS FROM FREQUENT CONFESSION (FULTON SHEEN)',
+                'fulton_sheen.jpg'),
+          ),
+          buildChild(
+            context,
+            GuideItem(1, 'FAQ', 'faq.jpg'),
+          ),
+          buildChild(
+            context,
+            GuideItem(4, 'CATECHISM OF THE CATHOLIC CHURCH', 'ccc.jpg'),
+          ),
+          buildChild(
+            context,
+            GuideItem(5, 'HOW TO MAKE A GOOD CONFESSION', 'confession.jpg'),
+          ),
+        ],
       ),
     );
   }

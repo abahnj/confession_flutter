@@ -34,7 +34,6 @@ class PrayersPageViewModel extends BaseModel {
           ),
         );
       }
-      ;
       notifyListeners();
     });
   }
